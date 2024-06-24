@@ -1,0 +1,404 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>操作DOM</title>
+
+    <style>
+        *{margin:0; padding:0;}
+        table{border: 0; border-collapse: collapse; border-spacing: 0;}
+
+        .imgBox{width:250px;/* height:150px; */margin:20px auto;text-align:center;padding: 10px 10px 10px;background:#f60;}
+        .imgBox p{font-size:12px; color:#fff;}
+        .imgBox img{display: block; width:100%; height:100%; margin-top:10px;}
+        .imgBox button{margin-top:5px;}
+
+        .selectList{margin-top:15px;}
+        .selectList label{border:0; border-collapse:collapse; border-spacing: 0;}
+        .selectBtn{margin-top:15px;}
+
+        .staffBox{
+            width:280px; 
+            margin:15px auto;
+        }
+        .staffTable{
+            width:100%;
+        }
+        .staffTable th,.staffTable td{
+            border:1px solid #ddd;
+            padding:2px 5px;
+            text-align: center;
+            vertical-align:middle;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
+        .staffForm{
+            margin-top:20px;
+            border:1px solid #ddd;
+        }
+        .staffItem{
+            padding:5px;
+        }
+        .staffItem input{
+            height:26px;
+            line-height:26px;
+        }
+        .staffItem:last-child{
+            border-bottom:0;
+        }
+
+        .staffBtn{
+            padding:10px;
+            text-align:center;
+        }
+        .staffBtn button{
+            width:100px;
+            height:26px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="imgBox">
+        <p id="text"></p>
+
+        <img src="../images/img_list01.jpg" alt="">
+
+        <button id="prev">上一张</button>
+        <button id="next">下一张</button>
+    </div>
+
+
+    <div class="selectBox">
+        <div class="selectExplain">
+            你爱好的运动是？ <label for=""><input type="checkbox" id="selectAll">全选/全不选</label>
+        </div>
+
+        <div class="selectList">
+            <label for=""><input type="checkbox" name="checkbox" value="足球">足球</label>
+            <label for=""><input type="checkbox" name="checkbox" value="篮球">篮球</label>
+            <label for=""><input type="checkbox" name="checkbox" value="羽毛球">羽毛球</label>
+            <label for=""><input type="checkbox" name="checkbox" value="乒乓球">乒乓球</label>
+        </div>
+
+        <div class="selectBtn">
+            <button id="checkAllBox">全选</button>
+            <button id="checkNoBox">全不选</button>
+            <button id="checkInverse">反选</button>
+            <button id="checkSubmit">提交</button>
+        </div>
+    </div>
+
+
+    <div class="staffBox">
+        <table class="staffTable" id="staffTable">
+            <tr>
+                <th>name</th>
+                <th>email</th>
+                <th>salay</th>
+                <th>操作</th>
+            </tr>
+            <tr>
+                <td>Tom</td>
+                <td>tom@qq.com</td>
+                <td>5000</td>
+                <td><a href="javascript:;">delete</a></td>
+            </tr>
+            <tr>
+                <td>Rose</td>
+                <td>rose@qq.com</td>
+                <td>2000</td>
+                <td><a href="javascript:;">delete</a></td>
+            </tr>
+        </table>
+
+
+        <div class="staffForm">
+            <div class="staffItem">
+                name:
+                <input type="text" name="name" id="name" value="name">
+            </div>
+            <div class="staffItem">
+                name:
+                <input type="text" name="email" id="email" value="email">
+            </div>
+            <div class="staffItem">
+                name:
+                <input type="text" name="salay" id="salay" value="2000">
+            </div>
+            <div class="staffBtn">
+                <button id="addEmpButton">提交</button>
+            </div>
+        </div>
+    </div>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  操作DOM  //////////////
+
+    //------------------------------------实例 图片切换的练习
+    //获取上一张按钮的元素节点
+    var prev = document.getElementById('prev')
+    //获取下一张按钮的元素节点
+    var next = document.getElementById('next')
+
+    //获取要切换的图片元素节点
+    /*  
+        返回的是一个img类数组(里面只包含了一个元素，不需要遍历)
+        获取img类数组对象中的第一个元素
+    */
+    var img = document.getElementsByTagName('img')[0] 
+
+    //定义一个数组，用来保存所有图片的路径
+    var imgArr = ['../images/img_list01.jpg','../images/img_list02.jpg','../images/img_list03.jpg','../images/img_list04.jpg']
+
+    //用来保存当前显示的图片的索引
+    var index = 0;    
+
+    var text = document.getElementById('text')
+    text.innerHTML = "总共"+imgArr.length+"张图片，当前是第"+(index+1)+"张"        
+
+    //给上一站按钮绑定单击响应事件
+    prev.onclick = function(){
+        index--;
+
+        //判断如果index小于0
+        if(index < 0){
+            index = imgArr.length - 1;
+        }
+
+        //更改图片的src属性
+        img.src = imgArr[index];
+
+        text.innerHTML = "总共"+imgArr.length+"张图片，当前是第"+(index+1)+"张" 
+    }  
+
+    //给下一站按钮绑定单击响应事件
+    next.onclick = function(){
+        index++;
+
+        //判断如果index大于或小于图片数量
+        if(index > imgArr.length - 1){
+            index = 0;
+        }
+
+        //更改图片的src属性
+        img.src = imgArr[index];
+
+        text.innerHTML = "总共"+imgArr.length+"张图片，当前是第"+(index+1)+"张" 
+    }
+
+
+
+
+    
+    //------------------------------------实例 全选练习
+    //全选
+    var checkAllBox = document.getElementById('checkAllBox');
+    checkAllBox.onclick = function(){
+        var items = document.getElementsByName('checkbox')
+        for(var i=0; i<items.length; i++){
+            items[i].checked = true
+
+            //将selectAll(全选或全不选)选中
+            selectAll.checked = true 
+        }
+    }
+    //全不选
+    var checkNoBox = document.getElementById('checkNoBox');
+    checkNoBox.onclick = function(){
+        var items = document.getElementsByName('checkbox')
+        for(var i=0; i<items.length; i++){
+            items[i].checked = false
+
+            //将selectAll(全选或全不选)不选中
+            selectAll.checked = false 
+        }
+    }
+
+     //反选
+     var checkInverse = document.getElementById('checkInverse');
+     checkInverse.onclick = function(){
+        var items = document.getElementsByName('checkbox')
+        
+        //默认设置selectAll(全选或全不选)为选中
+        selectAll.checked = true;
+
+        for(var i=0; i<items.length; i++){
+            //判断多选框状态
+            /* if(items[i].checked){
+                //如果多选框已选中，则设置为没选中状态
+                items[i].checked = false
+            }else{
+                //如果多选框未选中，则设置为选中状态
+                items[i].checked = true
+            } */
+
+            //简写方式
+            items[i].checked = !items[i].checked
+
+            //如果当前复选框未选中
+            if(!items[i].checked){
+                //将selectAll(全选或全不选)不选中
+                selectAll.checked = false 
+            }
+        }
+    }
+
+    //提交
+    var checkSubmit = document.getElementById('checkSubmit');
+    checkSubmit.onclick = function(){
+        var items = document.getElementsByName('checkbox')
+        for(var i=0; i<items.length; i++){
+            if(items[i].checked){
+                var value = items[i].value
+                console.log(value)
+            }
+        }
+    }
+
+    //全选或全不选
+    var selectAll = document.getElementById('selectAll')
+    selectAll.onclick = function(){
+        var items = document.getElementsByName('checkbox')
+        for(var i=0; i<items.length; i++){
+            if(this.checked){
+                items[i].checked = true
+            }else{
+                items[i].checked = false
+            }
+        }
+    }
+
+    //点击复选框判断是否选中，设置全选或全不选(和质数练习类似)
+    var items = document.getElementsByName('checkbox')
+    for(var i=0; i<items.length; i++){
+
+        items[i].onclick = function(){
+
+            //默认设置selectAll(全选或全不选)为选中
+            selectAll.checked = true;
+
+            //判断所有复选框是否选中
+            for(var j=0; j<items.length; j++){
+
+                //如果当前复选框未选中
+                if(!items[j].checked){
+
+                    //将selectAll(全选或全不选)不选中
+                    selectAll.checked = false 
+
+                    //优化，循环已经得到结果，就不需要再循环了
+                    break;
+                }
+            }         
+        }
+    }
+
+
+
+    //------------------------------------实例 删除、添加
+    function delList(){
+            var tr = this.parentNode.parentNode
+            
+            //获取所每行tr下有td元素的第一个td
+            //var name = document.getElementsByTagName('td')[0].innerHTML
+            var name = tr.children[0].innerHTML
+
+            //确定是否删除该条记录
+            var flag = confirm('确定删除'+name+'这条记录吗？')
+
+            if(flag){                       
+                tr.parentNode.removeChild(tr);
+            }
+
+            /* 
+                点击超链接以后，超链接会跳转页面，这个是超链接的默认行为
+                不希望有超链接默认行为，可以通过在响应的最后 
+                return false来取消默认行为
+            */
+            return false
+        }
+    //--------------------删除记录
+    //获取所有删除按钮元素
+    var aDiv = document.getElementsByTagName('a')
+
+    //给删除按钮元素添加单击响应事件
+    for(var i=0; i<aDiv.length; i++){
+        aDiv[i].onclick = delList   //delList不能加括号，赋值的是一个对象
+    }
+
+
+    //--------------------添加记录
+    /* 
+        点击提交按钮，将员工信息添加到表格中
+    */
+    var addEmpButton = document.getElementById('addEmpButton');
+    addEmpButton.onclick = function(){
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var salay = document.getElementById('salay').value;
+
+        var tr = document.createElement('tr') 
+
+        /*
+        var tdName = document.createElement('td')
+        var tdEmail = document.createElement('td')
+        var tdSalay = document.createElement('td')
+        var tdLink = document.createElement('td')
+
+        var link = document.createElement('a')
+        link.href='javascript:;'
+        link.innerText = 'delete'
+        link.onclick = delList
+
+        //创建文本节点    
+        var textName = document.createTextNode(name)
+        var textEmail = document.createTextNode(email)
+        var textSalay = document.createTextNode(salay)
+        
+        tdName.appendChild(textName)
+        tdEmail.appendChild(textEmail)
+        tdSalay.appendChild(textSalay)
+        tdLink.appendChild(link)
+
+        tr.appendChild(tdName)
+        tr.appendChild(tdEmail)
+        tr.appendChild(tdSalay)
+        tr.appendChild(tdLink) */
+
+        //创建元素简化方式    
+        var tr = document.createElement('tr') 
+
+        tr.innerHTML = '<td>'+name+'</td>'+
+                        '<td>'+email+'</td>'+
+                        '<td>'+email+'</td>'+
+                        '<td><a href="javascript:;">delete</a></td>'
+
+        //哟先获取到元素，再添加单击相应事件
+        var a = tr.getElementsByTagName('a')[0]
+        a.onclick = delList                
+
+        var staffTable = document.getElementById('staffTable')
+
+        var tbody = staffTable.getElementsByTagName('tbody')[0]
+
+        //将tr和其他所有创建的节点都添加到tbody中
+        /* 
+            这种添加节点的方式不建议使用，会导致页面重构，元素中点击事件会失效
+            tbody.innerHTML = '' 
+         */
+        tbody.appendChild(tr)
+        /* tbody.innerHTML = '<tr>'+
+                            '<td>'+name+'</td>'+
+                            '<td>'+email+'</td>'+
+                            '<td>'+email+'</td>'+
+                            '<td><a href="javascript:;">delete</a></td>'+
+                          '</tr>' */
+    }
+</script>
+</body>
+</html>

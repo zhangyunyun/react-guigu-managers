@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>class操作</title>
+
+    <style>
+        *{margin:0; padding:0;}
+
+        #btn{
+            margin:10px;
+            width:100px;
+            height:30px;
+        }
+        #box{
+            width:100px;
+            height:100px;
+            margin:10px;
+        }
+        .b1{background:red;}
+        .b2{background:yellowgreen;}
+    </style>
+</head>
+<body>
+
+    <button id="btn">操作类</button>
+
+    <div id="box" class="b1 b2"></div>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  类(class)的操作  //////////////
+
+    //类(class)的操作
+    var btn = document.getElementById('btn')
+    var box = document.getElementById('box')
+    btn.onclick = function(){
+        //box.className = 'b2'
+
+        alert(hasClass(box, 'b2'))
+
+        //addClass(box, 'b2')
+
+        //removeClass(box, 'b2')
+
+        toggleClass(box,'b2')
+    }
+
+
+    /* 
+        1.定义一个函数，用来向一个元素中添加指定的class属性值 
+        
+          参数：obj 要添加class属性的元素
+                name 要添加的class值
+    */
+    function addClass(obj,name){
+        //判断元素是否含有指定的class名
+        if(!hasClass(obj,name)){
+            obj.className += " " + name
+        }
+    }
+
+
+
+    /* 
+        2.判断元素中是否包含指定的class名 
+          如果有name，则返回true，否则返回false
+    */
+    function hasClass(obj,name){
+        //判断obj中有没有name类名，这种方式不合适
+        //return obj.className == name  
+
+        //创建一个正则表达式 这种方式只能验证一个class名
+        //var reg = /\bb2\b/
+        //return reg.test(obj.className) 
+
+        //创建一个构造函数
+        var reg = new RegExp('\\b'+ name +'\\b')
+        return  reg.test(obj.className)
+    }
+
+
+    /* 
+        3.删除一个指定的class名
+    */
+    function removeClass(obj,name){
+        var reg = new RegExp('\\b'+ name +'\\b')
+        
+        //删除一个class
+        obj.className = obj.className.replace(reg, '')
+    }
+
+    /* 
+        4.切换class名
+           如果元素中没有该类，则添加
+           如果元素中具有该类，则删除
+    */
+    function toggleClass(obj,name){
+        if(hasClass(obj,name)){
+            //有则删除
+            removeClass(obj,name)
+        }else{
+            //没有则添加
+            addClass(obj,name)
+        }  
+    }
+</script>
+</body>
+</html>

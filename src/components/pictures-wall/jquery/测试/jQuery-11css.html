@@ -1,0 +1,55 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>css</title>
+    <style>
+        *{margin:0; padding:0;}
+        body{
+            padding:.25rem;
+        }
+    </style>
+</head>
+<body>
+    <p style="color: blue;">尚硅谷的后裔</p>
+    <p style="color: green;">太阳的后裔</p>
+    
+    <script>
+        //////////////////// css //////////////
+        /* 
+            一.css  
+                1)设置css样式
+
+                2)读取css值
+        */
+    </script>
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+        /*
+            需求:
+                1. 得到第一个p标签的颜色
+                2. 设置所有p标签的文本颜色为red
+                3. 设置第2个p的字体颜色(#ff0011),背景(blue),宽(300px), 高(30px)
+        */
+
+        $(function(){
+            //1. 得到第一个p标签的颜色
+            $('p:first').css('color')
+
+            //2. 设置所有p标签的文本颜色为red
+            $('p').css('color','#f00')
+
+            //3. 设置第2个p的字体颜色(#ff0011),背景(blue),宽(300px), 高(30px)
+            $('p:eq(1)').css({
+                'color':'#ff0011',
+                'background':'blue',
+                'width':'300px',
+                'height':'30px'
+            })
+        })
+
+    </script>
+</body>
+</html> 

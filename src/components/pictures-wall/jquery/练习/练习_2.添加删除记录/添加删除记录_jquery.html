@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>添加删除记录</title>
+    <style>
+      *{margin:0; padding:0;}
+      ul,li{
+         list-style:none;
+      }
+      body{
+         padding:10px;
+      }
+   
+      #listDiv{
+         width: 297px;
+      }
+      #employeeTable {
+         width: 100%;
+         border-spacing: 1px;
+         background-color: black;
+         margin: 40px auto 10px auto;
+      }
+
+      th,td {
+         background-color: white;
+         padding:5px;
+      }
+
+      #formDiv {
+         width: 275px;
+         border-style: solid;
+         border-width: 1px;
+         margin-top: 28px;
+         padding: 10px;
+      }
+
+      #formDiv input {
+         width: 100%;
+      }
+
+      .word {
+         width: 40px;
+         font-size: 12px;
+      }
+
+      .inp {
+         width: 200px;
+      }
+      #employeeTable, #employeeTable th, #employeeTable td{
+         border: 1px solid;
+         border-spacing: 0;
+         word-break: break-all;
+         font-size: 13px;
+      }
+    </style>
+</head>
+<body>
+   <h2>添加删除记录</h2>
+   <div id="listDiv">
+      <table id="employeeTable">
+         <thead>
+            <tr>
+               <th width="17%">Name</th>
+               <th width="48%">Email</th>
+               <th width="22%">Salary</th>
+               <th width="12%">&nbsp;</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr id="noList">
+               <td colspan="4" align="center">暂无数据</td>
+            </tr>  
+         </tbody>
+      </table>
+   </div>
+
+   <div id="formDiv">
+      <h4>添加新员工</h4>
+      <table>
+         <tbody>
+            <tr>
+               <td class="word">name:</td>
+               <td class="inp">
+                  <input type="text" name="empName" id="empName">
+               </td>
+            </tr>
+            <tr>
+               <td class="word">email:</td>
+               <td class="inp">
+                  <input type="text" name="email" id="email">
+               </td>
+            </tr>
+            <tr>
+               <td class="word">salary:</td>
+               <td class="inp">
+                  <input type="text" name="salary" id="salary">
+               </td>
+            </tr>
+            <tr>
+               <td colspan="2" align="center">
+                  <button id="addEmpButton" value="abc">Submit</button>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+    </div>
+
+
+   <script src="../../js/jquery-1.11.1.min.js"></script>
+   <script>
+      /* 
+         JSON.stringify 将js对象转为json数据
+
+         JSON.parse  将json数据转为js对象
+      */
+
+      //将数据保存到本地缓存
+      function set(key,val){
+         window.localStorage.setItem(key,JSON.stringify(val))
+      }
+
+      //获取本地缓存的数据
+      function get(key){
+         return JSON.parse(window.localStorage.getItem(key) || '[]')
+      }
+
+      //获取本地最新缓存的数据
+      var listData = get('list')
+
+      //判断数据不为空就渲染到页面中
+      if(listData.length == 0){
+        $('#noList').show()
+      }else{
+         var html = ''
+         for(var i=0; i<listData.length; i++){
+            html += '<tr>'
+            html += '<td>'+listData[i].name+'</td>'
+            html += '<td>'+listData[i].email+'</td>'
+            html += '<td>'+listData[i].salary+'</td>'
+            html += '<td><a href="javascript:;" class="del">Del</a></td>'
+            html += '</tr>'
+         }
+         $('#employeeTable tbody').append(html)
+         $('#noList').hide()
+      }
+      
+      //点击提交按钮,添加一条数据
+      $('#addEmpButton').click(function(){
+         var $name = $('#empName')
+         var $email = $('#email')
+         var $salary = $('#salary')
+
+         //收集最新的数据
+         var name = $name .val()
+         var email = $email.val()
+         var salary = $salary.val()
+
+         //收集最新的数据并分装成需要的数据格式
+         var dataCollect = {
+            name,
+            email,
+            salary
+         }
+
+         //一般这里发送请求获取最新的数据
+         
+         //将最新的数据追加到原数组中
+         listData.unshift(dataCollect)
+
+         //将最新的数据存储到本地缓存中
+         set('list',listData)
+
+         $name.val('')
+         $email.val('')
+         $salary.val('')
+
+         window.location.href = '添加删除记录_jquery.html'
+      }) 
+
+      //点击删除，删除一条数据
+      $('.del').each(function(){
+         $(this).click(function(){
+            var parents = $(this).parents('tr')
+            var index = parents.index() - 1
+            parents.remove()
+            listData.splice(index,1)
+            set('list',listData)
+         })
+      })
+   </script>
+</body>
+</html> 

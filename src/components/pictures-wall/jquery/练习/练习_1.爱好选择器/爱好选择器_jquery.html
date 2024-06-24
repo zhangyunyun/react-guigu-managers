@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>爱好选择器</title>
+    <style>
+        *{margin:0; padding:0;}
+        ul,li{
+           list-style:none;
+        }
+        body{
+           padding:10px;
+        }
+        .sideBox{
+           margin-top:20px;
+        }
+    </style>
+</head>
+<body>
+   <h2>你爱好的运动是？</h2>
+   <div class="sideBox">
+      <label><input type="checkbox" id="checkAllBox">全选/全不选</label>
+   </div>
+   <div class="sideBox">
+      <label><input type="checkbox" name="items">足球</label>
+      <label><input type="checkbox" name="items">篮球</label>
+      <label><input type="checkbox" name="items">羽毛球</label>
+      <label><input type="checkbox" name="items">乒乓球</label>
+   </div>
+   <div class="sideBox">
+      <button id="chooseAll">全选</button>
+      <button id="chooseAllNo">全不选</button>
+      <button id="chooseReverse">反选</button>
+      <button id="submit">提交</button>
+   </div>
+
+   <script src="../../js/jquery-1.11.1.min.js"></script>
+   <script>
+      $(function(){
+         var $items = $('input[name=items]')
+         var len = $items.length
+         var $checkAllBox = $('#checkAllBox')
+         
+         //全选
+         $('#chooseAll').click(function(){
+            $items.prop('checked',true)
+            $checkAllBox.prop('checked',true)
+         })
+
+         //全不选
+         $('#chooseAllNo').click(function(){
+            $items.prop('checked',false)
+            $checkAllBox.prop('checked',false)
+         })
+
+         //反选
+         $('#chooseReverse').click(function(){
+            $items.each(function(index,item){
+               // if(!item.checked){
+               //    $(this).prop('checked',!item.checked)
+               //    var curLen = $("input[name='items']:checked").length
+               //    if(len == curLen){
+               //       $checkAllBox.prop('checked',true)
+               //    }
+               // }else{
+               //    $(this).prop('checked',!item.checked)
+               //    $checkAllBox.prop('checked',false)
+               // }
+
+               console.log(this.checked)
+               this.checked = !this.checked
+            })
+            
+            console.log($items.filter(':not(:checked)').length)
+            $checkAllBox.prop('checked',$items.filter(':not(:checked)').length === 0)
+         })
+
+         //点击全选checkbox(全选/全不选)
+         $checkAllBox.click(function(){
+            // if(this.checked){
+            //    $items.prop('checked',true)
+            //    $checkAllBox.prop('checked',true)
+            // }else{
+            //    $items.prop('checked',false)
+            //    $checkAllBox.prop('checked',false) 
+            // }
+            $items.prop('checked',this.checked)
+         })
+
+         //点击每个选项是否选中
+         $items.each(function(index,item){
+            item.onclick = function(){
+               //如果有1个未选中，就不全选
+               var curLen = $("input[name='items']:checked").length
+               if(curLen == len){
+                  $checkAllBox.prop('checked',true)
+               }else{
+                  $checkAllBox.prop('checked',false)
+               }
+            }
+         })
+      })
+   </script>
+</body>
+</html> 

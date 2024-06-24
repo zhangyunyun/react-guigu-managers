@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>导航动态显示效果</title>
+    <style>
+         *{margin:0; padding:0;}
+         ul,li{
+            list-style:none;
+         }
+         a{
+            text-decoration: none;
+         }
+         body{
+            padding:10px;
+         }
+         #navigation {
+            width: 784px;
+            padding: 8px;
+            margin: 8px auto;
+            background: #3B5998;
+            height: 18px;
+         }
+
+         #navigation ul li {
+            float: left;
+            margin-right: 14px;
+            position: relative;
+            z-index: 100;
+         }
+
+         #navigation ul li a {
+            display: block;
+            padding: 0 8px;
+            background: #EEEEEE;
+            font-weight: 700;
+            font-size:14px;
+         }
+
+         #navigation ul li a:hover {
+            background: none;
+            color: #fff;
+         }
+
+         #navigation ul li ul {
+            background-color: #88C366;
+            position: absolute;
+            top:28px;
+            width: 100px;
+            overflow: hidden;
+            display: none;
+         }
+
+         #navigation ul li ul li {
+            border-bottom: 1px solid #BBB;
+            text-align: left;
+            width: 100%;
+            height:30px;
+            line-height:30px;
+         }
+    </style>
+</head>
+<body style="height:2000px">
+   <div id="navigation">
+      <ul>
+        <li><a href="#">首 页</a></li>
+        <li>
+          <a href="#">衬 衫</a>
+          <ul>
+            <li><a href="#">短袖衬衫</a></li>
+            <li><a href="#">长袖衬衫</a></li>
+            <li><a href="#">无袖衬衫</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">卫 衣</a>
+          <ul>
+            <li><a href="#">开襟卫衣</a></li>
+            <li><a href="#">套头卫衣</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">裤 子</a>
+          <ul>
+            <li><a href="#">休闲裤</a></li>
+            <li><a href="#">卡其裤</a></li>
+            <li><a href="#">牛仔裤</a></li>
+            <li><a href="#">短裤</a></li>
+          </ul>
+        </li>
+        <li><a href="#">联系我们</a></li>
+      </ul>
+   </div>    
+
+   <script src="../js/jquery-1.11.1.min.js"></script>
+   <script>
+      $(function(){ 
+         //jquery方法
+         // $('#navigation ul>li').hover(function(){
+         //    $(this).find('ul').show()
+         //    $(this).siblings().find('ul').hide()
+         // })
+
+         $("#navigation>ul>li:has(ul)").hover(function () {
+            $(this).children("ul").stop().slideDown(400)
+         }, function () {
+            $(this).children("ul").stop().slideUp("fast")
+         })
+      })
+   </script>
+</body>
+</html> 

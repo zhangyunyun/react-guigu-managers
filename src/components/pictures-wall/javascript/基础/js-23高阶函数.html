@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>高阶函数</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  高阶函数  //////////////
+
+    /* 
+        高阶函数  函数都指向变量，变量可以指向函数，函数的参数能接收变量，一个函数可以接收另一个函数作为参数
+        1)理解  接受函数类型的参数
+                返回值是函数
+
+        2)常见高阶函数
+            ①定时器：setTimeout()/setInterval()
+            ②Promise(() => {}) then(value => {//成功}, reason(){//失败}) 
+            ③数组遍历相关的方法
+                forEach()
+                map() & reduce()
+                        map()    //接收一个函数，并返回一个新的数组
+                        reduce() //作用在每一个元素上(不包括数组中被删除的元素或从未被赋值的元素)，并返回一个具体的结果
+                filter()  //和map类似，接受一个函数
+                find()
+                findIndex()
+
+                every()   //判断数组的所有元素是否满足测试条件
+                sort()
+            ④函数对象的方法：apply() call() bind()() 
+
+        3)作用
+            高阶函数更新动态，更具有扩展性  
+    */
+
+
+    /*
+        1.高阶函数
+    */
+    //例 简单的高阶函数
+    function fun1(x,y,f){
+        return f(x) + f(y)
+    }
+    var result1 = fun1(5, -6, Math.abs);  //Math.abs称作回调函数
+    console.log(result1);   //11
+
+    function add(x,y,fun){
+        return fun(x) * fun(y)
+    }
+    console.log(add(-5,6,Math.abs));  //30
+
+
+    /*
+        2.map() & reduce()
+           map(Fun)  //定义  是一个映射  调用一个指定的方法Fun(Fun为回调函数)，将原数组映射成新的数组
+                             作用在每一个元素上
+                             不会对空数组进行检测
+                             不会改变原始数组
+                     //语法  es5语法
+	                          arr.map(function(item,index){
+	                            console.log(item)   
+							  })
+							  es6语法
+							  arr.map((item,index) => {
+	                            console.log(item)   
+							  })
+							  
+     
+           reduce() //为数组的每个元素依次执行回调函数(不包括数组中被删除或从未被赋值的元素),返回一个具体的结果
+                    //语法  es5语法 
+	                        arr.reduce(callback,[initialValue])
+                            callback(执行数组中每个值的函数，包含四个参数)
+                                 (1)previousValue  第一项的值或者上一次叠加的结果值，或者是提供的初始值(initialValue)
+                                 (2)currentValue   数组中当前被处理的元素
+                                 (3)index  当前元素在数组中的索引
+                                 (4)array  数组本身
+                            initialValue 作为第一次调用callback的第一个参数，可以控制返回值的格式
+							
+							es6语法(pre是初始值，或者计算结束后的返回值,可以是数组、对象、数值)
+							arr.reduce((pre,index) => {
+								if(条件语句){
+									pre.push()
+								}
+								return pre
+							},[])
+    */
+    /* 
+        ///////////////////----map()
+    */
+    //例1 数组元素的平方值
+    function changePow(x){
+        return  x * x
+    }
+    var arrPow = [1,2,3,4,5,6,7,8,9];
+    //--用map求平方值
+    var resultPow = arrPow.map(changePow);
+    console.log(resultPow);  //[1, 4, 9, 16, 25, 36, 49, 64, 81]
+    //--用循环求平方值
+    var arrEmpty = [];
+    for(var i=0; i<arrPow.length; i++){
+        arrEmpty.push(changePow(arrPow[i]));
+    }
+    console.log(arrEmpty);  //[1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+    //例1 数组的所有数字转为字符串
+    var arrString = [1,2,3,4,5,6,7,8,9];
+    var resultString = arrString.map(String);
+    console.log(resultString); //["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
+    //例2 数组元素首字母大写,其他小写
+    var arrList = ["fresh","LISA","barT"];
+    function arrPower(x){
+        var arrListU = x.substr(0,1).toUpperCase();
+        var arrListL = x.substr(1).toLowerCase();
+        return arrListU + arrListL
+    }
+    console.log(arrList.map(arrPower));
+
+
+    //例3 将数组字符串元素转换成整数
+    var arrStr = ["1","2","3"];
+    function arrChangeNum(x){
+        return x * 1
+    }
+    console.log(arrStr); //["1","2","3"]
+    console.log(arrStr.map(arrChangeNum)); //[1, 2, 3]
+
+
+
+    /* 
+        ///////////////////----reduce()
+    */
+    //例1 数组的求和
+    var arrSum = [1,2,3,4,5];
+    function funSum(x,y){
+        return x + y
+    }
+    var resultSum = arrSum.reduce(funSum);
+    console.log(resultSum);  //15
+
+
+
+    /*
+     *3.every()  //判断数组的所有元素是否满足测试条件(每一项都必须满足)
+     *
+     * */
+    var arrEvery = ["apple","orange","pear"];
+    function every1(x){
+        return x.toLowerCase() === x
+    }
+    var resultEvery = arrEvery.every(find1);
+    console.log(resultEvery);  //true
+
+
+    /*
+     *4.filter  过滤
+     *
+     *     filter(Fun)  也接收一个函数  把传入的函数依次作用于每个元素，根据返回值是true还是false决定保留还是丢弃该元素
+     *                  默认把所有元素先转换为String再排序
+     *                  默认按ASCII排序
+     * */
+     //例1 在一个数组中，删除偶数，只保留奇数
+     var arrFilter = [1,2,3,4,5,6,7]
+     function funFilter(x){
+         return x%2 != 0;
+     }
+     var resultFilter = arrFilter.filter(funFilter);
+     console.log(resultFilter);
+
+
+    /*
+     *5.sort  排序算法
+     *
+     *
+     * */
+    //例1
+    var arrSort1 = [1,10,20,2];
+    function sort1(x,y){
+        if(x > y){
+           return 1;
+        }
+        if(x < y){
+           return -1
+        }
+        return 0
+    }
+    var resultSort = arrSort1.sort(sort1);
+    console.log(resultSort);
+
+    //例2
+    var arrSort2 = [123,11,"ac",10,"xs"];
+    function sort2(x,y){
+        if(isNaN(x) && !isNaN(y)){
+            return -1
+        }
+        if(!isNaN(x) && isNaN(y)){
+            return 1
+        }
+        if(x > y){
+            return 1
+        }
+        if(x < y){
+            return -1
+        }
+        return 0
+    }
+    var resultSort2 = arrSort2.sort(sort2);
+    console.log(resultSort2);
+
+
+
+</script>
+</body>
+</html>

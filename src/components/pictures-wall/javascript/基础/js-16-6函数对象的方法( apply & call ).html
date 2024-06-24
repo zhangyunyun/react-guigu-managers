@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>apply & call</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  apply & call  //////////////
+
+    /* 
+        //apply()和call()、bind()都是函数对象的方法，需要通过函数对象来调用
+                                 用来重定义this这个对象的
+        1.相同点
+            --当函数对象调用apply()和call()、bind()都会调用函数执行
+            --当调用apply()和call()、bind()可以将一个对象作为第一个参数
+                  这个对象将会成为函数执行时的this(即this就指向这个对象)
+                  这个this通常默认绑定为null
+
+        2.不同点  
+            --apply()方法可以将实参分装到一个数组中统一传递
+               例：apply(obj,['广州','上海'])
+            --call()方法可以将实参在对象之后依次传入
+               例：call(obj,'广州','上海') 
+            --bind()()方法可以将实参在对象之后依次传入，需加括号调用
+               例：bind(obj,'广州','上海')()
+
+        3.this情况
+           --以函数形式调用时，this永远都是window
+           --以方法的形式调用时，this是调用方法的对象(谁调用就指向谁) 
+           --以构造函数的形式调用时，this指向新创建的那个对象
+           --使用 apply() 和 call() 调用时，this是指定的那个对象(指定谁就指向谁)   
+    */
+
+    //----1).调用执行函数
+    function fun(){
+        console.log('我是fun函数')
+    }
+    
+    fun();       //输出  我是fun函数
+    fun.apply(); //输出  我是fun函数
+    fun.call();  //输出  我是fun函数
+
+
+    //----2).this指向  (我可以指向obj1, 也可以指向obj2)
+    var obj1 = {
+        name:'我是一个对象obj1'
+    }
+    var obj2 = {
+        name:'我是一个对象obj2'
+    }
+    function fun1(){
+        console.log(this)
+    }
+
+    fun1();  //undefined
+    fun1.apply(obj1);  //输出这个对象 obj{name: "我是一个对象obj1"}
+    fun1.call(obj1);  //输出这个对象 obj{name: "我是一个对象obj1"}
+   
+    fun1.apply(obj2);  //输出这个对象 obj{name: "我是一个对象obj2"}
+    fun1.call(obj2);  //输出这个对象 obj{name: "我是一个对象obj2"}
+    
+
+    //----3)实参传入的方式不同
+    var obj = {}
+    function fun3(a,b){
+        console.log(a)
+        console.log(b)
+        console.log(this)
+    }
+    fun3.apply(obj,[2,3])//输出2
+                         //输出3
+                         //输出 obj{}这个对象
+    fun3.call(obj,2,3)   //输出2
+                         //输出3
+                         //输出 obj{}这个对象 
+
+
+ 
+    /* 
+        1.apply(thisObj/null, [args]) 
+            它接收两个参数, 第一个参数是需要绑定的this变量,该参数将替代Function类里面的this对象
+                               thisObj是指定的对象(也就是this指向的对象，指定谁this就指向谁)
+                            第二个参数是Array表示函数本身的参数
+                               [args]是把参数打包成Array再传入
+    */
+
+ 
+
+    /* 
+        2.call(thisObj/null, arg1, arg2, arg3, arg4)
+            它接收多个参数, 第一个参数是需要绑定的this变量,该参数将替代Function类里面的this对象
+                                thisObj是指定的对象(也就是this指向的对象，指定谁this就指向谁)
+                            第一个以后的n个参数 
+                                arg1,arg2....是一个个的参数，把参数按顺序传入
+    */
+
+
+
+    /*
+        3.装饰器 apply(),可以动态改变函数的行为
+    */
+    var count = 0;
+    var oldParseInt = parseInt;  //保存原函数
+
+    window.parseInt = function(){
+        count += 1;
+        return oldParseInt.apply(null, arguments);  // 调用原函数
+    }
+    parseInt("10");
+    parseInt("20");
+    parseInt("30");
+    parseInt("40");
+    console.log("count被调用:" + count + "次");  //4
+
+</script>
+</body>
+</html>

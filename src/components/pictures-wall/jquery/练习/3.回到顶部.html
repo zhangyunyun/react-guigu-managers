@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>回到顶部</title>
+    <style>
+         *{margin:0; padding:0;}
+         ul,li{
+            list-style:none;
+         }
+         body{
+            padding:10px;
+         }
+         #to_top {
+            width: 50px;
+            height: 50px;
+            font: 14px/20px arial;
+            text-align: center;
+            background: #06c;
+            position: fixed;
+            cursor: pointer;
+            color: #fff;
+            right:10px;
+            top: 500px;
+            display: flex;
+            align-items: center;
+            justify-content:center;
+         }
+    </style>
+</head>
+<body style="height:2000px">
+   <div>
+      <p>阿斯顿发大水敖德萨所多阿斯顿发大水敖德萨所多阿斯顿发大水敖德萨所多阿斯顿发大水敖德萨所多阿斯顿发大水敖德萨所多阿斯顿发大水敖德萨所多阿斯顿发大水敖德萨所多阿斯顿发大水敖德萨所多阿斯顿发大水敖德萨所多阿斯顿发大水敖德萨所多阿斯顿发大水敖德萨所多</p>
+   </div>
+   <div id="to_top">返回<br>顶部</div>
+   <script src="../js/jquery-1.11.1.min.js"></script>
+   <script>
+      $(function(){ 
+         //js原生方法 
+         $('#to_top').click(function(){
+            //返回顶部后，清除动画
+            var $body = $('body')
+            var $html = $('html')
+            //总距离
+            var distance = $body.scrollTop() + $html.scrollTop()
+            //总时间 自定义
+            var time = 500
+            //间隔时间 自定义
+            var intervalTime = 50  //总距离的某一段滚动所需要花费的时间
+
+            //滚动总距离需要花费500时间，那花费50滚动多少距离(即总距离的某一段距离)
+            var distanceItem = (distance * 50) / time
+
+            console.log(distanceItem)
+
+            //使用循环定时器不断滚动
+            var timer = setInterval(() => {
+               //滚动的距离
+               distance = distance - distanceItem
+               console.log(distance)
+               if(distance <= 0){
+                  clearInterval(timer)
+               }
+               $('html,body').scrollTop(distance)
+            }, intervalTime); 
+         })
+                 
+
+         //jquery方法
+         // $(window).scroll(function(){
+         //    var scrolltop = $(window).scrollTop()
+         //    console.log(scrolltop);
+         //    if(scrolltop > 50){
+         //       $('#to_top').fadeIn()
+         //    }else{
+         //       $('#to_top').fadeOut()
+         //    }
+         // })
+         // $('#to_top').click(function(){
+         //    $('body,html').animate({
+         //       scrollTop:0
+         //    },600)
+         //    return false
+         // }) 
+      })
+   </script>
+</body>
+</html> 

@@ -1,0 +1,329 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>Date 日期</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  Date 日期  //////////////
+    /*
+        Date对象  表示日期和时间(时间总是按浏览器所在时区显示的)
+                    Date对象月份值从0开始，(牢记0=1月，1=2月，2=3月...11=12月)
+                    parse解析一个日期时间字符串
+                    setTime()以毫秒设置Date对象
+                    1秒(s) = 1000毫秒(ms)
+                    1分(min) = 60秒(s) = 60 * 1000毫秒(ms)
+                    1小时(hour) = 60分(min) = 60 * 60秒 = 60 * 60 * 1000毫秒
+      
+	    时区 既可以显示本地时间，也可以显示调整后的UTC时间
+			 toLocalString() 本地时间，显示的字符串与操作系统设定的格式有关
+			 toUTCString()   UTC时间，与本地时间相差8小时
+	  
+	    Date.now() && new Date().getTime()  		  
+			 Date.now()要快于new Date().getTime()可以从代码执行上来看
+			 
+			 console.time()
+			 for(let i=0; i<100000; i++){
+				let date = Date.now()
+				console.log(date)
+			 }
+			 console.timeEnd()    //default: 2.578125ms
+			 
+			 console.time()
+			 for(let i=0; i<100000; i++){
+				let date = new Date().getTime()
+				console.log(date)
+			 }
+			 console.timeEnd()    //default: 8.759033203125ms
+    */
+
+    /*
+        1.Date 对象  Date对象用于处理日期和时间
+    */
+    new Date(); //当前日期和时间
+    //new Date(milliseconds); //返回从1970年1月1日至今的毫秒数
+    //new Date(dateString)
+    //new Date(year,month,day,hours,minutes,seconds,milliseconds);
+
+
+    /*
+        2.Date 对象属性
+           --属性： constructor  返回对创建此对象的Date()函数引用
+                    prototype    向对象添加属性和方法
+    */
+
+
+    /*
+        3.Date 对象方法
+            --方法：
+                  (1)获取时间
+                     getFullYear() //从Date对象以4位数字返回年份
+                     getMonth()  //从Date对象返回月份(0-11)
+                                      0表示1月份
+                                      1表示2月份
+                                      ...
+                                      11表示12月份
+                     getDate() //从Date对象中返回一个月中的某一天(1-31号)
+                     getDay()  //从Date对象返回一周中的某一天(0-6)
+                                      0表示周日
+                                      1表示周一
+                                      ...  
+                                      6表示周六  
+                     getTime()  //获取当前日期对象的时间戳(毫秒数)
+                                  --时间戳，指的是从格林威给标准时间的1970年1月1日，0时0分0秒
+                                      到当前日期所花费的毫秒数(1秒 = 1000毫秒) 
+                                      var d = new Date('1/1/1970 0:0:0') 这个是北京时间。和格林时间相差8小时
+                                      d.getTime()  //-28800000
+                                  --计算机底层在保存时间时使用的都是时间戳
+                                     
+                     getHours()   //返回Date对象的小时(0-23)
+                     getMinutes() //返回Date对象的分钟(0-59)
+                     getSeconds() //返回Date对象的秒数(0-59)
+                     getMilliSeconds()//返回Date对象的毫秒(0-999)
+                  (2)设置时间
+                     setFullYear(year,month,day)//设置Date对象中的年份(四位数字)
+                                 //year  必须
+                                 //month 可选  表示月份的数值
+                                               -1为去年的最后一天
+                                               12为明年的第一个月
+                                               13为明年的第二个月
+                                 //day   可选  表示月中某一天的数值
+                                               同下面setDate(day)中的day
+                     setMonth(month,day)//设置Date对象中的月份(0-11)
+                              //month  必选 表示月份的数值(0-11)
+                                            0表示第一个月
+                                            11表示第12个月
+                                            -1表示上一年的最后一个月
+                                            12表示下一年的第一个月
+                                            13表示下一年的第二个月
+                              //day  可选 表示一个月中的某一天的数值(1-31)
+                                          0为上一个月的最后一天
+                                          -1为上一个月最后一天的前一天
+                                          如果当月有31天
+                                               32为下一个月的第一天
+                                          如果当月有30天
+                                               32为下一个月的第二天
+                     setDate(day)//设置Date对象中月的某一天(1-31)
+                             //day 必须 表示一个月中的一天的一个数值(1-31)
+                                       0为上一个月的最后一天
+                                        -1为上一个月最后一天之前的一天
+                                        如果当月有31天
+                                            32为下个月的第一天
+                                        如果当月有30天
+                                            32为下一个月的第二天
+                     setHours(hour,min,sec,millisec)//设置Date对象中的小时(0-23)
+                              //hour 必须 表示小时的数值(0-23)
+                                          -1为昨天的最后一小时
+                                          24为明天的第一小时y
+                              //min 可选 表示分钟的数值(0-59)
+                                         -1为上一小时的最后一分钟
+                                         60为下一小时的第一分钟
+                              //sec 可选 表示秒的数值(0-59)
+                                         -1为上一分钟的最后一秒
+                                         60为下一分钟的第一秒钟
+                              //millisec 可选 表示毫秒的数值
+                                              -1为上一秒钟的最后一毫秒
+                                              100为下一秒钟的第一毫秒
+                     setMinutes(min,sec,millisec)//设置Date对象中的分钟(0-59)
+                                //min 必选 表示分钟的数值(0-59)
+                                           -1表示上一小时的最后一分钟
+                                           60表示下一小时的第一分钟
+                                //sec 可选 表示秒钟的数值
+                                           -1表示上一分钟的最后一秒
+                                           60表示下一分钟的第一秒
+                                //millisec 可选 表示毫秒的数值
+                                                -1表示上一秒钟的最后一毫秒
+                                                1000表示下一秒钟的第一毫秒
+                     setSeconds(sec,millisec)//设置Date对象中的秒钟(0-59)
+                                //sec 必选  表示秒钟的数值(0-59)
+                                            -1表示上一分钟的最后一秒钟
+                                            60表示下一分钟的第一秒钟
+                                //millisec 可选 表示毫秒的数值(0-999)
+                                               -1表示上一秒钟的最后一毫秒
+                                                1000表示下一秒钟的第一毫秒
+                     setMilliseconds(millisec)//设置Date对象中的毫秒数(0-999)
+                                     //millisec 必选
+                                                -1表示上一秒钟的最后一毫秒
+                                                1000表示下一秒钟的第一毫秒
+                                                1001表示下一秒钟的第二毫秒
+                   (3)其他时间方法
+                     parse()    //返回1970年1月1日午夜到指定日期(字符串)的毫秒数
+                     getTime()  //返回1970年1月1日至今的毫秒数
+                     setTime(millisec)  //以毫秒设置Date对象
+                             //millisec 必选
+                     getTimezoneOffset()  //返回本地时间与格林威治时间(GMT)的分钟差
+     
+                     getUtcFullYear() //根据世界时从Date对象返回4位数的年份
+                     getUtcMonth()   //根据世界时从Date对象返回月份(0-11)
+                     getUTCDate()    //根据世界时从Date对象返回月中的某一天(1-31)
+                     getUTCDay()     //根据世界时从Date对象返回一周中的某一天(0-6)
+                     getUTCHours()      //根据世界时返回Date对象的小时(0-23)
+                     getUTCMinutes()    //根据世界时返回Date对象的分钟(0-59)
+                     getUTCSeconds()    //根据世界时返回Date对象的秒钟(0-59)
+                     getUTCMilliseconds()    //根据世界时返回Date对象的毫秒(0-999)
+     
+                    (4)转换
+                      toLocaleTimeString()  //根据本地时间格式，把Date对象的时间部分转换为字符串
+    */
+	
+	
+    //创建一个Date对象
+    var d = new Date();
+
+    //获取当前时间
+    console.log(d.getFullYear());  //2021
+    console.log(d.getMonth());   //0
+    console.log(d.getDate());    //28
+    console.log(d.getDay());     //4 表示周4
+    console.log(d.getMilliseconds());  //484 每一秒一变
+
+    //获取当前时间的时间戳
+    console.log(d.getTime());  //1578277025234
+    console.log(new Date('1/1/1970 0:0:0').getTime()) //-28800000
+    console.log(d.getTimezoneOffset());  //-480
+
+    //设置时间
+    //---------setFullYear(year,month,day)设置一个月中的某一天
+    //d.setFullYear(2020,10,3);
+    //console.log(d);  //Tue Nov 03 2020 11:05:29 GMT+0800 (中国标准时间)
+
+    //---------setDate(day)设置一个月中的某一天
+    d.setDate(16)
+    console.log(d); //Thu Jan 16 2020 11:11:12 GMT+0800 (中国标准时间)
+
+    d.setDate(0);
+    console.log(d)  //Tue Dec 31 2019 11:08:56 GMT+0800 (中国标准时间)
+    d.setDate(-1);
+    console.log(d)  //Fri Nov 29 2019 11:08:56 GMT+0800 (中国标准时间)
+    
+	//----示例1 获取当前时间
+    var date = new Date();
+    console.log(date.getFullYear());  //获取年份  2018年
+    console.log(date.getMonth() + 1);  //获取月份  5月 (0=1月份，1=2月份，2=3月份，3=4月份...11=12月份)
+    console.log(date.getDate());  //获取日  22日
+    console.log(date.getDay());  //天  星期二
+    console.log(date.getHours());  //时  17时
+    console.log(date.getMinutes()); //分  34分
+    console.log(date.getSeconds())  //秒  0秒
+    console.log(date.getMilliseconds())  //毫秒数  297毫秒(不定)
+    console.log(date.getTime());  //时间戳 1526981929968 以number形式表示的时间戳
+
+    timerGo(2018,4,23);
+    function timerGo(year, month, day){
+        var yearTxt = $(".yearTxt"),
+                monthTxt = $(".monthTxt"),
+                dayTxt = $(".dayTxt"),
+                ddTxt =  $(".ddTxt"),
+                hhTxt =  $(".hhTxt"),
+                mmTxt =  $(".mmTxt"),
+                ssTxt =  $(".ssTxt")
+
+        var nowDate = new Date();  //当前时间
+        var endDate = new Date(year, month, day);  //结束时间
+        var leftTime = endDate.getTime() - nowDate.getTime(); //结束时间与当前时间的时间戳相减
+        var dd, hh, mm, ss, timerTxt;
+        if(leftTime > 0){
+            dd = parseInt(leftTime/1000/60/60/24,10) //天
+            hh = parseInt(leftTime/1000/60/60%24,10) //时
+            mm = parseInt(leftTime/1000/60%60,10) //分
+            ss = parseInt(leftTime/1000%60,10) //秒
+            dd = timerCheck(dd);
+            hh = timerCheck(hh);
+            mm = timerCheck(mm);
+            ss = timerCheck(ss);
+            yearTxt.text(year);
+            monthTxt.text(month);
+            dayTxt.text(day);
+            ddTxt.text(dd);
+            hhTxt.text(hh);
+            mmTxt.text(mm);
+            ssTxt.text(ss);
+        }
+    }
+    function timerCheck(i){
+        if(i < 10){
+            i = "0" + i;
+        }
+        return i;
+    }
+    setInterval(function(){timerGo(2018,4,23)},1000);
+	
+	//----示例2 测试时间
+    var myDate = new Date();
+    var month = myDate.getMonth(); //获取月份
+    var day = myDate.getDate()  //获取日
+    console.log(month +","+day);
+    if(month === 4 && day === 22){
+        alert("去哦预订了晚餐，晚上6点餐厅见哦");
+    }
+
+    
+	/*
+        4.Date获取时间戳
+		    --方法：var dd = new Date()
+			        第一种 dd.valueOf()
+					第二种 dd.getTime()
+					第三种 Date.parse(dd) 不推荐，进度差一些
+
+            1)将时间戳转成日期格式
+                //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+                var date = new Date(timestamp * 1000); 
+
+            2)将日期格式转成时间戳        
+                
+    */
+    //----1)将获取的当前的时间戳转成日期时间格式
+    //if(Date.now()){
+        //老版本IE没有now()方法
+        console.log(Date.now()); //1675821617345
+    //}else{
+		//其他浏览器支持getTime()
+		var dd = new Date()
+        var timestamp = dd.getTime()
+        console.log(dd.getTime()) //1675821617345
+		//console.log(dd.valueOf()) //1675821617345
+		//console.log(Date.parse(dd)) //1675821610000
+    //}
+    console.log(toTime(timestamp))
+
+    function toTime(timestamp){
+        var date = new Date(timestamp)
+        var year = date.getFullYear()
+        var month = date.getMonth() + 1
+        var day = setTime(date.getDate())
+
+        var h = setTime(date.getHours())
+        var m = setTime(date.getMinutes())
+        var s = setTime(date.getSeconds())
+
+        return year +'-'+ month +'-'+ day +' '+ h +':'+ m +':'+ s
+    }
+
+    function setTime(i){
+        if(i < 10){
+            i = "0" + i
+        }
+        return i
+    }
+    
+
+    //----2)将日期格式转成时间戳
+    var time = new Date('2023-2-08 10:50:20')
+    var tamp1 = time.getTime()
+    var tamp2 = date.valueOf()
+    var tamp3 = Date.parse(time)
+    console.log(tamp1)
+    console.log(tamp2)
+    console.log(tamp3)
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>错误处理</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  错误处理  //////////////
+
+    //错误语句
+    //try{}         语句测试代码块的错误，一般把可能会出错的代码放到这里
+    //catch(err){}  在try语句块执行出错时执行 catch 语句块, 参数err中记录着try里面代码的错误信息
+    //finally{}     无论有无异常里面代码都会执行
+    //              catch(e){} 和 finally{}至少存在一个或两个同时存在
+    //throw        抛出 (生成) 错误
+    try{
+        //运行代码段
+        //此语句从第一行开始执行，如果遇到错误（抛出异常），该代码块就会结束执行
+    }
+    catch(e){
+        //处理错误
+        //如果try语句块遇到错误（抛出异常），此语句块就会得到执行
+    }
+    finally{
+        //无论try中代码是否有异常抛出，此代码块中始终会被执行
+    }
+
+    //例1 捕捉异常
+    function tryCatch(){
+        try{
+            alert("这里是被捕捉的语句哦!");     //正确语句执行这段代码
+            //addlert("这里是被捕捉的语句哦!");  //错误的语句
+        }
+        catch(err){
+            alert(err.message);   //错误的语句执行这段代码
+        }
+    }
+    tryCatch();
+
+    //例2 抛出异常
+    function tryThrow(){
+        try{
+            var tryInp = $("#tryInp").val();
+            //console.log(tryInp);
+            if(tryInp == ""){
+                throw "tryInp is null";
+            }
+            if(tryInp > 10){
+                throw "tryInp is high"
+            }
+            if(tryInp < 5){
+                throw "tryInp is low"
+            }
+        }catch(err){
+            alert(err);
+        }
+    }
+
+
+</script>
+</body>
+</html>

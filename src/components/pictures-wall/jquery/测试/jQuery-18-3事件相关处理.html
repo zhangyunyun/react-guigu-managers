@@ -1,0 +1,91 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>事件绑定&解绑</title>
+    <style>
+        *{margin:0; padding:0;}
+        body{
+            padding: .25rem;
+            margin: 0;
+        }
+        .out {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 20px;
+            left: 10px;
+            background: blue;
+        }
+
+        .inner {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 50px;
+            background: red;
+        }
+
+        .divBtn {
+            position: absolute;
+            top: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="out">
+        外部DIV
+        <div class="inner">内部div</div>
+    </div>
+    
+    <div class='divBtn'>
+        <a href="http://www.baidu.com" id="test4">百度一下</a>
+    </div>
+
+    <script>
+        //////////////////// 事件相关处理 //////////////
+        /* 
+            一.事件相关处理
+                1.事件相关处理
+                    e.stopPropagation() 停止事件冒泡     
+                    e.preventDefault()  阻止事件默认行为   
+        */
+    </script>
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+        /*
+           需求:  
+                1. 点击.inner区域, 外部点击监听不响应
+                2. 点击链接, 如果当前时间是偶数不跳转  
+        */
+
+        $(function(){
+            //1. 点击.inner区域, 外部点击监听不响应
+            $('.out').on('click',function(e){
+                alert(1111)
+            })
+            $('.inner').click(function(event){
+                //阻止事件冒泡,
+                //如果不阻止，就会弹出上面父元素点击事件的弹框111
+                //如果阻止，以后就不会弹出上面父元素点击事件的弹框
+                event.stopPropagation()
+                //alert('停止事件冒泡')
+            })
+
+            //2.点击链接, 如果当前时间是偶数不跳转
+            $('#test4').click(function(e){
+                var times = new Date().getTime()  //Date.now(event)
+                console.log(times)
+                console.log(times%2)
+                if(times%2 === 0){ 
+                    //阻止事件默认行为
+                    e.preventDefault()
+                    alert('阻止事件默认行为')
+                }
+            })
+        })
+    </script>
+</body>
+</html> 

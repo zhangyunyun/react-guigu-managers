@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>this用法</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    //'use strict';
+    ////////////////////  this  //////////////
+
+   /* this  函数运行时自动生成的一个内部对象，只能在函数内部使用
+            
+            --解析器在调用函数每次都会向函数内部传递进一个隐含的参数，
+              这个隐含的参数就是this，this指向的是一个对象
+              这个对象我们称为函数执行的上下文对象
+
+            --随着函数的调用方式的不同，this的值会发生变化(指向不同的对象)，他永远指向调用函数的那个对象
+                1.单独使用this，this指向全局(Global)对象window
+                2.严格模式下单独使用this，this指向全局(Global)对象
+    
+                1.方法中的this，this指向调用它所在方法的对象
+                
+                1.函数中的this，this永远指向的是window
+                2.函数中的this(严格模式)，this是undefined
+
+                3.事件中的this，指向接受事件的HTML元素
+
+            注：保存this的变量常用: that
+                                   _this
+                                   self 
+    */ 
+
+
+
+    /* 
+        1.作为对象方法的调用 作为某个对象的方法调用，this就指向这个上级对象
+    */
+    //例1：
+    var obj3 = {
+        name:"孙悟空",
+        sayName:test
+    };
+    var obj4 = {
+        name:"猪八戒",
+        sayName:test
+    };
+    
+    function test(){
+        console.log(this.name)  //"孙悟空"
+        console.log('this指向：' + this)  //this指的是obj3这个对象      
+    }
+
+    //console.log(obj3.sayName() == test())  //true
+
+    //----以方法的形式调用，this指的是obj3这个对象
+    //obj3.sayName();   //[object object]  输出'孙悟空'
+    //obj4.sayName();   //[object object]  输出'猪八戒' 
+
+    //----以函数的形式调用，this指向的是window对象
+    test();   //this指向[object Window]
+
+
+    /* 
+        2.纯粹的函数调用  属于全局性调用，this就指向全局对象window
+    */
+    //例1：
+    function test1(){
+        console.log(this);  //window
+    }
+    test1();
+
+    var x = 1;
+    function test2(){
+        console.log(this.x);  //1 全局对象x
+    }
+    test2();
+
+    var x = 1;
+    function test3(){
+        this.x = 0;
+        console.log(this.x);  //0
+    }
+    test3();
+
+    var person = {
+        firstName:'John',
+        lastName:'Doe',
+        id:56,
+        fullName:function(){
+            console.log('this指向' + this) //this指向[object,object]
+            //return this.firstName + "-" + this.lastName;
+        }
+    }
+    console.log(person.fullName()); //undefined
+
+    "use strict";
+    var x = this;
+    console.log(x);  //window
+
+
+    /*
+        3.作为构造函数调用
+          如果不用this.name,就会指向同一个对象
+    */
+    var name ="全局"
+    function test4(){
+        console.log(this.name)
+    }
+    var obj4 = {
+        name:'孙悟空',
+        fun:test4
+    }
+    var obj44 = {
+        name:'猪八戒',
+        fun:test4
+    }
+    obj4.fun()  //孙悟空
+    obj44.fun() //猪八戒 
+
+
+    function test5(){
+        this.count = 5
+    }
+    var result = new test5()
+    console.log(result.count)  //5
+
+
+    /*4.apply调用   apply()是函数对象的一个方法，作用是改变函数的调用对象
+    *               第一个参数表示改变后的调用这个函数的对象
+    *               this就指向这第一个参数
+    *               注：详解看js-12this用法
+    *
+    * */
+    var x = 0;
+    function test6(){
+        console.log(this.x); //0
+    }
+    var obj6 = {};
+    obj6.x = 1;
+    obj6.m = test6;
+    obj6.m.apply();
+
+
+</script>
+</body>
+</html>

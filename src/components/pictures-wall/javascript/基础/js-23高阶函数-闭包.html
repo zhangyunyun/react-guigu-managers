@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>闭包</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  闭包  //////////////
+
+
+    //函数作为返回值   高阶函数除了可以接受函数作为参数外，还可以把函数作为结果值返回
+    /*
+        闭包    如果不立即求和，不返回求和的结果，而是返回求和的函数称之为闭包
+                外部函数lazy_sum()中的内部函数sum()可以引用外部函数lazy_sum()中的参数和局部变量，
+                外部函数lazy_sum()返回内部函数sum()时，相关参数和变量都保存在返回的函数sum()中。
+                调用lazy_sum()时，每次都会返回一个新的函数，即使传入相同的参数
+                返回函数不要引用任何循环变量，或者后续会发生变化的变量
+                在对象内部分装一个私有变量，可以用private修饰一个成员变量
+                还可以把多参数的函数变成单参数的函数
+
+                当内部函数被保存到外部时将会生成闭包。
+                闭包会导致原有作用域链不释放，造成内存泄露
+                返回闭包时牢记的一点就是：1、返回函数不要引用任何循环变量，或者后续会发生变化的变量。
+                闭包只需要理解两个点：1、在函数内部定义函数，2、函数不调用不执行
+
+        作用    1.实现共有变量
+                2.可以做缓存(存储结构)
+                3.可以实现分装，属性私有化
+                4.模块化开发，防止污染全局变量
+    */  
+   
+
+    /*
+      1.函数作为返回值
+    */
+    //例：函数作为返回值，实现对Array的求和
+    function sum(arr){
+        return arr.reduce(function(x, y){
+            return x + y;
+        });
+    }
+    var result = sum([1, 3, 5, 7, 9]);
+    console.log(result);  //25
+
+    /*
+     *2.闭包   外部函数lazy_sum()中的内部函数sum()可以引用外部函数lazy_sum()中的参数和局部变量，
+     *         外部函数lazy_sum()返回内部函数sum()时，相关参数和变量都保存在返回的函数sum()中。
+     *         调用lazy_sum()时，每次都会返回一个新的函数，即使传入相同的参数，f1 和 f2调用时互不影响
+     *         返回函数不要引用任何循环变量，或者后续会发生变化的变量，如需引用，再创建一个函数，用该函数的参数绑定循环变量当前的值
+     * */
+    //例：如果不立即求和，不返回求和的结果，而是返回求和的函数
+
+
+
+    //闭包应用场景
+    function count(){
+        var arr = [];
+        for(var i=1; i<=3; i++){
+            arr.push(
+                //匿名函数自调用
+                (function(n){
+                    return function(){
+                        return n * n
+                    }
+                })(i)
+            )
+        }
+        return arr;
+    }
+    var results = count();
+
+    console.log(results)
+
+    for(var j=0; j<results.length; j++){
+        console.log(results[j]());  //输出1 4 9
+    }
+
+    //////////////////////王子与公主 诠释闭包
+    function princess(){   //一位公主，她生活在一个充满奇幻冒险的世界里
+        var adventures = [];
+
+        function princeCharming(){}  //她遇见了她的白马王子，
+
+        var djs = {}   //独角兽     //带着他骑着独角兽开始周游这个世界，
+        var ll = []    //龙         //与巨龙战斗，巧遇会说话的动物，还有其他一些新奇的事物。
+        var ss = "Hello"  //松鼠
+
+        adventures.push(djs,ll,ss);
+        console.log(adventures);  //[{...},array(0),"Hello"]
+
+        return {  //但是她不得不回到她的王国里，面对那些年老的大臣。
+            story:function(){
+                //她会经常给那些大臣们分享她作为公主最近在外面充满奇幻的冒险经历。
+                return adventures[adventures.length - 1];
+            }
+        };
+    }
+    //但是在大臣们的眼里，总是认为她只是个小女孩
+    var litterGirl = princess();
+    //讲的是一些不切实际，充满想象的故事
+    litterGirl.story
+    //即便所有大臣们知道他们眼前的小女孩是真的公主，但是他们却不会相信有巨龙或独角兽，因为他们自己从来没有见到过。大臣们只会觉得它们只存在于小女孩的想象之中。
+    //但是我们却知道小女孩述说的是事实.......
+
+</script>
+<div class="box0" style="background:#f00; width:20px; height:20px;"></div>
+<div class="box1" style="background:#3fb7ff; width:20px; height:20px;"></div>
+<div class="box2" style="background:#2bf357; width:20px; height:20px;"></div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>jQuery基本选择器</title>
+    <style>
+        *{margin:0; padding:0;}
+        div{
+            display:inline-block;
+            width:100px;
+            height:100px;
+            margin:10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box" id="div1">div1(class="box")</div>
+    <div class="box">div2(class="box")</div>
+    <div>div3</div>
+    <div>div4</div>
+    <span></span>
+    <span></span>
+
+    <script>
+        //////////////////// jQuery基本选择器 //////////////
+        /* 
+            一.jQuery基本选择器
+                1.选择器是什么?
+                    有特定格式的字符串
+                2.作用
+                    用来查找特定页面元素
+                3.基本选择器
+                    #id: id选择器 
+                    element: 元素选择器
+                    .class: 属性选择器 
+                    *: (通配符)任意标签  
+                    selector1,selector2,selectorN: 取多个选择器的并集(组合选择器) 
+                    selector1selector2selectorN: 取多个选择器的交集(相交选择器)       
+        */
+    </script>
+
+    <script src="./js/jquery-1.11.1.min.js"></script>
+    <script>
+        /*
+            需求:
+                1. 选择id为div1的元素
+                2. 选择所有的div元素
+                3. 选择所有class属性为box的元素
+                4. 选择所有的div和span元素
+                5. 选择所有class属性为box的div元素
+        */
+        $(function(){
+            //选择id为div1的元素
+            $('#div1').css({'background':'#ff0000'})
+            
+            //选择所有class属性为box的元素
+            $('.box').css({'background':'#1222f9'})
+            
+            //选择所有的div元素
+            $('div').css({'background':'#30d503'})
+
+            //选择所有的div和span元素
+            $('div,span').css({'background':'#30d503'})
+
+            //选择所有class属性为box的div元素
+            $('div.box').css({'background':'#30d503'})
+        })
+    </script>
+</body>
+</html> 

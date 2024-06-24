@@ -1,0 +1,392 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>操作DOM</title>
+
+    <style>
+        *{margin:0; padding:0;}
+
+        .imgBox{width:250px;/* height:150px; */margin:20px auto;text-align:center;padding: 10px 10px 10px;background:#f60;}
+        .imgBox p{font-size:12px; color:#fff;}
+        .imgBox img{display: block; width:100%; height:100%; margin-top:10px;}
+        .imgBox button{margin-top:5px;}
+        
+    </style>
+</head>
+<body>
+    <div class="testBox">
+        <ul id="cityList">
+            <li>北京</li>
+            <li>上海</li>
+            <li>广州</li>
+        </ul>
+
+        <ul id="likeList">
+            <li>足球</li>
+            <li>篮球</li>
+            <li>乒乓球</li>
+        </ul>
+        <div id="checkList">
+            <input class="checkGender" type="radio" name="gender" value="男">
+            <input class="checkGender" type="radio" name="gender" value="女">
+        </div>
+
+        <button id="btn02">查找所有li元素</button>
+        <button id="btn03">查找name为gender元素的值</button>
+    </div>
+
+    
+
+    <div id="list">
+        <div id="ref"></div>
+        <div id="hask"></div>
+    </div>
+
+    <ul id="testList">
+        <li>测试1</li>
+        <li>测试2</li>
+        <li>测试3</li>
+    </ul>
+
+    <ul id="testList1">
+        <li>Swift</li>
+        <li>ANSI C</li>
+        <li>DirectX</li>
+        <li>Other</li>
+    </ul>
+
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  操作DOM  //////////////
+
+    //操作DOM对象  DOM是一个树形结构
+    //             DOM是宿主对象
+    /* 
+        全称：Document Object Model 文档对象模型
+
+        通过js来操作网页     
+    */
+    /* 
+        --文档 文档表示的就是整个的HTML网页文档
+        --对象 对象表示将网页中的每一个部分都转换为了一个对象
+        --模型 使用模型来表示对象之间的关系，这样方便我们获取对象 
+                    文档
+                      ↓
+                     Html
+                head      body
+                  ↓        ↓
+                title      a
+                  ↓        ↓
+               文本节点  文本节点  
+
+        --节点 节点Node，是构成我们网页的最基本的组成部分，
+                        网页中的每一个部分都可以称为是一个节点
+                
+                        (1)文档节点：整个HTML文档
+                        (2)元素节点：HTML文档中HTML标签
+                        (3)属性节点：元素的属性
+                        (4)文本节点：HTML标签中的文本内容
+
+                        元素节点      文本节点
+                         ↑               ↑
+                        <p id="pId">this is a pargraph</p>
+                              ↓          
+                          属性节点  
+
+
+                        节点的类型不同，属性和方法也都不尽相同
+                            获取
+                            更新
+                            遍历
+                            添加
+                            删除
+
+                节点属性              nodeName    nodeType    nodeValue
+                          文档节点    #document      9          null
+                          元素节点     标签名        1          null
+                          属性节点     属性名        2         属性值
+                          文本节点     #text         3        文本内容
+                        
+    
+    */
+
+
+    /////////////////操作DOM对象  节点
+    /* 
+        节点：Node——构成HTML文档最基本的单元
+        类型：文档节点 指整个HTML文档
+              元素节点 指HTML文档中的HTML标签
+              属性节点 指元素的属性
+              文本节点 HTML标签中的文本内容
+    */
+
+
+    /*
+        1.获取节点
+            1)dom查询
+                //-------------1)获取元素节点
+                △通过document对象调用
+                document.getElementById() 
+                    //通过(id属性)获取一个元素节点对象
+
+                
+                document.getElementsByTagName()
+                    //通过(标签名)获取一组元素节点对象
+                    //返回的是一个类数组对象，将所有查询到的元素都分装到对象中
+                    //如果是一个值，也是分装到对象中
+
+                
+                document.getElementsByName()
+                    //通过(name属性)获取一组元素节点对象
+                    //需要读取元素节点属性使用 
+                        元素.属性名
+                            inps[i].id
+                            inps[i].value
+                            inps[i].type
+                    //需要读取class属性不使用
+                        元素.class名   
+                            inps[i].className
+
+
+                //-------------2)获取元素节点的子节点(包括文本，空白文本)
+                △通过具体的元素节点调用
+                getElementsByTagName()
+                --方法 返回当前节点的指定标签名后代节点
+                
+                childNodes(不建议使用)
+                --属性 表示当前节点的所有子节点(包括文本、空白文本)
+                        IE8以下呃浏览器中，不会将空白当成子节点
+                children(建议使用)
+                --属性 表示当前节点的所有子元素(不会包括空白文本)
+
+
+                childNodes[0] 表示当前节点的第一个子节点
+                firstChild
+                --属性  表示当前节点的第一个子节点(会包括空白文本)
+                firstElementChild 表示当前节点的第一个子元素(会包括空白文本)
+                                支持IE8以上浏览器，不建议使用
+                                IE8以下浏览器中(不会包括空白文本)
+
+                lastChild
+                -属性 表示当前节点的最后一个子节点         
+
+
+                //-------------3)获取父节点和兄弟节点  
+                △通过具体的节点调用
+                parentNode
+                    --属性 表示当前节点的父节点
+
+                previousSibling
+                    --属性 表示当前节点的前一个兄弟节点(包含空白文本)
+                        (会包括空白文本)
+                previousElementSibling获取前一个兄弟元素
+                                    不支持IE8以下浏览器，不建议使用
+                                    IE8以下(不会包括空白文本)           
+
+                nextSibling
+                    --属性 表示当前节点的后一个兄弟节点 
+
+            2)dom查询的其他方法  
+                //-------------1)获取body标签       
+    */
+    function myClass(idStr,fun){
+        var btn = document.getElementById(idStr);
+        btn.onclick = fun;
+    }
+
+    myClass("btn02",function(){
+        var lisP = document.getElementById('cityList')
+        var lis = lisP.getElementsByTagName('li')
+
+        console.log(lis.length)
+        console.log(typeof lis)
+
+        //遍历类数组对象
+        for(var i=0; i<lis.length; i++){
+            console.log(lis[i].innerHTML)
+        }
+    })
+
+    myClass("btn03",function(){
+        var inps = document.getElementsByName('gender')
+
+        console.log(inps.length)
+        console.log(typeof inps)
+
+        //遍历类数组对象
+        for(var i=0; i<inps.length; i++){
+            //console.log(inps[i].id)
+            //console.log(inps[i].type)
+            console.log(inps[i].value)
+            console.log(inps[i].className)
+        }
+    })
+
+
+    /* 
+        2.创建节点
+            //创建一个节点对象
+            document.createElement('div') 
+
+            //创建文本节点
+            document.createTextNode('文本')
+    */
+    //创建节点
+    var div = document.createElement('div')
+
+    //创建文本节点
+    var gzText = document.createTextNode('文本内容')
+
+    
+
+    /*
+        4.增加(插入)节点
+            //天加子节点
+            appendChild()  把子节点添加到父节点的最后一个位置
+                           语法：父节点.appendChild(新节点）
+
+            //插入节点    
+            insertBefore() 在指定的节点(指父节点)之前插入新的节点
+                           有时需要循环一个父节点的所有子节点，通过迭代children属性实现
+                           语法：父节点.insertBefore(新节点，旧节点)
+
+            //替换子节点
+            replaceChild()  
+                    语法：父节点.replaceChild(新节点，旧节点)              
+    */
+    
+
+    //示例  对于一个已有的HTML结构，按字符串顺序重新排序DOM节点
+    var elem = document.getElementById("testList");
+    var i;
+    var arr = [];
+    //将元素存放到数组中
+    for(i=0; i<elem.children.length; i++){
+        console.log(elem.children[i].innerText);
+        arr.push(elem.children[i].innerText);
+    }
+    console.log(arr);
+
+    //对数组元素排序
+    arr.sort(function(x, y){
+        if(x > y){
+            return 1;
+        }
+        if(x < y){
+            return -1;
+        }
+        return 0;
+    });
+
+    elem.innerHTML = '';
+    for(var txt in arr){
+        elem.append(arr[txt]);
+    }
+
+
+    /*
+        5.删除节点
+            removeChild()
+                        语法:父节点.removeChild(子节点)
+
+                             子节点.parentNode.removeChild(子节点)
+    */
+     //例：把与Web开发技术不相关的节点删掉
+        var elem = document.getElementById("testList1");
+        var eChild = elem.children;
+        var eArr = [];
+        for(var i=0; i<eChild.length; i++){
+             if(eChild[i].innerText === "Swift" || eChild[i].innerText === "ANSI C" || eChild[i].innerText === "DirectX"){
+                 eArr.push(eChild[i]);
+             }
+        }
+        for(var x in eArr){
+            //console.log(eArr[x]);
+            elem.removeChild(eArr[x]);
+        }
+
+    
+    /*
+        3.修改(更新)节点
+             innerHTML  //返回元素的文本(含标签)
+                        //对于自结束标签(如：input)，这个属性没有意义
+             innerText  //返回元素的文本内容(不含标签)
+             textContent  //返回所有文本(IE9不支持)
+    */    
+
+
+
+
+    /* 
+        6.dom查询的其他方法
+            1)获取body
+               //---------方式一
+               var body = document.getElementsByTagName('body')[0]
+
+               //---------方式二
+               在document找那个有一个属性body,它保存的是body的引用
+               body = document.body
+
+            2)获取html
+              var html = document.documentElement
+
+            3)获取页面中所有元素
+              //---------方式一 
+              var all = document.all
+
+              //---------方式二 
+              all = document.getElementsByTagName("*") 
+
+            4)根据元素的class属性值查询一组元素节点对象 
+              //---------方式一 
+              document.getElementsByClassName('类名')  
+              --该方法不支持IE8及以下
+
+
+            //---------方式二
+            document.querySelector('.类名')  //只返回第一个
+            document.querySelectorAll('.类名')  //返回的是一个类数组对象，将所有查询到的元素都分装到对象中,需要遍历
+
+     */
+     //获取body标签方式1
+     var body = document.getElementsByTagName('body')[0]
+
+    //获取body标签方式2
+    body = document.body
+
+    //获取html
+    var html = document.documentElement
+
+    //获取页面中所有元素方式1    
+    var all = document.all
+    console.log(all)    //undefined
+    console.log(all.length)   //30
+    for(var i=0; i<all.length; i++){
+        console.log(all[i])
+    }
+
+    //获取页面中所有元素方式2
+    all = document.getElementsByTagName('*')
+
+    //获取页面中指定的所有元素
+    var divs = document.getElementsByTagName('div')
+
+    //根据元素的class属性值查询一组元素节点对象
+    var box = document.getElementsByClassName('box')
+    console.log(box.length)  //3
+
+    //获取class为box的所有元素
+    var box = document.querySelector('.box')
+    var box = document.querySelectorAll('.box')
+
+</script>
+</body>
+</html>

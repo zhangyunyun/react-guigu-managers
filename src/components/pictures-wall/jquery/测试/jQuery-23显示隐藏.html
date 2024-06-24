@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui" />
+  <title>显示隐藏</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      padding: 0.25rem;
+      margin: 0;
+    }
+    .div1 {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      top: 50px;
+      left: 10px;
+      background: red;
+    }
+  </style>
+</head>
+<body>
+    <button id="btn1">显示</button>
+    <button id="btn2">隐藏</button>
+    <button id="btn3">切换显示/隐藏</button>
+    
+    <div class="div1">显示隐藏</div>  
+
+    <script>
+      //////////////////// 显示隐藏 //////////////
+      /* 
+        一.显示隐藏
+            显示隐藏，默认没有动画
+            1. show(): (不)带动画的显示
+            2. hide(): (不)带动画的隐藏
+            3. toggle(): (不)带动画的切换显示/隐藏
+      */
+    </script>
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+      /*
+        需求:  
+            
+      */
+
+      $(function () {
+        //显示
+        $('#btn1').click(function(){
+          //立即显示
+          // $('.div1').show()
+
+          //慢慢显示
+          $('.div1').show(1000)
+        })
+
+        //隐藏
+        $('#btn2').click(function(){
+          //立即隐藏
+          // $('.div1').hide()
+
+          //慢慢隐藏
+          $('.div1').hide(1000)
+        })
+
+        //切换显示/隐藏
+        $('#btn3').click(function(){
+          $('.div1').toggle(1000)
+        })
+      });
+    </script>
+</body>
+</html>

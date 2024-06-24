@@ -1,0 +1,321 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>数组</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    ////////////////////  数组  //////////////
+
+
+    /* 
+        1.数组的遍历  就是将数组中所有的元素都取出来
+		   1)indexOf() 
+			    定义：遍历数组,返回元素在数组中第一次出现的下标
+				语法：(searchvalue,start)
+				
+        2)for, for in都可以迭代数组
+            for 语句需要配合length属性和数组下标来实现，执行效率没有 for/in 语句高
+            for/in 语句会跳过空元素
+
+		3)forEach(fun)遍历数组获取每一个元素，需要一个函数作为参数
+		   
+
+		4)map() & reduce() 遍历数组，返回一个新数组，数组由参数里的返回值组成，必须使用return  
+
+
+		5)filter() 遍历数组，返回一个新数组，新数组由
+		
+	
+        6)find()查找	
+		
+		
+		7)some() 遍历数组，返回参数函数里面符合条件的元素，只要检测到有一个元素符合条件就return
+		
+		
+		8)使用 keys 遍历对象键名
+			keys() 是Object的静态函数，专门用来遍历对象获取键名
+			Object.keys(obj) 函数的参数是一个对象，返回一个数组，元素是该对象所以本地属性名。
+						  如果使用该函数迭代数组，可以汇集数组的所有元素下标值
+			
+              			
+    */
+	
+	//--------1.indexOf()
+	let arrIn = [ 'a', 'b', 'c', 'a' ]
+	console.log(arrIn.indexOf( 'a',1)) //3
+
+
+    //--------2.for循环遍历
+    var arr = ["唐僧","孙悟空","猪八戒","沙和尚",'蜘蛛精']
+
+    for(var i=0; i<arr.length; i++){
+        console.log(arr[i])
+    }
+
+    /* 
+        1.练习1
+    */
+    function Person(name,age){
+        this.name = name;
+        this.age = age;
+    }
+
+    //修改Person原型的toString
+    Person.prototype.toString = function(){
+        return "Person[name="+this.name+",age="+this.age+"]"
+    }
+
+    var per = new Person('孙悟空',18)
+    var per2 = new Person('猪八戒',8)
+    var per3 = new Person('沙和尚',18)
+    var per4 = new Person('蜘蛛精',28)
+
+    var perArr = [per,per2,per3,per4]
+
+
+
+    /* 
+        练习2 创建一个函数，可以将perArr中满18岁的Person提取出来
+              然后分装到一个新的数组中并返回
+    */  
+    function getAdult(arr){
+        //创建一个新的数组
+        var newArr = [];
+
+        //遍历arr,获取arr中Person对象
+        for(var i=0; i<arr.length; i++){
+            var result = arr[i]
+            console.log(result)
+
+            //判断Person对象的age是否大于等于18
+            if(result.age >= 18){
+
+               //如果大于等于18，将这个对象天骄到newArr中
+                newArr.push(result)
+            }
+        }
+        console.log(newArr)
+
+        //将新的数组返回
+        return newArr
+    }
+    getAdult(perArr)
+
+
+    
+    //--------3.forEach()遍历
+    /* 
+        像这种函数，由我们创建但是不由我们调用的，我们称之为回调函数
+        数组中有几个元素函数就会执行几次
+        浏览器会在回调函数中传递三个参数
+            第一个参数value，就是当前遍历的元素就是值
+            第二个参数index，就是前遍历的元素的索引
+            第三个参数obj，就是当前正在遍历的数组
+
+        这个方法只支持IE8以上浏览器
+            IE8及以下的浏览器不支持该方法，
+            所以如果需要兼容IE8，
+               则不要使用forEach
+               使用for循环
+
+    */
+    arr = ["唐僧","孙悟空","猪八戒","沙和尚",'蜘蛛精']
+
+    arr.forEach(function(value,index,obj){
+        console.log(index+'-------'+value)
+    })
+
+	
+	//--------4.map & reduce遍历
+	/*
+	    map()
+			//定义  是一个映射  调用一个指定的方法Fun(Fun为回调函数)，将原数组映射成新的数组
+					作用在每一个元素上
+					不会对空数组进行检测
+					不会改变原始数组
+			//语法  es5语法
+						arr.map(function(item,index){
+							console.log(item)
+						})
+				    es6语法	
+						arr.map(item => {
+							console.log(item)
+						})	
+	*/
+	//将一个方法作用在数组的每一个元素上
+	function pow(x){
+		return x * x
+	}
+	arr = ['1','2','3','4','5','6','7','8','9']
+	let result = arr.map(pow) //输出[1, 4, 9, 16, 25, 36, 49, 64, 81]
+	console.log(result)
+	console.log(typeof result[0])  //输出 number
+	
+	//循环遍历数组
+	arr.map((item,index) => {
+		console.log(index +'--------'+ item)
+	})
+	
+	//将数组中的元素转为字符串
+	arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+	result = arr.map(String)
+	console.log(result)
+	console.log(typeof result[0]) //输出 string
+
+	//参数为一个函数,函数的形参1代表数组元素
+	let arrMap = [ 'a', 'b', 'c', 'a' ]
+	let res1 = arrMap.map(function(item){
+		return item == 'a'
+	})
+	console.log('---------11111------')
+	console.log(res1)
+
+	let res2 = arrMap.map(function(item, index){ 
+		return item.index 
+	});
+	console.log('---------22222------')
+	console.log(res2)  //[0,1,2,3]
+	
+	
+	/*
+	    reduce()
+		    //为数组的每个元素依次执行回调函数(不包括数组中被删除或从未被赋值的元素),返回一个具体的结果
+			//语法  es5语法
+						arr.reduce(callback,[initialValue])
+						callback(执行数组中每个值的函数，包含四个参数)
+							(1)previousValue  第一项的值或者上一次叠加的结果值，或者是提供的初始值(initialValue)
+							(2)currentValue   数组中当前被处理的元素
+							(3)index  当前元素在数组中的索引
+							(4)array  数组本身
+						initialValue 作为第一次调用callback的第一个参数，可以控制返回值的格式
+					
+					es6语法(pre是初始值，或者计算结束后的返回值,可以是数组、对象、数值)
+						arr.reduce((pre,index) => {
+							if(条件语句){
+								pre.push()
+							}
+							return pre
+						},[])
+
+	*/
+	//数组的求和
+	var arr = [1,2,3,4,5]
+	function add(x,y){
+		return x+y
+	}
+	var resultReduce = arr.reduce(add)
+	console.log(resultReduce)  //输出15
+	
+	
+	//数组去重
+	//es5
+	//var colors = ["red","red","green","blue"]
+	//var resultColor = colors.reduce(function(pre,color){
+	//	if(pre.indexOf(color) !== -1){
+	//		return pre
+	//	}else{
+	//		return [...pre,color]
+	//	}
+	//},[])
+	//console.log(resultColor) //输出 ['red', 'green', 'blue']
+	
+	//es6
+	var colors = ["red","red","green","blue"]
+	var resultColor = colors.reduce((pre,color) => {
+		return pre.indexOf(color) !== -1 ? pre : [...pre,color]
+	},[])
+	console.log(resultColor) //输出 ['red', 'green', 'blue']
+	
+	//数取出数组中最大值
+	const ages = [21,98,34,48,31,36,31,34]
+	const maxAge = ages.reduce((max,age)=>(
+		max>age?max:age
+	),0)
+	console.log(maxAge)
+	
+	//将数组转化为对象
+	const users = [
+		{id:1,title:'第一个名字',age:12}, 
+		{id:2,title:'第二个名字',age:19}, 
+		{id:3,title:'第三个名字',age:89}
+	]
+	const objS = users.reduce((user,{id,title,age})=>{
+		user[id] = {title,age}
+		return user
+	},{})
+	console.log(objS)
+	
+	
+	//--------5.filter()
+	data(){
+		retrun{
+			labelName:'',
+			tableData:[],
+			tableData1:[]
+		}
+	}
+	querySearch(){
+		this.tableData1 = []
+		if(!this.labelName){
+			this.tableData1 = this.tableData
+		}else{
+			let result = thia.tableData.filter(x => {
+			  console.log(x)
+			  if(x.labelName && x.labelName.indexOf(this.labelName) != 0){
+				return x
+			  }
+			})
+			this.tableData1 = result 
+		}
+	}
+	
+	
+	//--------6.find()	
+	data(){
+	   return{
+			messageDetail:{}
+	   }
+	}
+	
+	async mounted(){
+	    //setTimeout模拟数据(或者axios请求真实数据)
+		setTimeout(() => {
+			const allMessageDatasList = [
+				{id:1,title:'test1'，content:'this is life1'},
+				{id:2,title:'test2'，content:'this is life2'},
+				{id:3,title:'test3'，content:'this is life3'}
+			]
+		})
+		this.allMessageDatas = allMessageDatasList
+		const id = this.$route.params.id * 1 //接收路由传递过来的参数
+		this.messageDetail = this.allMessageDatas.find(item => item.id == id
+			//{
+				//if(item.id == id){
+				//retrun item
+				//}
+			//}
+		)
+	}	
+	
+	//--------7.some()
+	
+	
+	//--------8.Object.keys(obj)遍历
+    var o = {a:'A',b:'B',c:'C'}
+    console.log(Object.keys(o)) //['a','b','c']
+
+    var a = ["A", "B", "C"]
+    console.log(Object.keys(a)) //['0','1','2']
+	
+</script> 
+</body>
+</html>

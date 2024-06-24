@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>垃圾回收</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  垃圾回收  //////////////
+
+   
+    //垃圾回收 (GC) 
+    /* 
+        程序运行过程中也会产生垃圾，就像生活时间长了产生的垃圾一样
+            这些垃圾积攒过多以后，导致程序运行速度过慢
+            需要一个垃圾回收的机制，来处理程序运行过程中产生的垃圾
+        当一个对象没有任何的变量或属性对他进行引用，此时我们就无法操作该对象
+            此时，这种对象就是一个垃圾，这种对象过多会占用大量的内存空间,导致程序运行变慢
+            所以这种垃圾必须进行清理
+        在JS中拥有自动的垃圾回收机制，会自动将这些垃圾对象从内存中销毁
+            我们不需要也不能进行垃圾回收的操作 
+
+        我们要做的只是要将不再使用的对象设置为null即可       
+    */
+
+    /* 
+        var obj = new Object()
+
+        栈内存              堆内存
+          ↓                   ↓
+        obj   0x123         0x123 
+
+        
+        obj = null 
+
+        栈内存              堆内存
+          ↓      断开了链接    ↓
+        obj   null    →     0x123  (这里就产生了垃圾对象)
+    */
+
+    var obj = new Object()
+
+    obj = null
+
+</script>
+</body>
+</html>

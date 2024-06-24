@@ -1,0 +1,800 @@
+{
+	"info": {
+		"_postman_id": "1e477c4e-0d87-4334-8b2b-cf4df28c4ced",
+		"name": "谷粒后台-react项目",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "01_用户登录",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/login?username=admin&password=admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02_添加用户",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "admin6",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin6",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "13712341234",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "test@qq.com",
+							"type": "text"
+						},
+						{
+							"key": "role_id",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/user/add?username=admin&password=admin&phone=13712341234&email=test@qq.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"user",
+						"add"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "admin"
+						},
+						{
+							"key": "phone",
+							"value": "13712341234"
+						},
+						{
+							"key": "email",
+							"value": "test@qq.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03_更新用户",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "_id",
+							"value": "5c3b382c82a14446f4ffb647",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "admin6",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "13712341234",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "test@qq.com",
+							"type": "text"
+						},
+						{
+							"key": "role_id",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/user/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"user",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04_获取所有用户列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/manage/user/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"user",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "05_删除用户",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "userId",
+							"value": "admin6",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/user/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"user",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "06_获取一级或某个二级分类列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/category/list?parentId=610b9406c0f2710a741e42bb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"category",
+						"list"
+					],
+					"query": [
+						{
+							"key": "parentId",
+							"value": "610b9406c0f2710a741e42bb"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "07_添加分类",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "parentId",
+							"value": "610b9406c0f2710a741e42bb",
+							"type": "text"
+						},
+						{
+							"key": "categoryName",
+							"value": "分类1-009",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/category/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"category",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "08_更新品类名称",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "categoryId",
+							"value": "610b94bbc0f2710a741e42be",
+							"type": "text"
+						},
+						{
+							"key": "categoryName",
+							"value": "分类4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/category/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"category",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "09_根据分类ID获取分类",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/manage/category/info?categoryId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"category",
+						"info"
+					],
+					"query": [
+						{
+							"key": "categoryId",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10_获取商品分页列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/manage/product/list?pageNum=1&pageSize=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"product",
+						"list"
+					],
+					"query": [
+						{
+							"key": "pageNum",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11_根据ID/Name搜索产品分页列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/manage/product/search?pageNum=1&pageSize=5&productName=T",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"product",
+						"search"
+					],
+					"query": [
+						{
+							"key": "pageNum",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "5"
+						},
+						{
+							"key": "productName",
+							"value": "T"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12_添加商品",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "categoryId",
+							"value": "6110e1789987cd30107ba02f",
+							"type": "text"
+						},
+						{
+							"key": "pCategoryId",
+							"value": "610b9406c0f2710a741e42bb",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "商品E",
+							"type": "text"
+						},
+						{
+							"key": "desc",
+							"value": "一台式电脑",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "3500",
+							"type": "text"
+						},
+						{
+							"key": "detail",
+							"value": "IOS11",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/product/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"product",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13_更新商品",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "_id",
+							"value": "611a37ce40759c27f0c1a08b",
+							"type": "text"
+						},
+						{
+							"key": "categoryId",
+							"value": "6110e1789987cd30107ba02f",
+							"type": "text"
+						},
+						{
+							"key": "pCategoryId",
+							"value": "610b9406c0f2710a741e42bb",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "商品A",
+							"type": "text"
+						},
+						{
+							"key": "desc",
+							"value": "一个笔记本",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "4500",
+							"type": "text"
+						},
+						{
+							"key": "detail",
+							"value": "ThinkPad SE500",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/product/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"product",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14_对商品进行上架/下架处理",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "productId",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/product/updateStatus",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"product",
+						"updateStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "15_上传图片",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "image",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/img/upload",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"img",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "16_删除图片",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/img/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"img",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "17_添加角色",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "roleName",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/role/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"role",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "18_获取角色列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/manage/role/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"role",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "19_更新角色(给角色设置权限)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "_id",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "menus",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "auth_time",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "auth_name",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/manage/role/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"manage",
+						"role",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "20_获取天气信息(支持jsonp)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wthrcdn.etouch.cn/weather_mini?city=兰州",
+					"protocol": "http",
+					"host": [
+						"wthrcdn",
+						"etouch",
+						"cn"
+					],
+					"path": [
+						"weather_mini"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "兰州"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test_天气测试",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api.map.baidu.com/telematics/v3/weather?location=兰州&output=json&ak=3p49MVra6urFRGOT9s8UBWr2",
+					"protocol": "http",
+					"host": [
+						"api",
+						"map",
+						"baidu",
+						"com"
+					],
+					"path": [
+						"telematics",
+						"v3",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "location",
+							"value": "兰州"
+						},
+						{
+							"key": "output",
+							"value": "json"
+						},
+						{
+							"key": "ak",
+							"value": "3p49MVra6urFRGOT9s8UBWr2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

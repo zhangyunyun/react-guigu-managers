@@ -1,0 +1,111 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>jQuery核心对象</title>
+    <style>
+        *{margin:0; padding:0;}
+        .sideBox{
+            padding:.25rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sideBox">
+        <button id="btn1">测试1</button>
+        <button id="btn2">测试2</button>
+        <button id="btn3">测试3</button>
+        <button id="btn4">测试4</button>
+    </div>
+
+    <script>
+        //////////////////// jQuery核心对象 //////////////
+        /* 
+            一.jQuery核心对象
+                1.理解 即执行jQuery核心函数返回的对象
+                       jQuery对象内部包含的是dom元素对象的伪数组(可能只有一个元素)
+                       jQuery对象拥有很多有用的属性和方法，让程序员能方便的操作DOM
+
+                2. .属性/方法
+                    1)基本行为  
+                       size()/length
+                       [index]/get(index) 得到对应位置的DOM元素  
+                       each()
+                       index()
+                    2)属性
+                        操作内部标签的属性或值
+                    3)css
+                        操作标签的样式
+                    4)文档
+                        对标签进行增删改操作
+                    5)帅选
+                        根据指定的规则过滤内部的标签
+                    6)事件
+                        处理事件监听相关
+                    7)效果 
+                        实现一些动画效果 
+                             
+        */
+    </script>
+
+    <script src="./js/jquery-1.11.1.min.js"></script>
+    <script>
+        /*
+            需求:
+            需求1. 统计一共有多少个按钮
+            需求2. 取出第2个button的文本
+            需求3. 输出所有button标签的文本
+            需求4. 输出'测试三'按钮是所有按钮中的第几个
+        */
+        //需求1. 统计一共有多少个按钮
+        var $btns = $('button') //包含dom元素的伪数组,是jQuery对象
+        console.log($btns.size(), $btns.length)
+
+        //需求2. 取出第2个button的文本
+        console.log($btns[1].innerHTML, $btns.get(1).innerHTML) //$btns[1] 是dom元素
+
+        //需求3. 输出所有button标签的文本
+        $btns.each(function(index, item){
+            //console.log(index,item.innerHTML, this) //item 为dom元素
+            console.log(this.innerHTML)
+        })
+
+        //需求4. 输出'测试3'按钮是所有按钮中的第几个
+        console.log($('#btn3')) //包含dom元素的伪数组,是jQuery对象
+        console.log($('#btn3').index())
+
+
+        /* 
+            需求:
+                自定义一个伪数组
+                Object对象
+                   1)属性
+                      length属性
+                      数值下标属性
+                   2)没有数组的属性 
+                      没有数组特别的方法 forEach() push() pop() splice()
+        */
+        console.log($btns instanceof Object)  //true
+        console.log($btns instanceof Array)   //false
+        
+        var weiArr = {}
+        weiArr.length = 0
+        weiArr[0] = 'atguigu' 
+        weiArr.length = 1
+        weiArr[1] = 1
+        weiArr.length = 2
+        weiArr[2] = 2
+        weiArr.length = 3
+
+        console.log(weiArr)
+        for(var i=0; i<weiArr.length; i++){
+            var obj = weiArr[i]
+            console.log(i,obj)
+        }
+
+        console.log(weiArr.forEach,$btns.forEach)  //undefined undefined
+    </script>
+</body>
+</html> 

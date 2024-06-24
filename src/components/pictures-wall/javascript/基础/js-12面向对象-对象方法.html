@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>方法</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  面向对象  //////////////
+
+    //对象方法   在一个对象中绑定函数，称为这个对象的方法
+    //重构方法
+    //枚举   枚举对象中的属性
+
+    
+    /*
+     *1.对象方法
+     *
+     * */
+    var xiaoming1 = {
+        firstName:"小明",
+        lastName:"李",
+        birthDay:1991,
+        age:function(){
+            var y = new Date().getFullYear();
+            var o = y - this.birthDay;
+            return o;
+        }
+    }
+    console.log(xiaoming1.age());  //25
+
+
+    function getAgeOld2(){
+        var y = new Date().getFullYear();
+        var o = y - this.birthDay;
+        return o;
+    }
+    var xiaoming2 = {
+        firstName:"小明2",
+        lastName:"李",
+        birthDay:1992,
+        age:getAgeOld2
+    }
+    console.log(xiaoming2.age()); //25
+    //console.log(getAgeOld2()); //Cannot read property 'birthDay' of undefined
+
+
+    /*
+     *2.重构方法
+     *
+     * */
+     var xiaoming3 = {
+         firstName:"小明3",
+         lastName:"李",
+         birthDay:1993,
+         age:function(){
+             var that = this; //重构报错后添加这一行，在方法内部一开始就捕获this
+             function getAgeOld3(){//重构方法
+                 var y = new Date().getFullYear();
+                 var o = y - that.birthDay;//用that而不是this
+                 return o;
+             }
+             return getAgeOld3();
+         },
+		 stua:['youxi1', 'youxi2', 'youxi3', 'youxi4']
+     }
+     console.log(xiaoming3.age()); //25
+
+    
+    /* 
+      3.枚举   枚举对象中的属性
+               不确定对象中的属性和属性值时需要用到枚举
+                1)----枚举出 属性名     
+                    语法: for(var 变量 in 对象){
+                                语句...
+                            }
+                          var result = 对象[变量]  
+
+                1)----枚举出 属性名、值
+                    语法：对象[变量]     
+    */
+    for (var x in xiaoming3){
+
+        //枚举出属性名
+        //console.log("枚举出属性名：" + x);
+
+        //枚举出属性值
+        //console.log("枚举出属性值：" + xiaoming3[x]);
+		
+		console.log(x + ':' + xiaoming3[x])
+    }
+
+</script>
+</body>
+</html>

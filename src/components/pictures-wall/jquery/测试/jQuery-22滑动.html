@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui" />
+  <title>滑动</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      padding: 0.25rem;
+      margin: 0;
+    }
+    .div1 {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      top: 50px;
+      left: 10px;
+      background: red;
+    }
+  </style>
+</head>
+<body>
+    <button id="btn1">慢慢收缩</button>
+    <button id="btn2">慢慢展开</button>
+    <button id="btn3">收缩/展开切换</button>
+    
+    <div class="div1">滑动效果</div>  
+
+    <script>
+      //////////////////// 滑动 //////////////
+      /* 
+        一.滑动
+               滑动动画
+                1. slideDown():  带动画的展开
+                2. slideUp():    带动画的收缩
+                3. slideToggle():带动画的切换展开/收缩
+      */
+    </script>
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+      /*
+        需求:  
+            1. 点击btn1, 向上滑动
+            2. 点击btn3, 向下滑动
+            3. 点击btn3, 向上/向下切换
+      */
+
+      $(function () {
+        $('#btn1').click(function(){
+          $('.div1').slideUp()
+        })
+
+        $('#btn2').click(function(){
+          $('.div1').slideDown()
+        })
+
+        $('#btn3').click(function(){
+          $('.div1').slideToggle()
+        })
+      });
+    </script>
+</body>
+</html>

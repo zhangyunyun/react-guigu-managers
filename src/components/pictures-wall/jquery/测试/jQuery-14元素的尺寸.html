@@ -1,0 +1,66 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>元素的尺寸</title>
+    <style>
+        *{margin:0; padding:0;}
+        body{
+            padding: .25rem;
+            margin: 0;
+        }
+        .myBox{
+            padding:10px;
+            margin:10px;
+            border:4px solid #f00;
+        }
+    </style>
+</head>
+<body>
+    <div class="myBox">div</div>
+    <script>
+        //////////////////// 元素的尺寸 //////////////
+        /* 
+            一.元素的尺寸
+                1)内容尺寸
+                    width()
+                    height()
+
+                2)内部尺寸
+                    innerWidth()  width + padding
+                    innerHeight() height + padding    
+                
+                3)外部尺寸
+                    outerWidth(false/true)  width + padding + border (如果是true + margin) 
+                    outerHeight(false/true) height + padding + border (如果是true + margin)
+        */
+    </script>
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+        /*
+           需求:
+               1.获取div元素内容尺寸 
+               2.获取div元素内部尺寸 
+               3.获取div元素外部尺寸 
+        */
+
+        $(function(){
+           var $div = $('.myBox')
+
+           //内容尺寸
+           console.log($div.width())
+           console.log($div.height())
+
+           //内部尺寸
+           console.log($div.innerWidth())
+           console.log($div.innerHeight())
+
+           //外部尺寸
+           console.log($div.outerWidth())
+           console.log($div.outerHeight())
+        })
+    </script>
+</body>
+</html> 

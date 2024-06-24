@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui" />
+  <title>淡入淡出</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      padding: 0.25rem;
+      margin: 0;
+    }
+    .div1 {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      top: 50px;
+      left: 10px;
+      background: red;
+    }
+  </style>
+</head>
+<body>
+    <button id="btn1">慢慢淡出</button>
+    <button id="btn2">慢慢淡入</button>
+    <button id="btn3">淡出/淡入切换</button>
+
+    <div class="div1">淡入淡出效果</div>
+
+    <script>
+      //////////////////// 淡入淡出 //////////////
+      /* 
+          一.淡入淡出
+            淡入淡出: 不断改变元素的透明度来实现的
+            1. fadeIn(): 带动画的显示
+            2. fadeOut(): 带动画隐藏
+            3. fadeToggle(): 带动画切换显示/隐藏
+        */
+    </script>
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+      /*
+        需求:  
+          1. 点击btn1, 慢慢淡出
+            * 无参
+            * 有参
+              * 字符串参数
+              * 数字参数
+          2. 点击btn2, 慢慢淡入
+          3. 点击btn3, 淡出/淡入切换，动画结束时提示“动画结束了” 
+      */
+
+      $(function () {
+        //点击btn1, 慢慢淡出
+        $('#btn1').click(function(){
+          $('.div1').fadeOut()
+        })
+
+        //点击btn2, 慢慢淡入
+        $('#btn2').click(function(){
+          $('.div1').fadeIn()
+        })
+
+        //3.点击btn3, 淡出/淡入切换，动画结束时提示“动画结束了”
+        $('#btn3').click(function(){
+          $('.div1').fadeToggle(function(){
+            alert('动画结束了哦~')
+          })
+        })
+      });
+    </script>
+</body>
+</html>

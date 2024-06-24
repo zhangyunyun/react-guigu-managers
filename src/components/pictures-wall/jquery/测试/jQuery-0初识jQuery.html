@@ -1,0 +1,76 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>初识jQuery</title>
+
+    <style>
+       *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script>
+   ////////////////////  初识jQuery //////////////
+   ///////////////////什么是jQuery
+   /* 
+      1.what?
+         http://jquery.com/
+         一个优秀的JS函数库
+         分装了很多函数
+            DOM 主要分装
+            BOM
+         使用了jQuery的网站超过90%
+         中大型WEB项目开发首选
+         Write Less, Do More!!!
+
+      2.why?
+         HTML元素选取(选择器)
+         HTML元素操作
+         CSS操作
+         HTML事件处理
+         JS动画效果
+         链式调用
+         读写合一
+         浏览器兼容(IE8以上)
+         易扩展插件
+         ajax封装
+
+      3.how?
+         1. 引入jQuery库
+
+         2. 使用jQuery
+            jQuery核心函数(是指 $/jQuery)
+            jQuery核心对象(是执行 $()返回的对象)
+
+            $和$()的区别
+               $ 就是jQuery 是一个Function对象
+               $() 就是jQuery() 是调用这个function,得到的是jQuery.prototype.init的一个实例
+
+         3.区别2种js库库文件
+            开发版(测试版) jquery-1.11.1.js
+            生产版(压缩版) jquery-1.11.1.min.js
+         
+         4.区别2种引用js库的方式
+            服务器本地库(js库下载到本地文件引入)
+               开发测试时使用
+               加重了服务器负担, 上线时一般不使用这种方式
+            CDN远程库(必须有网)
+               项目上线时, 一般使用比较靠谱的CDN(boot CDN)资源库
+               减轻服务器负担
+         5. 区别jQuery的不同版本
+            1.x
+               兼容老版本IE
+               文件更大
+            2.x
+               部分IE8及以下不支持
+               文件小, 执行效率更高
+            3.x  
+               完全不再支持IE8及以下版本
+               提供了一些新的API
+               提供不包含ajax/动画API的版本  
+   */
+</script>
+</body>
+</html>

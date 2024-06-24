@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>数组</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    ////////////////////  数组  //////////////
+
+    /* 
+        内建对象
+        宿主对象
+        自定义对象
+    */ 
+    /* 
+       数组
+            数组也是一个对象
+            相同：和普通对象功能类似，也是用来存储一些值的
+            不同：普通对象是使用字符串作为属性名的
+                  数组使用数字来作为索引操作元素
+            索引：
+                  从0开始的整数就是索引
+
+            优势： 数组的存储性能比普通对象更好，在开发中我们经常使用数组来存储一些数据      
+                  
+            检测：检测一个对象是否是数组
+                  areguments instanceof Array
+                  Array.isArray(arguments)  //false 
+
+        普通对象
+           栈内存                  堆内存
+             ↓                       ↓
+           属性名  属性值 
+
+           obj     ox123  
+           b       456          ox123   age=18
+           a       123                  name='swk'
+ 
+        数组  
+          索引      值
+          
+          3        '值4' 
+          2        '值3'
+          1        '值2'
+          0        '值1'
+    */
+     
+    /* 
+       1.创建数组对象
+       2.向数组中添加元素
+       3.读取数组中的元素
+       4.数组对象属性
+    */
+
+
+
+    /* 
+       1.创建数组对象
+            方式一 常规方式
+                var arr = new Array(数组的长度);
+                arr[0] = '值1'
+                arr[1] = '值2'
+
+            方式二 简洁方式
+                var arr = new Array()
+                var arr = new Array('值1','值二',...)
+
+            方式三  数组字面量
+               var arr = []
+               var arr = ['值1','值2','值3',...]    
+    */
+    var array = [1,2,3,5]
+    array = [10]
+    console.log(array)  //[10] 即只有一个值的数组
+    console.log(array.length)  //1  数组的长度为1
+
+    var array2 = new Array(10,20,30)
+    array2 = new Array(50)
+    console.log(array2)   //[empty × 50]即是一个长度为50的空数组
+    console.log(array2.length)  //50  数组长度为50
+
+
+
+    /* 
+        2.向数组中添加元素
+            语法 数组[索引] = 值
+
+            1)数组中的元素可以是任意的数据类型
+              arr = ["hello",1,true,null,undefined]
+
+            2)也可以是对象
+              var obj = {name:'孙悟空'}
+              arr[arr.length] = obj
+
+            3)也可以是函数,调用
+              var fun1 = function(){}
+              var fun2 = function(){}
+              arr = [fun1,fun2]
+              arr[0]()
+              arr[1]()
+
+            4)也可以是数组，构成二维、三维数组  
+    */
+   var arr = new Array()
+   arr[0] = 10;
+   arr[1] = 22;
+   arr[2] = 33;
+   
+   //1)数组元素可以是任意类型数据
+   var arrY = ["hello",1,true,null,undefined]
+   console.log(arrY)
+
+   //2)也可以是对象
+   var obj = {name:'孙悟空'}
+   arrY[arrY.length] = obj
+   console.log(arrY)
+
+   arrY = [
+        {name:'孙悟空'},
+        {name:'猪八戒'},
+        {name:'沙和尚'}
+   ]
+   console.log(arrY)
+
+   //3)也可以是函数
+   /* 
+        调用数组中函数
+        arr[0]();   
+    */
+   var fun1 = function(){
+        console.log('我是数组中函数1')
+   }
+   var fun2 = function(){
+        console.log('我是数组中函数2')
+   }
+   arrY = [fun1,fun2]
+   console.log(arrY)
+   //调用数组中函数
+   arrY[0]()
+   arrY[1]()
+
+   //4)也可以是数组，构成二维数组和三维数组
+   arrY = [[1,2,3],[4,5,6],[7,8,9]]
+   console.log(arrY)
+   console.log(arrY[0])
+   console.log(arrY[1])
+   console.log(arrY[2])
+
+
+
+   /* 
+       3.读取数组中的元素 (如果读取不存在的索引，他不会报错，返回undefined)
+            语法 数组[索引]
+   */
+   console.log(arr[2])
+
+
+
+    /* 
+       4.数组对象属性
+            1)length  
+                a.获取数组的长度
+                    对于连续的数组，使用length可以获取到数据的长度(元素个数)
+                    对于非连续的数组，使用length会获取到数组的最大的索引+1
+                        尽量不要创建非连续的数组
+
+                b.设置数组的长度
+                    如果修改的length大于原长度，则多出部分会空出来
+                    如果修改的length小于原长度，则多出的元素会被删除  
+
+                c.只向数组最后一位添加元素
+                    var arr = new Array()
+                    arr[arr.length] = '值'
+
+            2)constructor 返回创建数组对象的原型函数
+            3)ptototype  允许你向数组对象添加属性或方法
+    */
+
+    //1.获取数组的长度
+    console.log(arr.length)  //输出3
+
+    //arr[10] = 50
+    //console.log(arr.length)  //输出11
+    
+    //arr[100] = 90
+    //console.log(arr.length)  //输出101
+    //console.log(arr)  //(101) [10, 22, 33, empty × 7, 50, empty × 89, 90]
+
+
+    //2.设置数组的长度
+    arr.length = 10;
+    console.log(arr.length)  //10
+    console.log(arr)    //[10, 22, 33, empty × 7]
+
+    arr.length = 2 
+    console.log(arr.length)   //2
+    console.log(arr)  //[10,22]
+
+
+    //3.指向数组最后一位添加元素
+    arr[arr.length] = 70;
+    arr[arr.length] = 80;
+    console.log(arr)    //[10,22,70,80]
+
+</script> 
+</body>
+</html>

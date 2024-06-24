@@ -1,0 +1,81 @@
+/* 商品搜索 */
+.searchTitle{
+   .searchBox{
+      width:50%;
+      .search-select{
+         width:120px;
+      }
+      .search-input{
+         width:220px;
+         margin-left:5px;
+      }
+      .search-button{
+         margin-left:5px;
+      }
+   }
+   .addBox{
+      width:30%;
+   }
+}
+
+/* 商品列表表格 */
+/* 商品表格头操作居中显示 */
+.searchTable .ant-table-thead > tr > th:nth-of-type(4) .ant-table-header-column,
+.searchTable .ant-table-thead > tr > th:nth-of-type(5) .ant-table-header-column,
+.searchTable .ant-table-thead > tr > th:nth-of-type(5) .ant-table-header-column{
+   display: block!important;
+   margin: auto!important;
+   text-align: center!important;
+}
+.stateBox{
+   text-align: center;
+}
+.operateBox{
+   text-align: center;
+}
+.imgBox{
+   margin:auto;
+   width:80px;
+   height:80px;
+}
+.imgBox img{
+   display: block;
+   width:100%;
+   height:100%;
+}
+.pricesBox{
+   text-align:center;
+}
+
+/* 商品详情 */
+.productDetail{
+   .ant-list-item{
+      display:table;
+      width:100%;
+      table-layout:fixed;
+      span{
+         display: table-cell;
+         position: relative;
+         vertical-align: middle;
+         &.labelText{
+            width:100px;
+            margin-right:15px;
+            font-size:16px;
+            font-weight:bold;
+         }
+      }
+   }
+}
+.productImg {
+   display:inline-block;
+   width: 140px;
+   height: 140px;
+   border: 1px solid #ddd;
+   margin-right: 10px;
+   padding:5px;
+} 
+.detailText{
+   p{
+      display:inline;
+   }
+}

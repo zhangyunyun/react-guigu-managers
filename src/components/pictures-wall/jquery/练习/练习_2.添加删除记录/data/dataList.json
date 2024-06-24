@@ -1,0 +1,19 @@
+{
+   "datas": [
+      {
+         "name": "Tom",
+         "email": "tom@tom.com",
+         "salary": "5000"
+      },
+      {
+         "name": "Jerry",
+         "email": "jerry@sohu.com",
+         "salary": "8000"
+      },
+      {
+         "name": "Bob",
+         "email": "bob@tom.com",
+         "salary": "10000"
+      }
+   ]
+}

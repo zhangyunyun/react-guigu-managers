@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        ul,
+        li {
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        body {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <p>xxxx</p>
+
+    <ul class="list">
+        <li>11111</li>
+        <li>1111111</li>
+    </ul>
+    <button id="btn1">添加li</button>
+    <button id="btn2">移除事件委托</button>
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+        $(function() {
+            $("p").remove()
+
+            $('.list').delegate('li', 'click', function() {
+                $(this).css({
+                    'color': 'red'
+                })
+            })
+            $('#btn1').click(function() {
+                $('.list').append('<li>新添加的li</li>')
+            })
+            $('#btn2').click(function() {
+                //移除事件委托(所有)
+                $('ul').undelegate()
+            })
+
+        })
+    </script>
+</body>
+
+</html>

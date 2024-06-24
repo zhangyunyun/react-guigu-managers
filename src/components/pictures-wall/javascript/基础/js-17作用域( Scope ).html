@@ -1,0 +1,518 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>作用域</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    //'use strict';
+    ////////////////////  作用域  //////////////
+
+    /* 
+    作用域  指一个变量的作用的范围 
+            为可访问变量，对象，函数的集合 
+             
+
+            注意： 1)遵循在函数内部首先声明所有变量
+                     用一个var申明函数内部用到的所有变量
+
+                   2)变量生命周期在它声明时初始化。
+                   3)全局变量在页面打开时创建，在页面关闭时销毁。
+                   4)局部变量在调用函数时创建，在函数执行完毕后销毁。
+    */
+    
+
+    //全局作用域  名字空间(同名全局变量)
+    /* 
+        --直接编写在script标签中的js代码，都在全局作用域
+        --全局作用域在页面打开时创建，在页面关闭时销毁
+        --在全局作用域中有一个全局对象window
+          它代表的是一个浏览器的窗口，它由浏览器创建，我们可以直接使用
+        --在全局作用域中
+              创建的变量都会作为window对象的属性保存 
+              创建的函数都会作为window对象的方法保存
+        --全局作用域中的变量都是全局变量
+              在页面的任意的部分，都可以访问到    
+     */
+
+    //局部作用域(即函数作用域)
+    /* 
+
+    */
+
+    //块级作用域  let & const
+
+    //作用域链  
+
+    //常量
+
+    //解构赋值
+
+
+    //----------------------全局作用域---------------------//
+    /* 
+     *1.全局作用域  -不在任何函数内定义的变量就具有全局作用域
+                    -在全局作用域中有一个全局对象window（window为默认的全局对象）
+                          它代表的是一个浏览器窗口，它由浏览器创建我们可以直接使用 
+                    -全局作用域中
+                        a.创建的变量，都会作为window对象的属性保存(实际上被绑定到window的一个属性)   
+                            var a = 10
+                            console.log(window.a)  //10
+                        b.创建的函数，都会作为window对象的方法保存
+                            var fun = function({alert('1111')})(
+                            console.log(fun()))   
+                            console.log(window.fun())
+                    -变量如果在函数内没有定义(没有使用var)，该变量也为全局变量
+                            c = 5
+                            console.log(window.c)  //undefined
+     
+         名字空间  -不同javascript文件使用相同的全局变量，或者定义了相同名字的顶层函数会造成冲突
+                    (为了减少冲突，把所有变量和函数全部绑定到一个全局变量中)
+     * */
+    var x = 10;
+    var y = 'hello';
+    console.log(x)   //10
+    console.log(window.x)  //10
+    console.log(window.y)
+
+
+    function fun(){
+        console.log("我是fun")
+    }
+    fun();
+    window.fun();
+
+
+
+
+    function myFunction(){
+        return this;  //this 指的是浏览器window对象
+    }
+    myFunction();
+
+    var course = "lean javascript";
+    console.log(course);  //lean javascript
+    console.log(window.course);  //lean javascript
+
+    
+    /*
+    * 名字空间  减少不同js文件中全局变量冲突的方法
+    * */
+    //唯一的全局变量
+    var MYAPP = {}
+
+    //其他变量
+    MYAPP.name = 'Tom';
+    MYAPP.version = 123;
+
+    //其他函数
+    MYAPP.foo = function(){
+        return 'foo'
+    }
+    console.log(MYAPP);
+
+
+
+    //----------------------局部作用域(函数作用域)---------------------//
+    /*
+    *2.局部作用域   变量在函数内声明，称为局部作用域(函数作用域)
+
+                   --局部变量在函数开始执行时创建，函数执行完毕后局部变量会自动销毁
+                   
+                   --每调用一次函数就会创建一个新的函数作用域，他们之间是相互独立的
+                   
+                   --函数作用域中可以访问到全局作用域中的变量
+                       全局作用域中访问不到函数作用域中的变量
+
+                   --当在函数作用域操作一个变量，先会从自身作用域中寻找，如果有就直接使用
+                       如果没有就向上一级作用域中寻找，直到找到全局作用域
+                       如果全局作用域中依然没有找到，则会报错(ReferenceError m is not defined)
+                   
+                   --在函数作用域中要访问全局作用域变量使用 window.变量名 
+                   
+                   --函数内部定义的变量，for语句中无法定义具有局部作用域的变量 
+                  
+                  1.只能在函数内部访问，不能在函数外部引用
+                  2.不同函数 函数内部的同名变量互相独立，互不影响
+                  3.嵌套函数 内部函数可以访问外部函数的变量
+                             内部函数的变量与外部函数的变量同名，内部函数的变量将屏蔽外部函数的变量(由内向外查找)
+                             
+                  
+                  函数形参实际就是在函数作用域内声明了变量
+    * */
+    var n = '我是全局作用域n';
+    function fun(){
+        var n = '我是函数作用域n';
+        var m = '我也是函数作用域m';
+        console.log(n); //我是函数作用域n
+
+        //访问全局中的变量
+        console.log(window.n) //我是全局作用域n
+    }
+    fun();
+    console.log(n);  //我是全局作用域n
+    //console.log(m);  //ReferenceError m is not defined
+
+
+    /*
+        在函数作用域中也有声明提前的特性
+            --变量提前声明
+                使用var关键字声明的变量，会在函数中所有的代码执行之前被声明
+                变量提前声明了，但未赋值  
+            --函数提前声明 
+                函数中嵌套声明的函数，会在函数中所有的代码执行之前被声明
+                函数中嵌套声明的函数也是一个小的全局 
+
+        在函数中不使用var声明的变量都会设置为全局变量 
+            严格模式中会报错，正常运行模式输出对应的值       
+    */ 
+    function fun1(){
+        console.log(a) //undefined
+        var a = 35
+
+        fun2()
+        function fun2(){
+            console.log("I'm fun2")
+        }
+    }
+    fun1();
+   
+    /*  
+        //原理分析
+        function fun1(){
+            var a;
+
+            console.log(a)  //undefied
+
+        a = 35
+        }
+        fun1(); 
+    */
+
+
+    /* 
+        var t = 33;
+        function fun2(){
+            console.log(t)  //33
+        }
+        fun2() 
+    */ 
+
+    /* 
+        var t = 33;
+        function fun2(){
+            console.log(t)  //undefined
+
+            var t = 10;
+        }
+        fun2()  
+    */
+
+    
+    var t = 33;
+    function fun2(){
+        //console.log(t)  //33
+
+        //未使用var声明的变量，会设置为全局变量
+        //严格模式中会报错，正常运行模式输出值
+        //t = 10;
+        d = 100;
+    }
+    fun2() 
+
+    //在全局分别输出t、d
+    console.log(t)  //输出10
+    console.log(d)  //输出100  严格模式中会报错，正常运行模式输出值
+   
+
+    /* 
+       函数形参实际就是在函数作用域内声明了变量    
+    */
+    var e = 23
+    function fun3(){
+        console.log(e) //23
+    }
+    fun3()
+
+    var e = 23;
+    function fun4(e){
+        var e;  //形参e实际就相当于声明了变量e
+        console.log(e) //未传实参时，输出undefined
+                       //传实参了，输出传入的实参
+    }
+    fun4()
+    
+
+    //不同函数，同名变量互不影响
+    function foo1(){
+        var x = 1;
+        x = x + 5;
+        console.log(x);  //6
+    }
+    foo1();
+    function foo2(){
+        var x = "哈哈";
+        x = x + 5;
+        console.log(x);  //哈哈5
+    }
+    foo2();
+
+    //嵌套函数，内部可访问外部变量，外部访问不了内部变量
+    function foo3(){
+        var x, y;
+        x = 1;
+        function bar(){
+            var z = 2;
+            z = z + x;
+            console.log(z);  //3
+        }
+        bar();
+        // y = x + z;
+        console.log(y);   //ReferenceError x not defined
+    }
+    foo3();
+
+    //嵌套函数，内部外部变量名相同,内部函数变量将屏蔽外部函数变量,由内向外查找
+    function foo4(){
+        var x = 1;
+        function bar(){
+            var x = "A";
+            console.log("bar中x的值为：" + x);   //A
+        }
+        bar();
+        console.log("foo4中x的值为：" + x);   //1
+    }
+    foo4();
+
+
+    function foo5(){
+        var sum = 0;
+        for(var i=0; i<=100; i++){
+            sum += i;
+        }
+        i += 1;
+        console.log("i的值为：" + i);  //102
+        console.log("sum的值为：" + sum);  //5050
+    }
+    foo5();
+
+
+    function foo6(){
+        var sum = 0;
+        for(let i=0; i<=100; i++){
+            sum += i;
+        }
+       //i += 1;
+       //console.log("i的值为：" + i);  //ReferenceError  i not defined
+        console.log("sum的值为：" + sum);  //5050
+    }
+    foo6();
+
+
+    //----------------------let & const 块级作用域---------------------//
+    /*
+    * 3.let & const
+    *    1.let    //声明的变量只在let命令所在的代码块{}内有效,在{}之外不能访问
+    *    2.const  //声明一个或多个常量。声明时必须进行初始化，且初始化后值不可再修改
+    *             //并非真正的常量，定义的对象或数组是可变的
+    *             //不能对(常量对象、常量数组)重新赋值
+    *
+    *    3.不同点 (1)let和const都是块级作用域
+    *             (2)都不能和它所在作用域内的其他变量或函数拥有相同的名称
+    *             (3)const声明的常量必须初始化
+    *                let声明的变量不用初始化
+    *             (4)const定义的常量的值不能通过再赋值修改，也不能再次声明
+    *                let定义的变量值可以修改(在不同作用域或不同块级作用域中可以修改)
+     * */
+    //例1
+//    var i = 5;
+//    for(var i=0; i<10; i++){}
+//    console.log(i);  //10
+
+    let i = 6;
+    for(let i=0; i<10; i++){}
+    console.log(i);  //5
+
+    //例2
+    const car = {
+        type:"Fiat",
+        model:"500",
+        color:"white"
+    }
+    car.color = "red"
+    console.log(car.color);  //red
+
+
+
+    //----------------------作用域链---------------------//
+    /*
+    * 4.作用域链  当声明一个函数时，局部作用域一级一级向上包起来，
+    *             当函数执行时，总是先从函数内部找寻局部变量
+    *             如果内部找不到(函数的局部作用域没有)，则会向创建函数的作用域(声明函数的作用域)寻找，依次向上
+    * */
+    function a(){
+        function b(){
+            function c(){
+
+            }
+            c();
+        }
+        b();
+    }
+    a();
+
+    /*
+      a defined a.[[scope]] -- > 0: GO
+      a doing   a.[[scope]] -- > 0: aAO
+                                 1: GO
+     
+      b defined b.[[scope]] -- > 0: aAO
+                                 1: GO
+      b doing   b.[[scope]] -- > 0: bAO
+                                 1: aAO
+                                 2: GO
+     
+      c defined c.[[scope]] -- > 0: bAO
+                                 1: aAO
+                                 2: GO
+      c doing   c.[[scope]] -- > 0: cAO
+                                 1: bAO
+                                 2: aAO
+                                 3: GO
+     
+    */
+
+
+    //----------------------常量---------------------//
+    /*
+     * 5.常量
+     * */
+    function constanst(){
+        var sum = 0;
+        for(let i=0; i<100; i++){
+            sum += i;
+        }
+        //i += 1;  //i is not defined
+        return
+    }
+    const PI = 3.14;
+    //console.log(PI = 3);  //Uncaught TypeError:Assignment to constant variable
+    console.log(PI);
+
+
+
+    //----------------------变量生命周期---------------------//
+    /*
+     * 6.变量生命周期  变量生命周期在它声明时初始化
+     *                全局变量在页面打开时创建，在页面关闭后销毁
+     *                局部变量在函数执行完毕后销毁
+     * */
+
+
+
+    //----------------------解构赋值---------------------//
+    /*
+    * 7.解构赋值，直接对多个变量同时赋值,可以忽略空元素对其他元素赋值
+    *
+    * */
+    var array = ["World","Jquery","ES5"];
+    var a = array[0];
+    var b = array[1];
+    var c = array[2];
+    console.log("a的值为：" + a);   //World
+    console.log("b的值为：" + b);   //Jquery
+    console.log("c的值为：" + c);   //ES5
+
+    //es6写法 数组解构赋值
+    var [x, y, z] = ["Hello","JavaScript","ES6"];
+    console.log("x的值为：" + x);   //Hello
+    console.log("y的值为：" + y);   //JavaScript
+    console.log("z的值为：" + z);   //ES6
+
+    var [x, [y, z]] = ["Golob", ["Js","ES7"]];
+    console.log("x的值为：" + x);   //Golob
+    console.log("y的值为：" + y);   //Js
+    console.log("z的值为：" + z);   //ES7
+
+    var [, , z] = ["Golob", "Js","ES8"];
+    console.log("z的值为：" + z);   //ES8
+
+    //es6写法 对象解构赋值 如果对应的属性不存在，变量将被赋值为undefined
+    var person = {
+        firstName:"Jack",
+        lastName:"Soon",
+        age:40,
+        eyeColor:"blue",
+        fullName:function(){
+            return this.firstName + this.lastName;
+        }
+    }
+    var {firstName, lastName, age} = person;
+    console.log("firstName的值为：" + firstName);
+    console.log("lastName的值为：" + lastName);
+    console.log("age的值为：" + age);
+    //console.log("fullName的值为：" + fullName);
+
+     var person1 = {
+         name:"小明",
+         age:18,
+         sex:"male",
+         passport: 'G-12345678',
+         address:{
+             city:"兰州",
+             street:"No.1 Road",
+             zipCode:"100001"
+         }
+     }
+    var {name, age, passport, address:{city, zipCode}} = person1;
+    console.log("name的值为：" + name);
+    console.log("age的值为：" + age);
+    console.log("passport的值为：" + passport);
+    console.log("city的值为：" + city);
+
+    var x, y;
+    //解构赋值报错
+    //{x, y} = {name:"xiaoming", x:100, y:200}  //SyntaxError: Unexpected token =
+
+    //解决方法
+    ({x, y} = {name:"xiaoming", x:100, y:200});
+    console.log("x的值为：" + x + "\ny的值为：" + y);
+
+
+
+    var a1 = "global";
+    var fooo1 = function(){
+        console.log(a1);  //global
+    }
+    fooo1();
+
+    var fooo2 = function(){
+        var a1 = "locale";
+        fooo1();   //global
+    }
+    fooo2();
+
+
+    var closure = function(){
+        var c = 0;
+        return (function(){
+            c++;
+            return c;
+        })
+    }
+    var result = closure();
+    console.log(result());  //1
+    console.log(result());  //2
+    console.log(result());  //3
+    console.log(result());  //4
+</script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>事件</title>
+
+    <style>
+        *{margin:0; padding:0;}
+        a{text-decoration:none;}
+
+        .wrapperBox{height:700px;}
+
+        .task-list{display:flex; justify-content:center; align-items:center; padding:10px 0;}
+        .task-list li{flex:1; text-align:center; list-style:none;}
+        .task-list li a{color:#666; padding-bottom:5px; position:relative;}
+        .task-list li.active a{color: #009cff;}
+        .task-list li.active a:before{position:absolute; content:""; width:100%; height:2px; bottom:0; left:calc(50% - 50%); background:#009cff;}
+        .task-list li.active a:after{position:absolute; content:""; left:calc(50% - 8px); bottom:-8px; width:0; height:0; border-top:8px solid #009cff; border-left:6px solid transparent; border-right:6px solid transparent;}
+
+        .task-content{border:1px solid #ddd; margin:10px; padding:10px;}
+        .task-content div{display:none; position:relative;}
+        .task-content div.active{display:block;}
+
+        #ty{position:absolute; bottom:0; left:0; width:100px; height:100px; padding:10px; font-size:15px; text-align:center; display:flex; justify-content: center; align-items:center; flex-wrap:wrap; background:#ccc;}
+    
+        #goBack{position:fixed; right:10px; bottom:10px; color:#fff; font-size:12px; display:block; width:40px; height:30px; padding:5px 0; line-height:15px; text-align:center; background:#f60;}
+    </style>
+</head>
+<body>
+    <div class="wrapperBox">
+        <button id="btn1" onclick="fun(1)">事件注册方法一</button>
+        <button id="btn2">事件注册方法二</button>
+        <button id="btn3">事件注册方法三</button>
+
+        <img src="images/01.jpg" alt="" style="width:100px; height:100px;" onabort="alert('图片被中断加载')" />
+
+        <button id="btn4">右键菜单</button>
+
+        <ul id="box">
+            <li>蚂蚁部落一</li>
+            <li class="ant">蚂蚁部落二</li>
+            <li>蚂蚁部落三</li>
+            <li class="ant">蚂蚁部落四</li>
+            <li>蚂蚁部落五</li>
+            <li>蚂蚁部落六</li>
+        </ul>
+
+
+        <ul class="task-list">
+            <li class="active"><a href="#one">标题一</a></li>
+            <li><a href="#two">标题二</a></li>
+            <li><a href="#tree">标题三</a></li>
+        </ul>
+        <div class="task-content">
+            <div id="one" class="active">蚂蚁部落一</div>
+            <div id="two">蚂蚁部落二</div>
+            <div id="tree">蚂蚁部落三</div>
+        </div>
+
+        <div id="ty">我是一个可以拖拽的div</div>
+
+        <form action="" name="myForm" id="myForm">
+            <input type="submit" value="提交" id="submit"/>
+            <input type="reset" value="重置" id="reset"/>
+        </form>
+        
+        <a href="javascript:;" title="返回顶部" id="goBack" style="display:none;">返回<br>顶部</a>
+    </div>
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    //'use strict';
+    ////////////////////  事件  //////////////
+    /* 
+       事件  就是用户和浏览器之间的交互行为
+             比如：点击按钮、鼠标移动、关闭窗口...
+    */
+
+
+    //-----------javaScript事件
+    /*
+        //框架/对象事件
+           onload      //一张页面或一幅图像完成加载
+                       //检测文档内容或者图片是否加载完毕
+                         window.onload = function(){}
+           onunload    //用户退出页面              
+           onresize    //窗口或框架被重新调整大小
+           onscroll    //文档被滚动时发生的事件
+           onpagehide  //用户离开当前网页跳转到另外一个页面时触发
+
+        //鼠标事件
+           onclick    //用户点击
+                        ele/target.onclick = function(){}    
+           ondblclick  //用户双击某个对象时调用的事件句柄
+           oncontextmenu //用户点击鼠标右键打开上下文菜单时触发
+          
+           onmousedown   //鼠标按钮被按下
+           onmouseup    //鼠标按键被松开
+
+           onmouseenter //当鼠标指针移动到元素上时触发
+           onmousemove  //用户移动鼠标
+           onmouseleave  //当鼠标指针移出元素时触发
+
+           onmouseover  //用户在一个HTML元素上移动鼠标
+           onmouseout   //用户从一个HTML元素上移开鼠标
+     
+        //键盘事件
+           onkeydown   //用户按下键盘按键
+           onkeypress  //用户按下并松开键盘按键
+           onkeyup     //用户松开键盘按键
+     
+        //表单事件
+           onselect  //用户选取时触发
+           onchange  //表单元素的内容改变时触发(input, select, textarea, keygen)
+                       ele/target.onchange = function(){}
+           onfocus   //获取焦点
+           onblur    //失去焦点
+
+           onreset   //表单重置时触发
+                     //表单重置按钮被点击时触发
+                       ele.onreset = function(){}
+           onsubmit  //表单提交时触发
+     
+           on(events,selector,data,fn)  //绑定一个或多个事件
+     
+           event.preventDefault();  //阻止元素发生默认的行为
+           event.stopPropagation();  //阻止事件冒泡到父元素，阻止任何父事件处理程序被执行
+     
+           trigger() //触发被选元素的指定事件类型
+
+        //注册事件
+            addEventListener   //注册事件函数
+            removeEventListener  //移除事件函数    
+    */
+    
+
+    //-----------jQuery事件
+    /*
+        //框架/对象事件
+            resize  //调整浏览器窗口大小时会触发事件
+            scroll  //拖动滚动条时触发
+
+            hashchange    // 在hash值改变时触发
+
+        //鼠标事件
+            click     //点击事件
+            dblclick  //连续快速双击元素时触发
+
+            contextmenu  //点击鼠标右键，通常使用此事件禁用右键菜单
+
+            mousedown/mouseup/mouseenter/mousemove/mouseleave/mouseover/mouseout
+            mousedown   //鼠标按键被按下时触发
+            mouseup     //鼠标按键被松开时触发
+
+            mouseenter  //鼠标进入元素时触发
+            mousemove   //鼠标在元素上移动触发此事件
+            mouseleave  //鼠标离开元素时触发
+
+            mouseover   //鼠标移入指定元素或者其子元素时触发
+            mouseout    //鼠标指针离开元素时触发
+
+        //键盘事件
+            keydown/keypress/keyup
+            keydown   //当一个按键按下时会触发事件
+                        ele/target.onkeydown = function(){}
+            keypress  //当键盘按键被按下并松开时会触发事件
+                        ele/target.onkeypress = function(){}
+            keyup     //当按键松开时会出发事件
+                        ele/target.onkeyup = function(){}
+
+        //表单事件
+            select  //会在input单行文本域或者<textarea>多行文本域内文本被选中时触发
+            change
+
+            focus   //获取焦点
+            blur    //失去焦点
+
+            reset   //表单重置按钮被点击时触发
+            submit  //表单中的提交按钮被点击会触发
+
+            
+    */  
+
+
+
+    /*
+        1.onload  检测文档内容或者图片是否加载完毕
+                window.onload
+    */
+    window.onload = function(){
+        console.log('检测文档内容或者图片是否加载完毕')
+    }
+
+
+    /*
+        2.resize  //调整浏览器窗口大小时触发事件
+    */
+    $(window).resize(function(){
+        alert(1);
+        var wWidth = $(document).width();
+        var wHeight = $(document).height();
+        alert(wWidth +","+ wHeight);
+    }); 
+
+
+    /*
+        3.scroll  //调整浏览器窗口大小时触发事件
+    */
+    //-------1.返回顶部
+    $(window).scroll(function(){
+        var scrollTop = $(window).scrollTop()
+        if(scrollTop >= 50){
+            console.log('页面向下滚动了');
+            $("#goBack").show()
+        }else{
+            $("#goBack").hide()
+        }
+    }); 
+    $("#goBack").click(function(){
+        $('html,body').animate({
+            scrollTop:0
+        },1000)
+    })
+
+    //-------2.滚动到底部
+    $(window).scroll(function(){
+         var winHeight = $(window).height();   //窗口可视高度
+         var docHeight = $(document).height();   //文档高度
+         var docScroll = $(document).scrollTop(); //文档滑动的高度 
+         console.log(winHeight)   //568 固定值
+         console.log(docHeight)   //700 
+         console.log(docScroll)   //100  页面滑动的高度不固定
+         console.log(docHeight - winHeight)
+         if(docHeight - winHeight == docScroll){
+            console.log('页面滑动到底部了哦')
+         }
+    });  
+
+
+    /*
+        4.hashchange  是在hash值改变时触发
+    */
+    function hash(){
+        //var urlHash = window.location.hash.slice(1)
+        //console.log(urlHash);
+        //if(urlHash){
+            var list = document.querySelectorAll(".task-list li");
+            var listCont = document.querySelectorAll(".task-content div");
+            //var listId = $("#" + urlHash);
+            for(var i=0; i<list.length; i++){
+                (function(x){
+                    list[x].onclick = function(){
+                        for(var y=0; y<list.length; y++){
+                            list[y].className = '';
+                            listCont[y].style.display = 'none';
+                        }
+                        list[x].className = 'active';
+                        listCont[x].style.display = 'block';
+                    }
+                })(i);
+            }
+        //}
+    }
+    hash();
+
+
+
+    /*
+        5.图像完全加载完成之前中断图像加载时触发
+            abort
+    */
+
+
+
+    /*
+        6.动画
+            animationstart  animationiteration  animationend
+            animationstart      //动画已经开始
+            animationiteration  //动画重新播放
+            animationend        //动画已经完成
+    */
+
+
+    /*
+        7.右键菜单触发事件
+            contextmenu
+    */
+    $('body').contextmenu(function(){
+        console.log('右键菜单被禁止了')
+        return true
+    });
+
+
+    /*
+        8.mousedown/mouseup/mouseenter/mousemove/mouseleave/mouseover/mouseout
+            mousedown   //鼠标按键被按下时触发
+            mouseup     //鼠标按键被松开时触发
+
+            mouseenter  //鼠标进入元素时触发
+            mousemove   //鼠标在元素上移动触发此事件
+            mouseleave  //鼠标离开元素时触发
+
+            mouseover   //鼠标移入指定元素或者其子元素时触发
+            mouseout    //鼠标指针离开元素时触发
+    */
+
+    function Code(){}
+    Code.prototype = {
+        addEvent:function(){
+            var that = this;
+            var tDiv = document.getElementById('ty');
+            var disX = 0;
+            var disY = 0;
+            tDiv.addEventListener('touchstart',function(ev){
+                var ev = ev || event;
+                //var x = ev.targetTouches[0].pageX;
+                //var y = ev.targetTouches[0].pageY;
+                //console.log(x);  //x坐标值()
+                //console.log(y);  //y坐标值
+                //var xLt = this.offsetLeft;
+                //var yTp = this.offsetTop;
+                //console.log(xLt);  //0 元素距离页面左侧的值（固定值）
+                //console.log(yTp);  //468 元素距离页面顶部的值（固定值）
+                disX = ev.targetTouches[0].pageX - this.offsetLeft;  //左侧移动的距离 = 获取鼠标的X轴坐标值 - 元素距离页面左侧的值
+                disY = ev.targetTouches[0].pageY - this.offsetTop;   //上侧移动的距离 = 获取鼠标的Y轴坐标值 - 元素距离页面顶部的值
+                console.log(disX);  //
+                console.log(disY);  //
+                if(tDiv.setCapture){
+                    tDiv.setCapture();
+                }
+                tDiv.addEventListener('touchmove',function(ev){
+                    var ev = ev || event;
+                    var l = ev.targetTouches[0].pageX - disX;
+                    var t = ev.targetTouches[0].pageY - disY;
+                    console.log(l);  //
+                    console.log(t);  //
+                    if(l < 0){
+                        l = 0
+                    }else if(l > document.documentElement.clientWidth - tDiv.offsetWidth){
+                        l = document.documentElement.clientWidth - tDiv.offsetWidth;
+                    }
+                    if(t < 0){
+                        t = 0
+                    }else if(t > document.documentElement.clientHeight - tDiv.offsetHeight){
+                        t = document.documentElement.clientHeight - tDiv.offsetHeight;
+                    }
+                    tDiv.style.left = l + "px";
+                    tDiv.style.top = t + "px";
+                    tDiv.style.cursor = "move";
+                });
+                tDiv.addEventListener("touchend",function(ev){
+                    document.onmousemove = document.onmouseup = null;
+                    tDiv.style.cursor = "default";
+                    if (tDiv.releaseCapture) {
+                        tDiv.releaseCapture();
+                    }
+                });
+            })
+        },
+        init: function() {
+            var that = this;
+            window.onload = that.addEvent;
+        },
+    }
+    new Code().init();
+
+
+    
+    /*
+        9.reset  //表单中的重置按钮被点击时触发
+    */
+    var myForm = document.getElementById("myForm");
+    myForm.onreset = function(){
+        alert("事件触发");
+    }
+
+
+    /*
+        10.submit  //表单中提交按钮被点击会触发
+    */
+
+</script>
+</body>
+</html>

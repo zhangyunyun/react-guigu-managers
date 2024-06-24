@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>操作文件</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<input type="file" id="test-file-upload"/>
+
+<div class="fileBox">
+    <input type="file" id="test-image-file" />
+    <div id="test-file-info"></div>
+    <div id="test-image-preview"></div>
+</div>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<!--<script src="js/加密文件/MD5.js"></script>-->
+<script>
+    'use strict';
+    ////////////////////  操作文件  //////////////
+
+    //操作文件   <input type="file">
+    //file API
+
+    /*
+     *1.操作文件
+     *       提交表单时 表单的enctype必须指定为multipart/form-data
+     *                        method必须指定为post
+     *       提交表单时 endsWith对文件扩展名做检查，以便防止用户上传无效格式的文件
+     * */
+
+     var f = document.getElementById("test-file-upload");
+     var fVale = f.value;
+//     if(!fVale || !(fVale.endsWith(".jpg") || fVale.endsWith(".png") || fVale.endsWith(".gif"))){
+//         alert("图片格式不对");
+//     }
+
+
+    /*
+     *2.file API
+     *
+     * */
+    var fileInput = document.getElementById("test-image-file");
+    var fileInfo = document.getElementById("test-file-info");
+    var preview = document.getElementById("test-image-preview");
+    //监听change事件
+    fileInput.addEventListener("change", function(){
+        // 清除背景图片:
+        preview.style.backgroundImage = '';
+
+        // 检查文件是否选择:
+        if(!fileInput.value){
+            fileInfo.innerHTML = "没有选择任何文件";
+            return
+        }
+
+        // 获取File引用:
+        var file = fileInput.files[0];
+        console.log(file);
+
+        // 获取File信息:
+        var fireName = file.name;
+        var fireType = file.type;
+        var fireSize = file.size;
+        var fireData = file.lastModifiedDate;
+        fileInfo.innerHTML = fireName + "<br>" + fireType + "<br>" + fireSize + "<br>"  + fireData;
+        if(fireType !== "image/jpeg" && fireType !== "image/jpg" && fireType !== "image/png"){
+            alert("不是有效的图片文件");
+        }
+
+        // 读取文件:
+        var reader = new FileReader();
+        reader.onload = function(e){  //onloadend
+            // 当文件读取完成后，自动调用此函数:
+            //var data = reader.result;  //旧写法
+            var data = e.target.result;  //新写法 'data:image/jpeg;base64,/9j/4AAQSk...(base64编码)...'
+
+            var image = new Image();
+            image.src = data;
+            image.onload = function(){
+                var imgWidth = image.width;
+                var imgHeight = image.height;
+                console.log(imgWidth +","+ imgHeight);
+                preview.appendChild(image);
+            }
+        }
+        // 以DataURL的形式读取文件:
+        reader.readAsDataURL(file);
+    });
+
+</script>
+</body>
+</html>

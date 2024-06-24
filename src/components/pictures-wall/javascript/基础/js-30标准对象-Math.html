@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>Math 算数</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  Math 算数  //////////////
+    /*
+        1.Math对象用于执行数学任务
+            Math对象不是构造函数
+            它属于一个工具类不用创建对象
+            它里面分装了数学运算相关的属性和方法
+    */
+
+
+    /*
+        2.Math对象属性
+          --属性 Math.E       属性代表算数常量e,即自然对数的底数（约等于2.718)
+                 Math.LN2     属性就是loge2(以e为底2的对数),即2的自然对数,(约等于0.693)
+                 Math.LN10    属性就是loge10(以e为底10的对数),即10的自然对数,(约等于2.302)
+                 Math.LOG2E   属性就是log2e(以2为底e的对数),即以2为底e的对数,（约等于1.4426950408889634)
+                 Math.LOG10E  属性就是log10e(以10为底e的对数),即以10为底e的对数,（约等于0.434)
+                 Math.SQRT1_2 属性返回2的平方根的倒数，即二分之一的平方根(约为0.707)
+                 Math.SQRT2   属性返回2的平方根(约为1.414)
+                 Math.PI      属性就是π,即圆周率(圆的周长和它的直径之比),(约为3.14)
+     
+                 Math.PI/180 表示为1° 例Math.sin(30 * Math.PI/180)为30°
+                                    例360 * PI/180 = 2PI (一周是2弧度)
+    * */
+    var math = Math.E;  //2.718
+    math = Math.LN2;    //0.693
+    math = Math.LN10;   //2.302
+    math = Math.LOG2E;  //1.44
+    math = Math.LOG10E; //0.434
+    math = Math.SQRT1_2;//0.707
+    math = Math.SQRT2;  //1.414
+    math = Math.PI;     //3.1415926
+    console.log(math);
+
+
+
+    /*
+     2.Math对象方法
+         abs(x)返回x的绝对值
+    
+         asin(x)返回x的反正弦值
+         acos(x)返回x的反余弦值
+         atan(x)返回x的反正切值
+         atan2(y,x)返回从x轴到点(x,y)的角度(-PI/2--PI/2弧度之间)
+    
+         sin(x)返回数的正弦
+         cos(x)返回数的余弦
+         tan(x)返回角的正切
+    
+         ceil(x)对数进行上舍入
+                向上取整,小数位只要有值就自动进1
+         floor(x)对数进行下舍入(向下取整)
+                向下取整,小数位会被舍掉
+         round(x)四舍五入最接近的整数
+    
+         max(x,y,z...n);返回x,y,z...n中的最高值
+         min(x,y,z...n);返回x,y,z...n中的最低值
+    
+         log(x)返回数的自然对数(底数为e)
+         sqrt(x)返回x的平方根
+         pow(x,y)返回x的y次幂
+    
+         random()返回0-1之间的随机数(不会出现0也不会出现1)
+                //0不包含
+                //1也不包含
+                Math.random()
+
+                0-10之间的随机数
+                Math.round(Math.random() * 10)
+
+                生成一个0-x之间的随机数
+                Math.round(Math.random() * x)
+
+                生成一个x-y之间的随机数
+                Math.round(Math.random() * (y-x) + x)
+
+                生成一个1-10之间的随机数
+                Math.round(Math.random() * 9) + 1
+
+                生成一个2-10之间的随机数
+                Math.round(Math.random() * 8) + 2
+
+    */
+    var a = -5, b = 3.14
+    console.log(Math.abs(a));    //5
+    console.log(Math.ceil(b))    //4
+    console.log(Math.floor(b));  //3
+    console.log(Math.random())   //0.4054374557897551 值一直在变化
+    console.log(Math.round(b));  //3
+    console.log(Math.pow(2,3));  //8
+    console.log(Math.sqrt(2));   //1.4142135623730951
+
+    console.log(Math.round(4.7));  //5
+
+    //1-10之间的随机数
+    var ran = (Math.random() * 9) + 1
+    var ranR = Math.floor(ran)
+    console.log(ran);  //7.814932348548927  值随机变的
+    console.log(ranR); //7  值随机变
+
+    //返回0-10之间的最大值
+    function getMax(min,max){
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+    console.log(getMax(0,10));  //6
+</script>
+</body>
+</html>

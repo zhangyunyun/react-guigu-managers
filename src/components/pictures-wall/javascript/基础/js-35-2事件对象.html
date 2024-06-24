@@ -1,0 +1,299 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>事件对象</title>
+
+    <style>
+        *{margin:0; padding:0;}
+
+        #whichDiv{width:100px; height:100px; background:#ccc;}
+        #clipDiv{display:inline-block; width:10em; height:10em; background:#2bf357;
+            clip-path: inset(2em 3em 2em 1em round 2em);  /*圆角矩形*/
+            clip-path: circle(30% at 80px 80px);  /*圆*/
+            clip-path: ellipse(45% 30% at 50% 50%);  /*椭圆*/
+            clip-path: polygon(50% 0,100% 50%,0 100%)  /*多边形*/
+        }
+        #antzone{width:100px; height:100px; background:#f00;}
+        #show{width:100px; height:100px; background:#00f;}
+        #bubDiv{position:relative; width:100px; height:100px; background:#00f; margin-top: 10px;}
+        #bubDiv span{display:block; width:50px; height:50px; background: #ffff00; position:absolute; top:50%; left:50%; transform:translate(-50% -50%);}
+    
+        .testBox{
+            width:300px;
+            margin-top:10px;
+        }
+        .moveBox{
+            width:300px;
+            height:100px;
+            border:1px solid #ddd;
+        }
+        .showBox{
+            width:300px;
+            height:50px;
+            border:1px solid #ddd;
+            margin-top:10px;
+        }
+
+        .tragBox{
+            width:100px;
+            height:100px;
+            background:#f00;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="clipDiv"></div>
+
+<div id="whichDiv"></div>
+
+<div id="bubDiv">
+    <span id="span">event.bubbles</span>
+</div>
+
+
+<div class="testBox">
+    <div class="moveBox" id="moveBox"></div>
+    <div class="showBox" id="showBox"></div>
+</div>
+
+<div class="tragBox" id="tragBox"></div>
+
+<div>
+    <div style="width:3000px; height:1000px">
+        <!-- tBox跟随鼠标移动的div -->
+        <div class="tBox"></div>
+    </div>
+</div>
+
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  事件对象  //////////////
+
+    //事件对象   事件对象中存储着与事件相关的信息
+    /* 
+        当事件的响应函数被触发时，浏览器每次都会将一个事件对象作为实参传递进响应函数
+        在事件对象中分装了当前事件相关的一切信息(如：鼠标的坐标，键盘按钮被按下，鼠标滚轮滚动的方向...)
+
+        event指的就是事件对象
+    */
+
+
+     /* 
+        1.鼠标 / 键盘属性
+          event.altKey
+          event.button
+          event.bubble
+
+          //clientX 和 clientY获取鼠标在当前可见窗口的坐标(支持IE8及以下)
+          clientX 获取鼠标指针相对于可见窗口的水平坐标
+          clientY 获取鼠标指针相对于可见窗口的垂直坐标
+
+          //pageX 和 pageY获取鼠标在当前页面的坐标(支持google,firefox)
+          pageX  获取元素相对于页面的水平坐标
+          pageY  获取元素相对于页面的垂直坐标
+    */
+    
+
+    /*
+    * 1)event.altKey    Alt键是否被按下并保持住
+    *                   返回一个布尔值true  表示alt键被按下
+    *                                false 表示alt键未被按下
+    *
+    * */
+    var whichDiv = document.getElementById("whichDiv");
+    if(window.addEventListener){
+        whichDiv.addEventListener('mousedown',function(ev){
+            var ev = ev.altKey
+            if(ev == 0){
+                console.log("alt键被按下");
+            }else{
+                console.log("alt键没有被按下");
+            }
+        });
+    }
+    else{
+        whichDiv.detachEvent('mousedown',function(ev){
+            var ev = ev.altKey
+            if(ev == 0){
+                console.log("alt键被按下");
+            }else{
+                console.log("alt键没有被按下");
+            }
+        });
+    }
+
+
+
+    /*
+     * 2)event.button   指示当事件被触发时哪个鼠标按键被点击
+     *                  返回一个整数  0 表示鼠标左键被点击
+     *                                1 表示鼠标中间被点击
+     *                                2 表示鼠标右键被点击
+     * */
+    window.onmousedown = function(ev){
+        var ev = ev || event;
+        whichDiv.innerHTML = ev.button
+    }
+
+
+
+    /*
+     * 3)event.bubble  判断当前事件是否是冒泡类型
+     *                 返回一个布尔值  true表示冒泡类型
+     *                                 false表示非冒泡类型
+     * */
+     var bubDiv = document.getElementById("bubDiv").firstChild
+    console.log(bubDiv)
+    bubDiv.onclick = function(ev){
+        var ev = ev || event;
+        if(ev.bubbles){
+            alert("事件类型冒泡");
+        }else{
+            alert("非事件类型冒泡");
+        }
+    }
+
+
+
+    /* 
+        实例1 鼠标在moveBox中移动时，在showBox中显示鼠标移动的坐标
+     */
+    var moveBox = document.getElementById('moveBox')
+    var showBox = document.getElementById('showBox')
+    moveBox.onmousemove = function(event){
+        //解决不兼容IE8及以下浏览器
+        // if(!event){
+        //     event = window.event
+        // }
+
+        //简写方式
+        event = event || window.event
+
+        //clientX和clientY获取当鼠标在当前的可见窗口的坐标  
+        var x = event.clientX
+        var y = event.clientY
+        showBox.innerHTML = 'x' + x +','+ 'y' + y
+    }
+
+    /* 
+        实例2 div跟随鼠标移动
+    */
+
+    var tragBox = document.getElementById('tragBox')
+    document.onmousemove = function(event){
+
+        //解决兼容问题
+        event = event || window.event
+
+        //获取到滚动条滚动的距离,这个距离是当前移动元素的父级元素
+        //兼容google浏览器 var st = document.body.scrollTop
+        //兼容其他浏览器   var st = document.documentElement.scrollTop
+        var st = document.body.scrollTop || document.documentElement.scrollTop;
+        var sl = document.body.scrollLeft || document.documentElement.scrollLeft;
+
+        //pageX 和 pageY获取鼠标在当前页面的坐标，但IE8及以下不支持
+        var left = event.clientX
+        var top = event.clientY
+
+        tragBox.style.top = top + st +'px'
+        tragBox.style.left = left + sl + 'px'
+    }
+
+
+
+    /*/!*
+     *1.event.currentTarget   在事件冒泡阶段中的当前DOM元素
+     * *!/
+     $("p").click(function(event){
+         console.log(event.currentTarget === this);  //true
+     });
+
+
+    /!*
+     *2.event.data   当前执行的处理器被绑定的时候，包含可选的数据传递给jQuery.fn.bind
+     * *!/
+    $(".linkList a").each(function(i){
+        $(this).bind('click',{index:i},function(e){
+            alert('my index is' + e.data.index);  //0, 1, 2
+        });
+    });
+
+
+
+    /!*
+     *3.event.delegateTarget //委派事件，处理程序附加在当前操作元素的父元素上
+     * *!/
+
+    $(".box").on('click','button',function(event){
+        $(event.delegateTarget).css("background","red");  //父元素背景变红，当前元素不会发生改变
+    });
+
+
+    /!*
+     *4.event.isDefaultPrevented     //根据事件对象中是否调用过event.preventDefault()方法
+     *  event.isPropagationStopped() //确定event.stopPropagation() 事件方法是否(在那个事件对象上)调用过了
+     * *!/
+     $(".linkPrevented a").click(function(event){
+         alert(event.isDefaultPrevented());
+         event.preventDefault();  //阻止默认事件行为的触发
+         alert(event.isDefaultPrevented());
+     });
+
+
+
+    /!*5.event.preventDefault()  //阻止默认事件行为的触发
+    *   event.stopPropagation() //防止事件冒泡到DOM树上，不触发任何前辈元素上的事件处理函数
+    * *!/
+
+
+
+    /!*6.event.pageX  & event.pageY  显示鼠标相对于文件的左侧和顶部边缘的位置(即x轴、y轴的坐标值)
+    * *!/
+    $(document).bind('mousemove', function(e){
+        console.log("pageX：" + e.pageX + "pageY：" + e.pageY);
+    });
+
+
+
+    /!*7.event.target  //最初触发事件的DOM元素
+    *                 //比较event.target 和 this来确定事件是不是由于冒泡而触发的。
+    *                 //用于事件冒泡时处理事件委托
+    * *!/
+     /!*$("body").click(function(){
+         $("#log").html("clicked:" + event.target.nodeName);
+     });*!/
+
+     //例，简单的事件委托
+     function handler(event){
+         var target = $(event.target);
+         if(target.is("p")){
+             target.siblings("ul").toggle();
+         }
+     }
+    $("li p").click(handler).siblings("ul").hide();
+
+
+    /!*8.event.type   //点击所有锚点后弹出事件类型
+     * *!/
+    $("a").click(function(event){
+        alert(event.type);
+    });
+
+
+    /!*9.event.which   //针对键盘和鼠标事件code值， 确定你到底按的哪个键，或按钮
+    * *!/
+    $("#whichkey").bind('keydown',function(e){
+        $("#whichDiv").html(e.type +":"+ e.which);
+    });
+*/
+
+
+
+</script>
+</body>
+</html>

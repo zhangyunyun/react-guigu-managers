@@ -1,0 +1,80 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>筛选_查找孩子-父母-兄弟标签</title>
+    <style>
+        *{margin:0; padding:0;}
+        body{
+            padding: .25rem;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1" class="box" title="one">class为box的div1</div>
+    <div id="div2" class="box">class为box的div2</div>
+    <div id="div3">div3</div>
+    <span class="box">class为box的span</span>
+    <br/>
+    <div>
+        <ul>
+            <span>span文本1</span>
+            <li>AAAAA</li>
+            <li title="hello" class="box2">BBBBB</li>
+            <li class="box" id='cc'>CCCCC</li>
+            <li title="hello">DDDDDD</li>
+            <li title="two"><span>span文本2</span></li>
+            <span>span文本3</span>
+        </ul>
+        <span>span文本444</span><br>
+        <li>eeeee</li>
+        <li>EEEEE</li>
+    </div>
+
+    <script>
+        //////////////////// 筛选_过滤 //////////////
+        /* 
+            一.筛选_查找孩子-父母-兄弟标签
+                在已经匹配出的元素集合中根据选择器查找孩子/父母/兄弟标签
+                1. children(): 子标签中找
+                2. find() : 后代标签中找
+                3. parent() : 父标签
+                4. prevAll() : 前面所有的兄弟标签
+                5. nextAll() : 后面所有的兄弟标签
+                6. siblings() : 前后所有的兄弟标签
+
+        */
+    </script>
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+        /*
+           需求:
+                1. ul标签的第2个span子标签
+                2. ul标签的第2个span后代标签
+                3. ul标签的父标签
+                4. id为cc的li标签的前面的所有li标签
+                5. id为cc的li标签的所有兄弟li标签
+        */
+
+        $(function(){
+            //1. ul标签的第2个span子标签
+            $('ul').children('span:eq(1)').css('color','#f00')
+
+            //2. ul标签的第2个span后代标签
+            $('ul').find('span:eq(1)').css('background','#52c3fd')
+
+            //ul标签的父标签
+            $('ul').parent().css('background','#f6bdff')
+
+            //id为cc的li标签的前面的所有li标签
+            $('li#cc').prevAll('li').css('background','#fdeb52')
+
+            //id为cc的li标签的所有兄弟li标签
+            $('li#cc').siblings('li').css('font-size','40px','font-weight','bold')
+        })
+    </script>
+</body>
+</html> 

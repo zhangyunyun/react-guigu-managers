@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>数组</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    ////////////////////  数组  //////////////
+
+    /* 
+        1.数组的剩余方法
+            1)concat() 
+
+            2)join()  
+            
+            3)reverse()
+
+            4)sort()
+
+            5)find()  //查找出第一个符合条件的数组成员 并返回该成员 如果没有则返回undefined
+
+            6)findIndex()  //返回的是第一个符合条件的数组成员的下标, 返回下标值，否则返回-1
+
+            7)fill()  //填充
+
+            8)includes()  //数组是否包含某个元素,包含返回true,不包含返回false
+
+    */
+    var arr = [1,2]
+    var arr2 = [3,4]
+    var arr3 = [5,6]
+
+
+
+    //1.concat()方法
+    /* 
+        可以连接两个或多个数组，并将新的数组返回
+        不会影响原数组
+    */
+    result = arr.concat(arr2,arr3,'7','8')
+    console.log(result)  //[1, 2, 3, 4, 5, 6, "7", "8"]
+
+
+
+    //2.join()方法
+    /* 
+        可以将一个数组转换为一个字符串
+        该方法不会对原数组产生影响，而是将转换后的字符串作为结果返回
+        在join('连接符')中可以指定一个字符串作为参数，这个字符串将会成为数组中元素的连接符
+                        如果不指定连接符，默认使用,逗号作为连接符
+                        如果不想用任何连接符,就设置为空 arr.join('') 
+    */
+    arr = ["孙悟空","猪八戒","沙和尚"]
+    //var result = arr.join()  //孙悟空,猪八戒,沙和尚
+    result = arr.join("-") //孙悟空-猪八戒-沙和尚
+    console.log(result)   
+    console.log(typeof result)   //string
+
+    
+    
+    //3.reverse() 
+    /* 
+        将数组顺序颠倒，将颠倒后的数组作为返回值
+        原数组也发生改变(直接修改原数组),返回颠倒后的数组
+    */
+    arr = ["孙悟空","猪八戒","沙和尚"]
+    result = arr.reverse()
+    console.log(result)  //["沙和尚", "猪八戒", "孙悟空"]
+
+    
+    
+    //4.sort()
+    /* 
+       1)默认排序
+          对数组中的元素进行排序
+          原数组顺序也发生改变(直接修改原数组),返回排序后的数组
+          默认会按照Unicode编码进行排序
+          对数字进行排序时，可能会得到错误的结果
+
+        2)自定义排序规则
+            1)sort()中添加一个回调函数，来指定排序规则
+                   回调函数中定义两个形参
+                   浏览器将会分别使用数组中的元素作为实参去调用回调函数
+                   确定两个形参 x 一定是在 y 的前面
+                   var arr = [1,10,5,20,8]
+                   arr.sort(function(x,y){
+                     //前面的值大于后面的值，就交换位置
+                     if(x > y){
+                        return 1
+                     }
+                     //前面的值小于后面的值，就不交换位置
+                     if(x < y){
+                        return -1
+                     }
+                     return 0
+                   })
+
+            2)浏览器会根据回调函数的返回值来决定元素的顺序
+                如果返回一个大于0的值(return 1)，则元素会交换位置
+                如果返回一个小于0的值(return -1)，则元素不交换位置
+                如果返回一个0(return 0)，则认为两个元素相等，也不交换位置
+
+            3)简洁方式
+               升序排列,则返回 x-y (正值)
+               降序排列,则返回 y-x (负值)
+    */
+   arr = ["a","b","c","d","e","a","c"]
+   result = arr.sort()
+   console.log(arr)
+   console.log(result)  //["a", "a", "b", "c", "c", "d", "e"]
+
+
+   //普通方式
+   arr = [1,10,5,20,8]
+   arr.sort(function(x,y){
+        //前面的值大于后面的值，就互换位置(升序)
+        if(x > y){
+            return 1
+        }
+        //前面的值小于后面的值，就互换位置(降序)
+        if(x < y){
+            return -1
+        }
+        return 0
+    })
+    console.log(arr)  //[1, 5, 8, 10, 20]
+
+
+    //简写方式(升序排列)
+    arr = [1,10,5,20,8]
+    arr.sort(function(x,y){
+        return x - y
+    })
+    console.log(arr)  //[1, 5, 8, 10, 20]
+
+
+    //简写方式(降序排列)
+    arr = [1,10,5,20,8]
+    arr.sort(function(x,y){
+        return y - x
+    })
+    console.log(arr)  //[20, 10, 8, 5, 1]
+
+
+    //5.find()
+    /* 
+        查找出第一个符合条件的数组成员,并返回该成员
+        如果没有找到就返回undefined
+    */
+    let arrFind = [23,40,50]
+    let resFind = arrFind.find((val,index,arr) => {
+        return val > 30
+    })
+    console.log(resFind) //输出40
+
+    //findIndex()
+    /* 
+        找到的是位置，找不到返回 -1
+    */
+    let arrFindIndex = [23,40,50]
+    let resFindIndex = arrFindIndex.findIndex((val,index,arr) => {
+        return val > 30
+    })
+    console.log(resFindIndex) //输出1
+
+
+    //fill() 填充
+    /* 
+        接收两个参数 
+        arr.fill(填充的内容,开始位置(包括),结束位置(不包括))
+     */
+    let arrFill = new Array(4)
+    arrFill.fill('默认')
+    console.log(arrFill) //['默认','默认','默认','默认']
+    arrFill.fill('测试',2,3) //['默认','默认','测试','默认']
+    console.log(arrFill)
+
+
+    //includes()
+    /* 
+        是否包含某个元素 包含则返回true 不包含则返回false
+    */
+    let arrIncludes = ['Vue','React','Javascript','uniapp']
+    let resIncludes = arrIncludes.includes('Vue')
+    console.log(resIncludes)
+</script> 
+</body>
+</html>

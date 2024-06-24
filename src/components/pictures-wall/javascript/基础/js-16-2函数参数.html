@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>函数</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  函数参数  //////////////
+
+    //显式参数 Parameters关键字    
+    
+    //函数隐含参数(内部属性)
+    /* 
+        arguments
+        this
+    */
+
+    //rest参数
+
+    
+    /*
+        1.显式参数 Parameters关键字
+            在函数定义时列出
+            函数定义时显示参数没有指定数据类型
+            
+            参数的类型可以是任何数据类型
+            参数也可以是一个对象
+                当参数过多时，可以将参数分装到对象中，通过对象传递
+            
+            实参可以是一个对象，也可以是一个函数 
+                mianji() --是指调用函数
+                         --相当于使用的函数的返回值
+                mianji  --是指函数对象
+                        --相当于使用函数对象
+    */
+	//----1)参数可以是任何数据类型
+    function param(parameter1, parameter2, parameter3){
+        //要执行的代码
+    }
+    console.log(param.length);  //3
+    console.log(param.name);    //param
+
+
+    //----2)参数可以是一个对象(对象作为参数传入)
+    var obj = {
+        parameter1:'1',
+        parameter2:'2',
+        parameter3:'3'
+    }
+    function param1(o){
+        console.log('parameter1='+o.parameter1)
+        console.log('parameter2='+o.parameter2)
+        console.log('parameter3='+o.parameter3)
+    }
+    param1(obj)
+
+
+    //----3)函数作为参数传入
+    function param2(f){
+        console.log(f)
+    }
+    //param2(param1)
+    param2(function(){console.log('函数作为参数传入测试')})
+
+
+    /*
+        2.隐式参数 在函数内部，有两个特殊的对象(是浏览器自带过来的)
+            1)arguments --该对象不是数组，是一个类数组对象
+                            可以通过索引来操作数据
+                            也可以获取长度
+                            它只在函数内部起作用，并且永远指向当前函数的调用者传入的所有参数
+                        --在调用函数时，我们所传递的实参都会在arguments中保存  
+                        --arguments.length可以用来获取实参的长度
+                        --我们即使不定义形参，也可以通过arguments来调用所有实参，只不过比较麻烦
+                            arguments[0]  表示第一个实参
+                            arguments[1]  表示第二个实参
+                            ...
+                        --它里边有一个属性叫做callee
+                            这个属性对应一个函数对象，就是当前正在指向的函数的对象
+
+
+                        注：在函数调用时传递给函数真正的值，如果没有提供隐式参数，默认设置为：undefined
+                            函数对隐式参数没有进行类型检测
+                            函数对隐式参数的个数没有进行类型检测
+                            它只在函数内部起作用，并且永远指向当前函数的调用者传入的所有参数
+                            可以获得调用者传入的所有参数（即函数不定义任何参数，还是可以拿到参数的值）
+
+            2)this  this引用的是一个对象
+                    this 引用会根据代码的上下文语境自动改变其引用对象
+                    this 引用的规则： 
+                        ----(1)在最外层代码中，this引用的是全局对象
+                        ----(2)在函数内this根据函数调用方式的不同而有所不同：
+                                函数的调用方式          this引用的对象(window)
+                                构造函数               所生成的对象
+                                调用对象的方法         当前对象
+                                apply或call调用        参数指定的对象
+                                其他方式               全局对象（window） 
+    */
+    //设置默认参数值
+    function fooDefault1(x, y){
+        x = x || 0;
+    }
+    //或者
+    function fooDefault2(x, y){
+        if(x === undefined){
+            x = 0;
+        }
+    }
+
+
+	/*
+		instanceof  检测数值是不是谁的对象
+		hasOwnProperty 用于检测实例对象自身中是否含有某个对象
+	*/
+    function fun(a,b){
+        console.log(arguments instanceof Array) //检测arguments是不是数组的实例对象 false
+        console.log(Array.isArray(arguments))  //检测是否是数组 false
+        console.log(arguments.length)  //2
+        console.log(arguments.callee == fun)
+    }
+    fun("hello",true)
+
+
+    //例1
+    function foo(x){
+        console.log("x" + "=" + x);  //x = 10
+        for(var i=0; i<arguments.length; i++){
+            var arg = 'arg' + i + "=" + arguments[i];
+            console.log(arg);   //arg0 = 10  arg1 = 20  arg2 = 30
+        }
+    }
+    foo(10,20,30);
+
+
+    //例2
+    function foo1() {
+        if (arguments.length === 0) {
+            return 0;
+        }
+        var m = arguments[0];
+        return m >= 0 ? m : -m;
+
+    }
+    console.log(foo1());   //0
+    console.log(foo1(10));  //10
+    console.log(foo1(-20));  //20
+
+    //例3 计算所有参数之和
+    function foo2(){
+        var sum = 0;
+        for(var i=0; i<arguments.length; i++){
+            sum += arguments[i];
+        }
+        return sum;
+    }
+    var x = foo2(10, 20, 30, 40);
+    console.log(x);  //100
+
+
+     //例4  找出值中的最大值,计算所有参数之和
+     function findMax(){
+         // max;
+         var sum = 0;
+         for(var i=0; i<arguments.length;i++){
+             //max = arguments[i];
+             sum += arguments[i];
+         }
+         //return max;
+         return sum;
+     }
+    //document.write(findMax(4,5,6));  //6
+    console.log(findMax(4,5,6));  //15
+
+
+
+    /* 
+        3.rest参数
+    */
+    function fRest(a, b, ...rest){
+        var i, rest = [];
+        if (arguments.length > 2) {
+            for (i = 2; i<arguments.length; i++) {
+                rest.push(arguments[i]);
+            }
+        }
+        console.log("a = " + a);
+        console.log("b = " + b);
+        console.log(rest);
+    }
+    fRest(1, 2, 3, 4, 5);
+    //a = 1
+    //b = 2
+    //array[3,4,5]
+
+    fRest(1);
+    //a = 1
+    //b = undefined
+    //array[]
+
+    //例1 通过值传递参数  (不会改变初始值)
+    var x = 1;
+    function passValue(x){
+        x++;
+        console.log(x);  //2
+    }
+    passValue(x);
+    console.log(x);  //1
+
+    //例2 通过对象传递参数  (会改变对象属性的值)
+    var obj = {
+        x:1
+    }
+    function passObj(obj){
+        obj.x++;
+        console.log(obj.x);  //2
+    }
+    passObj(obj);
+    console.log(obj.x);  //2
+</script>
+</body>
+</html>

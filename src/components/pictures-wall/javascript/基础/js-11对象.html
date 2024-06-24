@@ -1,0 +1,523 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>对象</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    ////////////////////  对象  //////////////
+
+    //对象  是一组由键、值组成的无序集合数据类型，由若干键值对组成，是属性和方法的容器
+    /*
+            --String(字符串)、
+            --Number(数字)、
+            --Boolean(布尔值)、
+            --Null(空值)、
+            --Undefined(未定义)之外，
+                除了以上这5种类型属于基本数据类型，以后我们看到的值
+                只要不是上边的5种，全都是对象
+            --Object  对象
+    
+        ----创建对象    
+
+        ----对象赋值    a.对象字面量方式创建 
+                            语法：var obj = {
+                                    name:'xxx',
+                                    age:18,
+                                    say:function(){
+										alert('111')
+                                    }
+                                  }
+								  
+                        b.new关键字创建
+                            语法：var obj = new Object()
+                                  obj.name = 'xxx'
+                                  obj.age = 18 
+                                  obj.say = function({
+									alert('111')
+                                  })
+
+                        c.工厂函数创建多个对象
+                          工厂函数创建的对象的类型都是Object(Object{}),无法区分多种类型对象(如 Person{}，Dog{})
+                            语法：function createPerson(name,age){
+                                    //1.创建一个新的对象
+                                    var obj = new Object()
+
+                                    //2.向对象中添加属性
+                                    obj.name = this.name
+                                    obj.age = this.age
+                                    obj.say = function(){
+                                        console.log(this)
+                                    }
+
+                                    //3.将新对象返回
+                                    retrun obj
+                                  }
+                                  //4.调用
+                                  var result1 = createPerson('孙悟空',18)
+                                  var result2 = createPerson('猪八戒',28)
+								  
+                        d.构造函数方式
+                              详细查看js-20构造函数   
+							  
+        ----向对象添加属性      对象.属性名 = 属性值
+        ----读取对象中的属性    对象.属性名
+        ----修改对象的属性值    对象.属性名 = 新属性值
+        ----删除对象的属性      delete 对象.属性名
+        ----对象方法
+        ----对象操作  添加、删除、检测属性
+    */
+
+    //基本数据类型  JS中的变量可能包含两种不同数据类型的值：
+                   //基本数据类型和引用数据类型。
+                   //JS中一共有5种基本数据类型：String、Number、Boolean、Undefined、Null。
+                   //基本数据类型的值是无法修改的，是不可变的。
+                   //基本数据类型的比较是值的比较，也就是只要两个变量的值相等，我们就认为这两个变量相等
+           
+    //引用数据类型  引用类型的值是保存在内存中的对象。
+                   //当一个变量是一个对象时，实际上变量中保存的并不是对象本身，而是对象的引用。
+                   //当从一个变量向另一个变量复制引用类型的值时，会将对象的引用复制到变量中，并不是创建一个新的对象。
+                   //这时，两个变量指向的是同一个对象。
+				   //因此，改变其中一个变量会影响另一个。
+				   
+    //栈和堆   JavaScript在运行时数据是保存到栈内存和堆内存当中 
+                   //栈内存用来保存变量和基本类型
+                   //堆内存用来保存对象 
+               //声明一个变量时实际上就是在栈内存中创建了一个空间用来保存变量           
+                    //如果是基本类型则在栈内存中直接保存
+                    //如果是引用类型则会在堆内存中保存，变量中保存的实际上是对象在堆内存中的地址
+
+    //数组  数组也是对象的一种
+            //数组是一种用于表达有顺序关系的值的集合的语言结构。
+            //创建数组：
+            //     var array = [1,44,33];
+            //数组内的各个值被称作元素。每一个元素都可以通过索引（下标）来快速读取。索引是从零开始的整数
+
+    //函数  JavaScript中的函数也是一个对象
+            //查看js-11函数.html  
+
+
+
+    /*
+        对象  是一种复合型数据类型，对象中可以保存多个不同数据类型的属性
+        对象分类
+            1.内建对象
+                -由ES标准中定义的对象，在任何的ES的实现中都可以使用
+                比如：Math  String  Number  Boolean  Function  Object...
+            2.宿主对象
+                -由js的运行环境提供的对象，目前来讲主要是指浏览器提供的对象
+                比如：BOM(浏览器对象模型)  DOM(文档对象模型)
+                    console.log()
+                    document.write()
+            3.自定义对象
+                -由开发人员自己创建的对象
+    */
+
+
+
+    /*
+      ------1.创建对象  可以使用字符来定义和创建 JavaScript 对象
+    */
+
+        //(1)方法一  对象字面量表达式,可以直接在创建对象时，直接指定对象中的属性
+        /*           属性名和属性值是一对一对的名值对结构
+                     名和值之间用分号(:)链接,多个名值对之间用逗号(,)分隔，最后一个名值对不用逗号
+                     如果要使用特殊的名字，必须要用引号("")引起来
+                     语法： {
+                               属性名：属性值，
+                               属性名：属性值,
+                               ...
+                            }
+        
+        */
+        var xiaoming = {
+            firstName:"李",
+            lastName:"小明",
+            age:50,
+            eyeColor:"blue",
+            test:{name:'小明'},  //对象也可以作为属性值
+            doSth:function(){
+                console.log("哈哈哈哈哈");
+            }
+        }
+
+        //(2)方法二  new 实例化一个对象(new Object()后面是一个构造函数constructor)              
+        /*      
+					构造函数是专门用来创建对象的函数 
+					使用typeof检查一个对象时，会返回object 
+                    语法：var obj = {}
+                          var obj = new Object()
+        */
+        var personTwo = new Object();
+        personTwo.name = "John";
+        personTwo.age = 60;
+        personTwo.doSth = function(){
+            console.log("哈哈哈哈哈");
+        }
+        console.log(personTwo);
+
+        
+        var personThree = new Object();
+        personThree["name"] = "Sun";
+        personThree["age"] = 60;
+
+
+        //(3)方法三 使用工厂方法创建对象(批量生产对象)
+        //----如下方式创建多个对象不太优雅，重复代码太多
+        var obj = {
+            name:'孙悟空',
+            age:18,
+            gender:'男',
+            sayName:function(){
+                alert(this.name)
+            }
+        } 
+        var obj1 = {
+            name:'猪八戒',
+            age:28,
+            gender:'男',
+            sayName:function(){
+                alert(this.name)
+            }
+        } 
+        var obj2 = {
+            name:'沙和尚',
+            age:38,
+            gender:'男',
+            sayName:function(){
+                alert(this.name)
+            }
+        } 
+
+        //----如下方法批量创建对象
+        function createPerson(name,age,gender){
+            //1.创建一个新的对象
+            var obj = new Object();
+
+            //2.向对象中添加属性
+            obj.name = name,
+            obj.age = age,
+            obj.gender = gender,
+            obj.say = function(){
+                console.log(this)
+            }
+
+            //3.将这个新的对象返回
+            return obj;
+        }
+
+        //4.调用
+        var result1 = createPerson('孙悟空',18,'男');
+        var result2 = createPerson('猪八戒',28,'男');
+        var result3 = createPerson('沙和尚',38,'男');
+
+        //5.打印输出
+        console.log(result1)
+        console.log(result2)
+        console.log(result3)
+
+
+        function createDog(name,age){
+            //1.创建一个新的对象
+            var obj = new Object();
+
+            //2.向对象中添加属性
+            obj.name = name,
+            obj.age = age,
+            obj.say = function(){
+                console.log(this)
+            }
+
+            //3.将这个新的对象返回
+            return obj;
+        }
+        var dog = createDog('旺财',18) 
+        console.log(dog)
+
+
+
+    /*
+      ------2.对象赋值  对象也是一个变量，但对象可以包含多个值（多个变量），对象是变量的容器
+    */
+
+        var car = {
+            type:"Fiat",
+            model:500,
+            color:"white"
+        }
+        //3个值 Fiat 500 white
+        //3个变量 type model color
+
+        
+
+    /*
+     ------3.向对象添加属性(属性名和属性值)   
+                语法一：对象.属性名 = 属性值
+     
+                属性名：必须是一个有效的变量名，不强制要求遵守标识符的规范
+                        如果属性名包含特殊字符(空格、连字符、保留字),
+                        必须用引号""或[""]括起来
+                        语法二：对象["属性名"] = 属性值  a.这种形式去操作属性，更加的灵活
+                                                        b.在[]中可以直接传递一个变量，这样变量值是多少就就会读取相应的属性
+                                                        c.读取值的时候也要采用这种方式
+                                                           语法：对象["属性名"] 
+                属性值：可以是任意的数据类型，甚至也可以是一个对象
+                                                 也可以是一个函数，这个函数就是对象的方法
+                                                                   调用这个函数就说是调用对象的方法(method)
+    */
+        //实例1
+        var person1 = {
+            name: '小红',
+            'middle-school': 'No.1 Middle School'
+        };
+        document.write(person1['middle-school'] + '<br>');
+
+        //实例2 使用[""]向对象中添加属性
+        person1["123"] = 789;
+        person1["nihao"] = "你好";
+        var p = "nihao";
+        console.log(person1[p])
+
+       //实例3 将对象person1_one作为person1的属性值
+        var personObj = new Object();
+        personObj.name = "我是对象属性值"
+        person1.test = personObj
+        console.log(person1)
+        console.log(person1.test.name) //我是对象属性值
+
+        //将函数作为属性值
+        person1.sayName = function(){
+            console.log('我是函数属性值')
+        }
+        console.log(person1)
+        console.log(person1.sayName())
+
+
+    /*
+     *------4.读取对象中的属性值   
+                 语法一：对象.属性名
+                 语法二：对象["属性名"]
+     * */
+
+        var person2 = {
+            firstName:"Jack",
+            lastName:"Soon",
+            age:50,
+            eyeColor:"blue"
+        }
+        document.write(person2.firstName + ' '+ person2.lastName + '<br>');       //访问对象属性1
+        document.write(person2["firstName"] + ' '+ person2["lastName"] + '<br>');    //访问对象属性2
+
+
+    /*
+     *------5.修改对象的属性值  对象.属性名 = 属性值(新值)
+     * */
+
+
+    /*
+     *------6.删除对象的属性  delete 对象.属性名
+     * */
+
+
+    /*
+     *------7.对象方法   对象的方法定义了一个函数，并作为对象的属性存储。
+     *                   对象方法通过添加 () 调用 (作为一个函数)
+     * */
+
+        var person3 = {
+            firstName:"John",
+            lastName:"Doe",
+            age:50,
+            eyeColor:"blue",
+            fullName: function(){
+                return this.firstName +  ' ' + this.lastName;
+            }
+        }
+        var name = person3.fullName();
+        document.write(name + '<br>');
+
+        person3.eat = function(){
+            console.log("I am a eat");
+        }
+
+
+    /*
+     *------8.对象操作   添加、删除、检测属性
+     * 
+     * */
+
+        var person4 = {
+            firstName:"Jack"
+        }
+
+        //添加
+        person4.lastName = "Soons";
+        person4.age = 60;
+        console.log(person4);
+        document.write(person4.age + '<br>');
+
+        //删除delete
+        delete person4.lastName
+        console.log(person4.lastName);   //undefined
+        delete person4["firstName"];
+        console.log(person4.firstName);   //undefined
+
+        //检测对象中是否包含某个属性
+        /*
+		    方式一：in
+			    定义：检测对象中是否存在某个属性				
+			          检测属性存在，不一定是当前对象的，而是当前对象继承得到的
+				语法："属性名" in 对象
+				缺点：如果属性来自对象的原型，它仍然会返回 true
+				实例：'name' in obj  //true
+				      'toString' in obj  //true
+				
+		    方式二：Reflect.has() 
+			    定义：允许我们检查属性是否在对象中，它像 in Operator 一样作为函数工作。
+				语法：Reflect.has(obj,'属性名')
+				缺点：如果属性来自对象的原型，它仍然会返回 true
+				实例：Reflect.has(obj,'name')  //true
+				      Reflect.has(obj,'toString')  //true
+				
+			方式三：hasOwnProperty()
+			    定义：它可以正确地区分对象本身的属性和其原型的属性
+				      判断是不是自身拥有的，而不是继承得到的，可以使用hasOwnProperty()方法
+				语法：obj.hasOwnProperty('属性名')
+				缺点：就是如果对象是用Object.create(null)创建的话，那么就不能用这个方法了
+				实例：obj.hasOwnProperty('name')  //true
+				      obj.hasOwnProperty('toString')  //false
+					  
+					  let obj = Object.create(null)
+					  obj.name = '测试'
+					  obj.hasOwnProperty('name') //obj.hasOwnProperty is not a function
+				    
+            方式四：Object.prototype.hasOwnProperty()
+			    定义：该方法是直接调用内置的有效用函数，跳过原型链
+				语法：Object.prototype.hasOwnProperty.call(obj,'属性名')
+				      let obj = Object.create(null)
+					  obj.name = '测试'
+					  Object.prototype.hasOwnProperty.call(obj,'name') //true
+					  Object.prototype.hasOwnProperty.call(obj,'toString') //false
+
+            方式五：Object.hasOwn()
+			    定义：由于前面的几种方式都不优雅,
+				      如果指定的对象具有指定的属性作为其自己的属性,则Object.hasOwn()静态方法返回 true。
+					  如果属性被继承或不存在，则该方法返回 false。
+				语法：Object.hasOwn(obj,'属性名')
+                实例：Object.hasOwn(obj,'name')	//true
+					  Object.hasOwn(obj,'toString') //false				
+				
+		*/
+        console.log( "firstName" in person4 );  //false
+        console.log( "age" in person4 );        //true
+        console.log( "toString" in person4 );   //true
+
+        console.log(person4.hasOwnProperty("firstName")); //false
+        console.log(person4.hasOwnProperty("age"));       //true
+        console.log(person4.hasOwnProperty("toString"));  //false
+
+
+    /*
+    * 栈和堆  
+            基本数据类型和引用数据类型区别
+            基本数据类型
+            String   Number  Boolean  Null  Undefined
+
+            引用数据类型
+            Object
+    * */
+    var a = 123;
+    var b = a;
+    a++;
+    var c = "hello";
+    var d = {
+            name:"sunwukong",
+            age:18
+        };
+    console.log("a=" + a) //124   
+    console.log("b=" + b) //123 
+
+
+    var test1 = new Object()
+    test1.name = "孙悟空"
+
+    var test2 = test1
+    test1.name = "猪八戒"  
+
+    test2 = null 
+
+    console.log(test1) //{name:"猪八戒"}
+    console.log(test2) //null
+
+
+
+    var n = 10;
+    var m = 10;
+    console.log(n == m) //true
+
+    var test3 = new Object()
+    var test4 = new Object()
+    console.log(test3 == test4) //false
+
+    test3.name = "shs"
+    test4.name = "shd"
+    console.log(test3)
+    console.log(test4)
+
+    
+    /* 
+           栈内存              堆内存
+              ↓                  ↓
+        变量    值               
+        d      0x000      
+        c      hello      
+        b      123           0x000   name="sunwukong"
+        a      124                   age=18 
+    */
+
+
+    var obj = new Object();
+    obj.name = 'swk'
+
+    var obj2 = obj
+    obj.name = 'zbj'
+    /* 
+        0x123是一个内存地址(内存地址就是对象的引用)
+        obj、obj2这两个变量都指向0x123同一个地址
+             
+           栈内存              堆内存
+              ↓                  ↓
+        变量    值               
+        
+        obj2   0x123          
+        obj    0x123        0x123   name = "swk"      
+    */
+
+
+    var obj3 = new Object();
+    obj3.name = 'shs'
+    var obj4 = new Object();
+    obj4.name = 'shd'
+    /* 
+        0x123是一个内存地址(内存地址就是对象的引用)
+        obj、obj2这两个变量都指向0x123同一个地址
+             
+           栈内存              堆内存
+              ↓                  ↓
+        变量    值               
+        
+        obj4   0x124        0x124    name = 'shd'      
+        obj3   0x123        0x123    name = 'shs'   
+    */
+
+</script>
+</body>
+</html>

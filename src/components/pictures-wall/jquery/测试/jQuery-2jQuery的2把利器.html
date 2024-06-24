@@ -1,0 +1,50 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>引用方法</title>
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+    <button id='btn1'></button>
+    <script>
+        //////////////////// jQuery的2把利器  //////////////
+        /* 
+            1.jQuery核心函数
+              简称：jQuery函数($/Jquery)
+              jQuery库向外暴露的就是$/jQuery
+              引入jQuery库后，直接使用$即可
+                   当函数用 $(xxx)
+                   当对象用 $.xxx()
+
+            2.jQuery核心对象
+              简称jQuery对象(是指 执行$()返回的对象)
+              得到jQuery对象: 执行jQuery函数返回的就是jQuery对象
+              使用jQuery对象: $obj.xxx()
+        */
+    </script>
+
+    <script src="./js/jquery-1.11.1.min.js"></script>
+    <script>
+        //jQUery核心函数 直接可用
+        console.log($, typeof $)  //function
+        console.log(jQuery === $)  //true
+
+        //jQuery核心对象
+        var btn1 = $('#btn1')
+        console.log($() instanceof Object)  //true
+
+        //
+        /* (function(window){
+            var jQuery = function(){
+                return xxx()
+            }
+
+            window.$ = window.jQuery = jQuery
+        })(window) */
+    </script>
+</body>
+</html> 

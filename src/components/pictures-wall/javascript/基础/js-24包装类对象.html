@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>标准对象</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  包装对象  //////////////
+
+    //包装对象             
+    /*      包装对象用new创建(不建议使用包装对象)
+            包装类可以将基本数据类型的数据转换为对象 
+            包装对象的数据类型是object
+        
+        String()对象
+            -可以将基本数据类型字符串转换为String对象
+        Number()对象  
+            -可以将基本数据类型的数字转换为Number对象
+        Boolean()对象 
+            -可以将基本数据类型的布尔值转换为Boolean对象
+    */
+
+    console.log(typeof 123);   //number
+    console.log(typeof NaN);   //number
+    console.log(typeof true);  //boolean
+    console.log(typeof undefined);  //undefined
+    console.log(typeof Math.abs);   //function
+    console.log(typeof null);    //object
+    console.log(typeof []);   //object
+    console.log(typeof {});  //object
+
+    /*
+     *1.包装对象    不建议使用new创建包装类
+                    new Number()
+                    new Boolean()
+                    new String() 
+
+                用String()来转换任意类型到string，
+                    或者直接调用某个对象的toString()方法
+                   （除了null和undefined，number对象调用..toString()是两个点）
+                不必把任意类型转换为boolean再判断，可直接写
+                    if(myVal){...}
+                
+                typeof操作符可以判断出number boolean string function 和undefined
+                    判断Array要使用Array.isArray(arr);
+                    判断null请使用myVal === null;
+                    判断某个全局变量是否存在用typeof window.myVal === 'undefined';
+                    判断函数内部某个变量是否存在用typeof myVal === 'undefined'
+
+                不建议使用：实际应用中不会使用基本数据类型的对象
+                    如果使用基本数据类型的对象，在做一些比较时可能会带来一些不可预期的结果
+
+                         
+     * */
+    var n = new Number(123);
+    console.log(n);
+    var b = new Boolean(true);
+    console.log(b);
+    var s = new String('str');
+    console.log(s);
+
+    console.log(typeof new Number(123));  //object
+    console.log(new Number(123) === 123);  //false
+
+    console.log(typeof new Boolean(123)); //object
+    console.log(new Boolean(123) === 123); //false
+
+
+    /* 
+        方法和属性只能天剑给对象，不能添加给基本数据类型
+            基本数据类型的值去调用属性和方法时
+            浏览器会临时使用包装类将其转换为对象，然后再调用对象的属性和方法
+    */
+
+    var  s = 123
+    s = s.toString();
+
+    s.hello = "你好"  
+
+    console.log(s)   //123
+    console.log(typeof s)  //string
+
+    console.log(s.hello)  //undefined
+</script>
+</body>
+</html>

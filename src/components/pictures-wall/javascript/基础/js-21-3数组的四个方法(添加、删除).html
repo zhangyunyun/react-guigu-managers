@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>数组</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    ////////////////////  数组  //////////////
+
+    
+    /* 
+       1.数组的方法
+    */
+ 
+    /* 
+        1.数组的方法
+            1)push() 向数组末尾添加一个或多个元素，并返回数组的新的长度 
+            2)pop()  删除数组最后一个元素，并返回被删除的元素
+            
+            3)unshift() 向数组开头添加一个或多个元素，并返回数组的新的长度
+                        向前面插入元素后，其他的元素索引值会依次调整
+            4)shift()  删除数组第一个元素，并返回被删除的元素
+                       删除前面插入元素后，其他的元素索引值也会依次调整     
+    */
+    //1.push()方法
+    var arr = ["孙悟空","猪八戒","沙和尚"]
+    var result1 = arr.push("蜘蛛精")
+    console.log(arr)    //["孙悟空", "猪八戒", "沙和尚", "蜘蛛精"]
+    console.log(result1) //4  返回数组的长度
+
+
+    //2.pop()方法
+    var result2 = arr.pop()
+    console.log(arr)  //["孙悟空", "猪八戒", "沙和尚"]
+    console.log(result2) //蜘蛛精
+
+
+    //3.unshift()方法
+    var result3 = arr.unshift('玉兔精')
+    console.log(arr) //["玉兔精", "孙悟空", "猪八戒", "沙和尚"]
+    console.log(result3) //4  返回数组的长度
+
+    //4.shift()方法
+    var result4 = arr.shift()
+    console.log(arr) //[ "孙悟空", "猪八戒", "沙和尚"]
+    console.log(result4)//玉兔精
+</script> 
+</body>
+</html>

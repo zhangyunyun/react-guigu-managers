@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>循环</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  循环  //////////////
+
+    //循环
+    //for
+    //for in
+    //for of  ES6新增遍历Array、Map、Set
+    //while
+    //do while
+
+    //break    //退出当前的循环(用于循环)
+    //continue //跳过当次循环
+    //return   //结束整个函数(用于函数)
+    //label
+
+
+    /*
+     *1.for语句 for(语句1；语句2；语句3)
+                    {
+                        被执行的代码块
+                    }
+                //初始化表达式，初始化计数器一个初始值
+                //判断条件表达式，判断给定的状态是否为真，执行代码，否则跳出循环
+                //循环操作表达式，改变循环条件，修改计数器的值
+     * */
+    //例：循环列表
+    var arrPhone = ["Apple", "Vivo", "Oppo"];
+    for(var i=0; i < arrPhone.length; i++){
+        var listText = '<li>'+ arrPhone[i] +'</li>';
+        $(".listBox").append(listText);
+    }
+
+    //例：嵌套循环
+    /*9*9乘法表*/
+    for(var i=1; i<=9; i++){
+        //document.write("*");
+        for(var j=1; j <= 9-i; j++){
+            document.write("*");
+        }
+        document.write("<br>");
+    }
+
+
+    /* 
+       测试如下程序的性能
+       在程序执行前，开启计时器
+       console.time("计时器的名字")可以用来开启一个计时器
+       它需要一个字符串作为参数，这个字符串将会作为计时器的标识
+       console.time('test')
+    */
+
+    //开启计时器
+    console.time('test')
+
+    /*输出2-100之间的质数*/
+    //质数是大于1的自然数
+    var count = 0;
+    for(var i=2; i<=100; i++){
+        //console.log(i);
+
+        //创建一个布尔值，用来保存结果，默认i是质数
+        var flag = true; //当前的值是质数
+
+        //判断i是否是质数
+        //获取到2-i之间的所有的数
+        for(var j=2; j<Math.sqrt(i); j++){
+            //console.log(j);
+
+            //判断i是否能被j整除
+            if(i % j == 0){
+                //console.log(i + "不是质数");
+
+                //如果进入判断则证明i不是质数,修改flag值为false
+                flag = false;
+
+                //一旦进入判断，则证明i不可能是质数了，此时循环再执行已经没有任何意义了
+                //使用break来结束循环
+                break;
+
+                //不加break 11、12、18ms
+                //加break  4、5、6、9ms
+                //修改j<=Math.sqrt(i)后  
+            }
+        }
+
+        //如果是质数，则打印i的值
+        if(flag){
+            console.log(i + "是质数");
+
+            count++;
+        }
+    }
+    console.log(count);
+
+    //终止计时器
+    //console.timeEnd()用来停止一个计时器，需要一个计时器的名字作为参数
+    console.timeEnd('test')
+
+    //对一个数进行开方，缩小取值的范围
+    //Math.sqrt()
+    var result = Math.sqrt(4)
+    console.log(result)
+
+
+    //例：拼接字符串
+    //1.用连接符 + 把字符串连起来
+    var str = "a";
+    str += "b";
+    //document.write(str + "<br>");   //ab
+
+    //2.以数组作为中介用join链接
+    var m = "hhh",
+        n = "bbb";
+    var arrStr = new Array();
+    arrStr.push(m);
+    arrStr.push(n);
+    var arrStrNew = arrStr.join(",");
+    document.write(arrStrNew + "<br>");
+
+
+    //3.利用对象属性连接字符串
+    var a = "haha";
+    function strAdd(){
+        this.str = new Array();
+    }
+
+    strAdd.prototype.append = function(a){
+        this.str.push(a);
+    }
+
+    strAdd.prototype.toString = function(){
+        return this.str.join();
+    }
+
+    var myStr = new strAdd;
+    myStr.append(a);
+    var myStrResult = myStr.toString();
+    //document.write(myStrResult + '<br>');
+
+
+
+    /*
+     *2.for in语句  循环遍历对象的属性
+                    
+                    语法：for(var i in object)
+                            {
+                                执行的代码块
+                            }
+     * */
+
+
+
+    /*
+     *3.while语句 //循环先判断条件表达式的返回值为真时，执行{}中的语句
+                  //直到条件表达式返回值结果为假时退出循环
+
+                语法：while(条件)
+                        {
+                            代码块
+                        }
+              
+     * */
+     var count = 0;
+     while(count <= 10){
+         //document.write("count is " + count + "<br>");
+         count ++;
+     }
+
+
+    /*
+     *4.do...While //先执行一次循环后，再判断条件是否成立
+                   //即使判断条件不成立，循环语句中的代码段至少要被执行一次
+                   //结尾的分号(;)
+                   语法：do{
+                            代码块
+                         }while(条件)
+     * */
+    var number = 0;
+    do{
+        //document.write("number is " + number + "<br>");
+        number++;
+    }while(number < 0);
+
+
+    /*
+     *5.break  跳出循环(终止一个循环)
+     *         1)只能用于循环语句和switch，不能在if语句中使用break和continue
+     *         2)只对离他最近的循环起作用
+     *         3)多个嵌套循环语句，可为循环语句创建一个label，来标识当前的循环，结束指定的循环
+     *           label名(label名为任意名字)：循环语句
+     * */
+    //-----------例1
+    var x = "";
+    for(var i=0; i< 10; i++){
+        if(i == 3){
+            break;  //对整个for循环起作用
+        }
+        x = x + 'number is ' + i + '<br>';
+    }
+    document.write(x);
+
+    //-----------例2
+    if(true){
+        //break;   //报错
+        console.log("Hello Word");
+    }
+
+    //-----------例3
+    for(var i=0; i<5; i++){
+        console.log("@--外部循环" + i)
+        for(var j=0; j<5; j++){
+            break;  //只对内部循环起作用(即对离它最近的循环起作用)
+            console.log("---内部循环" + j);
+        }
+    }
+
+    outer:
+    for(var i=0; i<5; i++){
+        console.log("@--外部循环" + i);
+        for(var j=0; j<5; j++){
+            break outer;
+            console.log("---内部循环" + j);
+        }
+    }
+
+
+    /*
+     *6.continue  语句跳出循环后，会继续执行该循环之后的代码
+     *            只能用于循环中
+     * */
+    var x = "";
+    for(var i=0; i<10; i++){
+        if(i == 3){
+            continue;  //跳过值3继续执行
+        }
+        x = x + 'number is ' + i + '<br>'
+    }
+    //document.write(x);
+
+
+
+    /*
+     * 7.label   label:statement
+     */
+     //例  start标签可以在将来由break 或 continue语句引用
+     //    加标签的语句一般都要与for语句等循环语句配合使用
+
+     start:for(var i=0; i<count; i++){
+        
+     }
+</script>
+</body>
+</html>

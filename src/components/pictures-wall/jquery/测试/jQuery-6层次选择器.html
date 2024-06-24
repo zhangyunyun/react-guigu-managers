@@ -1,0 +1,70 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>jQuery层次选择器</title>
+    <style>
+        *{margin:0; padding:0;}
+        div{
+            display:inline-block;
+            width:100px;
+            height:100px;
+            margin:10px;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>AAAAA</li>
+        <li class="box">CCCCC</li>
+        <li title="hello"><span>BBBBB</span></li>
+        <li title="hello"><span>DDDD</span></li>
+        <span>EEEEE</span>
+    </ul>
+
+    <script>
+        //////////////////// jQuery层次选择器 //////////////
+        /* 
+            一.jQuery层次选择器
+                查找子元素, 后代元素, 兄弟元素的选择器
+
+                1. ancestor descendant
+                   在给定的祖先元素下匹配所有的后代元素   
+
+                2. parent>child
+                   在给定的父元素下匹配所有的子元素
+
+                3. prev+next
+                   匹配所有紧接在 prev 元素后的next元素
+
+                4. prev~siblings
+                   匹配 prev 元素之后的所有 siblings 元素    
+        */
+    </script>
+
+    <script src="./js/jquery-1.11.1.min.js"></script>
+    <script>
+        /*
+            需求:
+            1. 选中ul下所有的的span
+            2. 选中ul下所有的子元素span
+            3. 选中class为box的下一个li
+            4. 选中ul下的class为box的元素后面的所有兄弟元素
+        */
+        $(function(){
+            //选中ul下所有的span
+            $('ul span').css({'background':'#f00'})
+            
+            //选中ul下所有的子元素span
+            $('ul > span').css({'background':'#f00'})
+            
+            //选中class为box的下一个li
+            $('.box + li').css({'background':'#f00'})
+
+            //选中ul下的class为box的元素后面的所有兄弟元素
+            $('ul .box~*').css({'background':'#f00'})
+        })
+    </script>
+</body>
+</html> 

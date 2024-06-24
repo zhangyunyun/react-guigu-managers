@@ -1,0 +1,129 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>属性</title>
+    <style>
+        *{margin:0; padding:0;}
+        body{
+            padding:.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1" class="box" title="one">class为box的div1</div>
+    <div id="div2" class="box" title="two">class为box的div2</div>
+    <div id="div3">div3</div>
+    <span class="box">class为box的span</span>
+
+    <br>
+    
+    <ul>
+        <li>AAAAA</li>
+        <li title="hello" class="box2">BBBBB</li>
+        <li class="box">CCCCC</li>
+        <li title="hello">DDDDD</li>
+        <li title="two"><span>BBBBB</span></li>
+    </ul>
+
+    <br>
+
+    <input type="text" name="username" value="guiguClassValue" />
+
+    <br>
+    <br>
+    
+    <input type="checkbox">
+    <input type="checkbox">
+    <br>
+
+    <button id="selAll">选中</button>
+    <button id="selNo">不选中</button>
+
+    <script>
+        //////////////////// 属性 //////////////
+        /* 
+            一.属性
+                1.操作任意属性
+                    attr() 操作属性值为非布尔值的属性
+                    removeAttr()
+                    prop()  专门操作属性值为布尔值的属性
+                2.操作class属性
+                    addClass()
+                    removeClass()  
+                3.操作HTML代码/文本/值
+                    html()
+                    text()
+                    val()      
+        */
+    </script>
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+        /* 
+            需求:
+                1. 读取第一个div的title属性
+                2. 给所有的div设置name属性(value为atguigu)
+                3. 移除所有div的title属性
+                4. 给所有的div设置class='guiguClass'
+                5. 给所有的div添加class='abc'
+                6. 移除所有div的guiguClass的class
+                7. 得到最后一个li的标签体文本
+                8. 设置第一个li的标签体为"<h1>mmmmmmmmm</h1>"
+                9. 得到输入框中的value值
+                10. 将输入框的值设置为atguigu
+                11. 点击'全选'按钮实现全选
+                12. 点击'全不选'按钮实现全不选
+        */
+
+        $(function(){
+            //读取第一个div的title属性
+            var restTitle = $('#div1').attr('title')
+            console.log(restTitle)
+
+            //给所有的div设置name属性(value为atguigu)
+            $('div').attr('name','atguigu')
+
+            //移除所有div的title属性
+            $('div').removeAttr('title')
+
+            //给所有的div设置class='guiguClass'
+            //$('div').prop('class','guiguClass')
+            $('div').attr('class','guiguClass')
+
+            //给所有的div添加class='abc'
+            $('div').addClass('abc')
+
+            //移除所有div的guiguClass的class
+            $('div').removeClass('guiguClass')
+
+            //得到最后一个li的标签体文本
+            var restTxt = $('ul li:last').text()
+            console.log(restTxt);
+
+            //设置第一个li的标签体为"<h1>mmmmmmmmm</h1>"
+            $('ul li:first').html('<h1>mmmmmmmmm</h1>')
+
+            //得到输入框中的value值
+            var restVal = $('input[name=username]').val()
+            console.log(restVal)
+
+            //将输入框的值设置为atguigu
+            $(':text').val('atguigu')
+            $('input[name=username]').val('atguigu')
+
+            //点击'全选'按钮实现全选
+            $('#selAll').click(function(){
+                //$(':checkbox').prop('checked',true)
+                $('input[type=checkbox]').prop('checked',true)
+            })
+            $('#selNo').click(function(){
+                //$(':checkbox').prop('checked',false)
+                $('input[type=checkbox]').prop('checked',false)
+            })
+        })
+
+    </script>
+</body>
+</html> 

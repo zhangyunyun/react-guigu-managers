@@ -1,0 +1,53 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title></title>事件的坐标</title>
+    <style>
+        *{margin:0; padding:0;}
+        body{
+            padding: .25rem;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="out">
+        外部DIV
+        <div class="inner">内部div</div>
+    </div>
+    
+    <div class='divBtn'>
+        <button id="btn1">测试事件坐标</button>
+    </div>
+
+    <script>
+        //////////////////// 事件的坐标//////////////
+        /* 
+            一.事件的坐标
+                1.事件的坐标
+                    event.clientX, event.clientY 相对于视口的左上角(窗口的左上角) 
+                    event.pageX, event.pageY     相对于页面的左上角(页面的左上角) 
+                    event.offsetX, event.offsetY 相对于当前元素左上角(当前元素的左上角)
+        */
+    </script>
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+        /*
+           需求:  
+                1.点击btn1得到事件坐标
+        */
+
+        $(function(){
+            //1. 点击btn3得到事件坐标
+            $('#btn1').click(function(event){
+                console.log(event.offsetX,event.offsetY)
+                console.log(event.clientX,event.clientY)
+                console.log(event.pageX,event.pageY)
+            })
+        })
+    </script>
+</body>
+</html> 

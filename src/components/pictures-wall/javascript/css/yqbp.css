@@ -1,0 +1,118 @@
+@charset "UTF-8";
+/**
+* @created : 2022/8/29
+* @author : by zyy
+* @desc : 运气爆棚首页
+*/
+/* 平方 */
+@font-face { font-family: "pingfangmidun"; src: url("../font/pingfangmediun.TTF"); src: url("../font/pingfangmediun.TTF") format("truetype"); }
+
+/* 方正韵动黑 */
+@font-face { font-family: "fzydchjtgb"; src: url("../font/fzydchjtgb.TTF"); src: url("../font/fzydchjtgb.TTF") format("truetype"); }
+
+* { -webkit-overflow-scrolling: touch; -webkit-scroll-touch: touch; }
+
+html, body { margin: 0; padding: 0; background: linear-gradient(to bottom, #fddaa7, #fce9ae); }
+
+.yqbpWrapper { position: relative; width: 100%; }
+
+.bannerBox { position: relative; }
+
+.bannerBox .imgBanner { display: block; width: 100%; }
+
+.bannerBox .imgLogo { position: absolute; left: .25rem; top: .25rem; width: 2.77rem; height: .38rem; }
+
+.bannerBox .linkRule { position: absolute; right: .25rem; top: .25rem; width: .8rem; height: .4rem; line-height: .42rem; color: #fff; font-size: .25rem; text-align: center; background: #94ccea; border-radius: 50px; -webkit-border-radius: 50px; -moz-border-radius: 50px; -ms-border-radius: 50px; -o-border-radius: 50px; }
+
+.bannerBox .imgPrize { z-index: 5; position: absolute; left: .25rem; top: 75%; width: 1.2rem; height: 1.2rem; }
+
+.bannerBox .bmhBox { position: absolute; left: calc(50% - 1.78rem); top: 3.3rem; width: 3.56rem; height: 4.10rem; text-align: center; }
+
+.bannerBox .bmhBox .imgBmh { margin: auto; width: 3.56rem; height: 4.10rem; }
+
+.mainBox { margin-top: -.25rem; padding: 0 .25rem .25rem; }
+
+.mainBox .prizeBox { position: relative; padding: .25rem; border: 1px solid #fff; background: #fdba72; border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; -ms-border-radius: 10px; -o-border-radius: 10px; }
+
+.mainBox .prizeBox .prizeTitle { z-index: 2; position: absolute; left: calc(50% - 1.255rem); top: -.57rem; width: 2.51rem; height: .77rem; background: url("../images/img_title.png") no-repeat; background-size: 100% 100%; }
+
+.mainBox .prizeBox .prizeCont { z-index: 1; padding: .1rem; position: relative; background: #ffe6b4; border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; -ms-border-radius: 10px; -o-border-radius: 10px; }
+
+.mainBox .prizeBox .prizeCont .prizeList { display: flex; display: -webkit-flex; display: -webkit-box; flex-wrap: wrap; -webkit-flex-wrap: wrap; }
+
+.mainBox .prizeBox .prizeCont .prizeList li { flex: 1 1 25%; }
+
+.mainBox .prizeBox .prizeCont .prizeList li .prizeItem { margin: .08rem; padding: .1rem; background: #fff; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -ms-border-radius: 5px; -o-border-radius: 5px; text-align: center; }
+
+.mainBox .prizeBox .prizeCont .prizeList li .prizeItem img { margin: auto; width: .68rem; height: .68rem; }
+
+.mainBox .prizeBox .prizeCont .prizeList li .prizeItem p { width: 152%; margin-top: .1rem; text-align: center; font-size: .25rem; color: #74583a; line-height: 1.1; transform-origin: left; transform: scale(0.7); -webkit-transform: scale(0.7); -moz-transform: scale(0.7); -ms-transform: scale(0.7); -o-transform: scale(0.7); }
+
+.mainBox .btnBox { margin-top: .15rem; display: flex; align-items: center; justify-content: center; }
+
+.mainBox .btnBox li { flex: 1 1 50%; text-align: center; }
+
+.mainBox .btnBox li button { margin: auto; width: 3.16rem; height: 1.20rem; padding: .15rem .15rem; color: #fff; font-size: .4rem; font-family: "fzydchjtgb"; }
+
+.mainBox .btnBox li button.btnODefault { background: url("../images/btn_orangeDefault.png") no-repeat; background-size: 100% 100%; }
+
+.mainBox .btnBox li button.btnOCurrent { background: url("../images/btn_orangeCurrent.png") no-repeat; background-size: 100% 100%; }
+
+.mainBox .btnBox li button span { position: relative; top: -.05rem; font-size: .3rem; }
+
+.mainBox .explainBox { margin-top: .15rem; text-align: center; font-size: .25rem; color: #59491c; }
+
+/* 弹框 */
+.popDialog { position: fixed; z-index: 999; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; }
+
+.popDialog .popItem { width: 6rem; position: relative; border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; -ms-border-radius: 10px; -o-border-radius: 10px; }
+
+.popDialog .popItemInner { padding: .25rem .25rem; background: #fff; border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; -ms-border-radius: 10px; -o-border-radius: 10px; }
+
+.popDialog .popClose { position: absolute; bottom: -.65rem; left: calc(50% - .225rem); width: .45rem; height: .45rem; background: url(../images/ico_close.png) no-repeat; background-size: 100% 100%; }
+
+.popDialog .popTitle { text-align: center; font-size: .4rem; color: #74583a; height: .75rem; line-height: .75rem; }
+
+.popDialog .popCont { height: 1.5rem; padding: .25rem; }
+
+.popDialog .popCont .contTxt { flex: 1; }
+
+.popDialog .popCont .contTxt img { display: block; margin: auto; width: 1rem; height: 1rem; }
+
+.popDialog .popCont .contTxt h3 { margin-top: .2rem; font-size: .4rem; text-align: center; font-weight: bold; color: #74583a; }
+
+.popDialog .popCont .contTxt p { margin-top: .1rem; font-size: .26rem; text-align: center; color: #74583a; }
+
+.popDialog .popCont .contTxt p span { color: #ff1c4b; }
+
+.popDialog .popBtn { display: flex; align-items: center; justify-content: center; }
+
+.popDialog .popBtn button { margin: auto; width: 3.16rem; height: 1.2rem; padding: 0.15rem .15rem; color: #fff; font-size: .4rem; font-family: "fzydchjtgb"; text-align: center; box-sizing: border-box; border: 0 none; outline: 0 none; background: url(../images/btn_orangeCurrent.png) no-repeat; background-size: 100% 100%; border-radius: 50px; -webkit-border-radius: 50px; -moz-border-radius: 50px; -ms-border-radius: 50px; -o-border-radius: 50px; }
+
+/* 活动规则 */
+.popDialog.popRule .popItemInner { padding: .2rem .2rem .25rem; background: url("../images/img_popRule-bg.png") no-repeat; background-size: 100% 100%; }
+
+.popDialog.popRule .popClose { position: absolute; bottom: inherit; left: inherit; top: -.75rem; right: .15rem; }
+
+.popDialog.popRule .popCont { padding: .5rem .25rem; }
+
+.popDialog.popRule .ruleList { height: 5.5rem; overflow: auto; }
+
+.popDialog.popRule .ruleList li { line-height: 1.8; }
+
+/* 中奖成功、失败弹框、查看奖品 */
+.popDialog.popSuccess .popItemInner, .popDialog.popFailed .popItemInner, .popDialog.popCheck .popItemInner { padding: 2.1rem .65rem .25rem .45rem; height: 7rem; box-sizing: border-box; background: url("../images/img_popDialog-bg.png") no-repeat; background-size: 100% 100%; }
+
+.popDialog.popSuccess .popTitle, .popDialog.popFailed .popTitle, .popDialog.popCheck .popTitle { color: #fff; font-size: .5rem; font-weight: bold; font-family: 'microsoft yahei','微软雅黑'; }
+
+.popDialog.popSuccess .popCont, .popDialog.popFailed .popCont, .popDialog.popCheck .popCont { min-height: 2.5rem; }
+
+.popDialog.popSuccess .popCont .contTxt h3, .popDialog.popFailed .popCont .contTxt h3, .popDialog.popCheck .popCont .contTxt h3 { font-size: .3rem; color: #74583a; }
+
+.popDialog.popSuccess .popCont .contExplain, .popDialog.popFailed .popCont .contExplain, .popDialog.popCheck .popCont .contExplain { margin-top: .2rem; font-size: .25rem; color: #74583a; line-height: 1.2; text-align: center; }
+
+.popDialog.popFailed .popCont { display: flex; align-items: center; justify-content: center; }
+
+.popDialog.popFailed .popCont .contTxt p span { color: #74583a; }
+
+.popDialog.popCheck .popCont { min-height: 2.5rem; display: flex; align-items: center; justify-content: center; }

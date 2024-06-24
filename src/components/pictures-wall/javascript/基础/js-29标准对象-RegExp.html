@@ -1,0 +1,373 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>RegExp 正则表达式</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  RegExp 正则表达式  //////////////
+    /*
+     *1.RegExp正则表达式  用于定义一些字符串的规则
+                          计算机可以根据正则表达式，来检查一个字符串是否符合规则
+                          获取将字符串中符合规则的内容提取出来
+
+         ------(1)正则表达式语法格式
+               ^表示行的开头  例:^\d表示必须以数字开头
+               $表示行的结束  例:\d$表示必须以数字结尾
+
+               /^ 正则表达式 &/
+     
+         ------(2)正则表达式匹配修饰符
+               i //执行对大小写不敏感的匹配
+               g //执行全局匹配
+               m //执行多行匹配
+     
+         ------(3)正则表达式模式
+               //---a.方括号用于查找某个范围内的字符
+               |  []这两个都表示或  
+               [abc]  查找方括号之间的任何字符
+               [^abc] 查找任何不在方括号之间的字符
+               [0-9]  查找任何从0至9的数字
+               [a-z]  查找任何从小写a到小写z的字符
+               [A-Z]  查找任何从大写A到大写Z的字符
+               [A-z]  查找任何从大写A到小写z的字符
+               [a-zA-Z]
+               [adgk] 查找给定集合的任何字符
+               [^adgk]查找给定集合之外的任何字符
+
+               (x|y)  查找任何以|分隔的选项
+     
+               //---b.元字符是拥有特殊含义的字符
+               \.  表示点(.) 查找单个字符(除了换行和行结束符)
+               \\  表示单斜杠(\)
+
+               \w  查找任意字母、数字、_   [A-z0-9]
+               \W  查找非任意字母、数字、_  [^A-z0-9]
+
+               \d  查找任意的数字  [0-9]
+               \D  查找除了数字    [^0-9]
+
+               \s  查找空白字符    [ ]
+               \S  查找非空白字符  [^ ]
+
+                    ver str = "  hello world  "
+
+                    去除掉字符串中呃前后的空格
+                    去除空格就是使用""来替换空格 
+                    str = str.replace(/\s/,"")
+
+                    去除掉字符串开头的空格
+                    str = str.replace(/^\s*\/,"")
+ 
+                    去掉字符串结尾的空格
+                    str = str.replace(/\s*$/,"")
+
+                    去掉字符串中开头的空格和结尾的空格
+                    str = str.replace(/^\s*|\s*$/g,"")
+                    同
+                    str = str.replace(/^\s+|\s+$/g,"")
+               
+               \b  匹配单词边界
+               \B  匹配非单词边界
+     
+               \0  查找NUll字符
+               \n  查找换行符,并确定其位置
+               \f  查找换页符
+               \r  查找回车符
+               \t  查找制表符
+               \v  查找垂直制表符
+               \xxx   查找以8进制数 xxx 规定的字符
+               \xdd   查找以16进制数 dd 规定的字符
+               \uxxxx 查找以16进制数 xxxx 规定的 Unicode 字符
+     
+               //---c.量词
+               n+  匹配任何包含至少一个n的字符串
+               n*  匹配任何包含零个或多个n的字符串
+               n?  匹配任何包含零个或一个n的字符串
+               n{X}    匹配包含X个n的序列的字符串
+               n{X,}   X是一个正整数,n连续出现至少X次时匹配
+               n{X,Y}  X,Y是一个正整数,n连续出现至少X次，至多Y次时匹配
+     
+               n&  匹配任何结尾为n的字符串
+               ^n  匹配任何开头为n的字符串
+               ?=n 匹配任何其后紧接指定字符串n的字符串
+               ?!n 匹配任何其后没有紧接指定字符串n的字符串
+     
+         ------(4)正则表达式对象方法
+               //RegObj 表示正则表达式对象
+               //str  表示被检测的字符串
+
+               RegObj.test(str) //检索字符串中指定的值。则返回true或false)
+               RegObj.exec(str) //检索字符串中指定的值。返回找到的值,并确定其位置(返回一个数组，其中存放匹配的结果)
+                                             未找到匹配，则返回null
+               RegObj.compile(regexp,modifier)  //改变检索模式，也可以添加或删除第二个参数(1.5版本已废弃)
+                                                //regexp 表示正则表达式
+                                                //modifier 规定匹配的类型
+               RegObj.toString() //返回正则表达式的字符串
+     
+         ------(5)支持正则表达式的 String 对象的方法
+                //regexp 表示正则表达式对象
+                str.search(searchvalue)          //字符串方法  
+                                                    使用字符串作为参数，
+                                                    字符串参数会转换为正则表达式
+                str.match(regexp)                //字符串方法  
+                                                    找到一个或多个正则表达式的匹配(返回数组)
+                str.replace(searchvalue,newvalue)//字符串方法  
+                                                    替换与正则表达式匹配的子串
+                str.split()                      //字符串方法  
+                                                    把字符串分割为字符串数组
+     
+         ------(6)正则表达式对象属性
+               //RegObj 表示正则表达式对象
+                RegObj.constructor  //返回一个函数，该函数是一个创建RegExp对象原型
+                RegObj.global       //判断是否设置了"g"修饰符
+                RegObj.ignoreCase   //判断是否设置了"i"修饰符
+                RegObj.lastIndex    //规定下次匹配的起始位置
+                RegObj.multiline    //判断是否设置了"m"修饰符
+                RegObj.source       //返回正则表达式的匹配模式
+     * */
+
+    /* 
+        1.创建正则表达式
+            方式一 直接通过字面量创建(简单)
+                     语法：
+                        var reg = /正则表达式/匹配模式
+                        var reg = /^ \d $/i
+                    --字面量中单斜杠和双斜杠(转义字符)
+                        两个斜杠 \\表示一个斜杠\
+                        var reg = '/\./'   表示(.)
+                        var reg = '/\\/'   表示(\)  
+
+            方式二 通过new RegExp()创建一个RegExp对象(灵活)
+                   语法：
+                       var reg = new RegExp("正则表达式","匹配模式")
+
+                   --在构造函数中可以传递一个匹配模式作为第二个参数
+                                 可以是i 忽略大小写
+                                    g 全局匹配模式
+                   --在构造函数中单斜杠(\\)和双斜杠(\\\\)
+                        两个斜杠\\表示一个斜杠\
+                        四个斜杠\\\\表示两个斜杠\\
+                        var reg = new RegExp('\\.')
+                        var reg = new RegExp('\\\\')
+
+            typeof 检查正则对象，会返回object 
+    */ 
+   //方式一     
+    var reg = /^\d$/
+
+    //方式二
+    var reg1 = /ABC\-001/;
+    var reg2 = new RegExp('ABC\\-001');
+    console.log(reg1);  // /ABC\-001/
+    console.log(reg2); // /ABC\-001/
+
+    
+    /* 
+        2.RegExp对象方法
+            test()  用来检查一个字符串是否符合正则表达式的规则
+                      如果符合则返回true，否则返回false
+
+                    |  表示或
+                    [] 表示或
+                        [ab] == a|b
+                        [a-z]任意小写字母
+                        [A-Z]任意大写字母
+                        [A-z]任意字母
+                        [0-9]任意数字
+                        
+                    ^  表示除了指定以外的字符串
+                       [^ab]  除了ab以外的字符串
+
+                    ()表示的就是要提取的分组(是一个整体 如：/(ab){2}/ 即abab) 
+                    
+                    {n} 连续出现的次数
+                    {m,n} m到n次 (不能小于m也不能超过n次
+                    {m,}  m次以上
+
+                    + 至少一个,相当于{1,}
+                    * 0个或多个，相当于{0,}
+                    ? 0个或一个,相当于{0,1}
+                    .表示任意字符
+    
+            exec()  提取出子串,检索字符串中的正则表达式的匹配 
+                        匹配成功返回一个array 
+                        匹配失败返回null            
+
+    */
+    //----------1.text()  
+    var re3 = /^\d{3}\-\d{3,8}$/;
+    console.log(re3.test('010-12345')); //true
+    console.log(re3.test('010-1234x')); //false
+    console.log(re3.test('010 12345')); //false
+
+    re3 = new RegExp('a')
+    console.log(re3.test('abcds'))  //true
+    console.log(re3.test('Abcds'))  //false
+
+    re3 = new RegExp('a','i')
+    console.log(re3.test('abcds'))  //true
+    console.log(re3.test('Abcds'))  //true
+
+
+    //例子1 创建一个正则表达式，检查一个字符串中是否有a或b
+    re3 = /a|b|c/
+    console.log(re3.test('abcd'))  //true
+
+
+    //例子2 创建一个正则表达式，检查一个字符串中是否有字母
+    re3 = /[ab]/
+    console.log(re3.test('bcd'))  //true
+    console.log(re3.test('abc'))  //true
+    console.log(re3.test('c'))  //false
+
+    re3 = /[a-z]/
+    console.log(re3.test('b'))  //true
+    console.log(re3.test('d'))  //true
+    console.log(re3.test('f'))  //true
+
+
+    //例子3 检查一个字符串中是否有abc 或 adc 或 aec
+    re3 = /a[bde]c/
+    console.log(re3.test('aeec'))  //false
+    console.log(re3.test('abc'))   //true
+    console.log(re3.test('adc'))   //true
+    console.log(re3.test('aec'))   //true
+
+
+
+    //----------2.exec()  
+    /* 
+        ()表示的就是要提取的分组
+    */
+    var re4 = /^(\d{3})-(\d{3,8})$/;
+    console.log(re4.exec('010-12345')); //["010-12345","010","12345",index:0,input:"010-12345"]
+
+    //贪婪匹配  匹配尽可能多的字符
+    var re5 = /^(\d+?)(0*)$/;   //加?表示非贪婪匹配
+    console.log(re5.exec('102300'));  //["102300","1023","00"]
+
+    //全局搜索  g表示全局匹配 不能使用/^...$/只能最多匹配一次
+    var re6 = /test/g;
+    var re7 = new RegExp('test','g');
+    console.log(re6);  ///test/g
+    console.log(re7);  ///test/g
+
+    var s = 'JavaScript, VBScript, JScript and ECMAScript';
+    var re = /[a-zA-Z]+Script/g;
+    console.log(re.exec(s)); //JavaScript  0
+    console.log(re.exec(s)); //VBScript  12
+    console.log(re.exec(s)); //JScript  22
+    console.log(re.exec(s)); //ECMAScript  34
+    console.log(re.exec(s)); //null
+
+    //----exec()
+    var str = "Hello World";
+    var pattern = /Hello/g;
+    console.log(pattern.exec(str));
+
+
+
+    /* 
+        3.字符串和正则相关的方法
+             1)字符串方法  
+                split()  --将一个字符串分割成为一个数组
+                         --和数组的join相反
+                         --可以传递一个正则表达式作为参数，
+                            这样方法将会根据正则表达式去拆分字符串
+                
+                search() --可以搜索字符串中是否含有指定内容
+                         --和indexof类似 
+                         --如果搜索到则返回第一次出现的索引位置
+                           如果没有搜索到则返回-1
+
+                match() --可以根据正则表达式，
+                          从一个字符串中奖符合条件的内容提取出来           
+    */
+    //----1.split()
+    //根据任意字母来将字符串拆分成数组
+    var str  = '1a2b3c4d5e6f7' 
+    var result = str.split('b')
+    console.log(result)  //["1a2", "3c4d5e6f7g"]
+ 
+    result = str.split(/[A-z]/)
+    console.log(result)  //["1", "2", "3", "4", "5", "6", "7"]
+
+    //----2.search() 
+    str = 'hello ac hello abc'
+    result = str.search('abc')
+    console.log(result)   //6
+
+    result = str.search('abcd')
+    console.log(result)   //-1
+
+    //搜索字符串中是否有abc 或 adc 或 aec
+    result = str.search(/a[bef]c/)
+    console.log(result)   //15
+
+    var res = /^1[3-9][0-9]{9}$/
+
+    //实例  判断是移动端浏览器还是PC端浏览器
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        console.log("移动端");
+    }else{
+        console.log("PC端");
+    }
+
+     
+    //是否带有小数
+    function isDecimal(str){
+        var regDecimal = /^\d+\.\d+$/;
+        return regDecimal.test(str);
+    }
+    console.log(isDecimal(123));  //false
+    console.log(isDecimal(12.3));  //true
+
+
+    //校验是否中文名称组成
+    function isChina(str){
+        var regChina = /^[\u4E00-\u9FA5]{2,4}$/;
+        return regChina.test(str)
+    }
+    console.log(isChina("sdds"));  //false
+    console.log(isChina("欧阳娇娇"));  //true
+
+
+    //校验是否由8位数字组成
+    function isNum(str){
+        var regNum = /^[0-9]{8}$/;
+        return regNum.test(str);
+    }
+    console.log(isNum(12345)); //false
+    console.log(isNum(12345678)); //true
+
+
+    //校验电话号码格式
+    function isTel(str){
+        var regTel = /^0\d{3}-[^0]\d{6}$/;
+        return regTel.test(str);
+    }
+    console.log(isTel("0102-261221"));  //true
+    console.log(isTel("0933-1612216"));  //true
+    console.log(isTel("0933 26122168"));  //false
+
+
+    //校验邮件地址
+    function isEmail(str){
+        var regEmail = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/;
+        return regEmail.test(str);
+    }
+    console.log(isEmail("876023825@139.com")); //true
+
+</script>
+</body>
+</html>

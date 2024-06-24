@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>Map & Set</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  Map & Set  //////////////
+
+    //Map()  //定义
+             //方法   m.size
+             //       m.set(key,value)
+             //       m.get(key)
+             //       m.has(key)
+             //       m.delete("属性名")
+             //遍历   for...of...
+    //Set()  //定义
+             //方法   s.size
+             //       s.add()
+             //       s.has()
+             //       s.delete()
+             //       s.clear()
+             //遍历   for...of...
+             
+    //iterable 数据类型 ES6新数据类型
+
+    //---------------Map----------------//
+    /*
+     Map  定义：是一组键值对(key,value)的结构，具有极快的查找速度
+                key   为"属性名"
+                value 为"属性值"
+          创建：var m = new Map()
+                var m = new Map([[array],[array],[array]])
+          方法: m.set(key,value)添加新的key value
+                                一个key只能对应一个value
+                                多次给一个key放入value，最后的值会覆盖掉前面的值
+                m.get(key)      获取key对应的value
+                m.has(key)      是否存在指定的key
+                m.delete(key);
+          遍历：（1）forEach(value,key,map)
+                       value 属性值
+                       key   属性
+                       map   map本身
+                （2）for(let i of map){}  结果是数组
+                       for(let i of map.keys()){}  结果是所有的属性，是一个数组
+                       for(let i of map.values()){}  结果是所有的属性值，是一个数组
+					   
+					   for(let i of map.values()){}  结果是所有属性和属性值
+                （3）entries
+                       for(let [key,value] of map.entries()){}
+    */
+    var m = new Map([["Michael","95"],["Bob","80"],["Tracy","96"]]);
+    var txt = "";
+    /*for(var i=0; i<m.length; i++){
+        console.log(m.get[i]);
+    }*/
+    //添加属性和属性值
+    m.set("Tom","100");
+    console.log(m)  //Map(4) {'Michael' => '95', 'Bob' => '80', 'Tracy' => '96', 'Tom' => '100'}
+
+
+    //循环
+    m.forEach(function(value,key){
+        console.log(value,key);
+    });
+
+
+    for(let [key,value] of m.entries()){
+        console.log(key+"的成绩为"+value);
+    }
+
+
+    //---------------Set----------------//
+    /*
+    *Set  定义：也是一组key的集合，但不存储value。
+    *           key不能重复，在Set中，没有重复的key
+    *                                 重复的元素自动被过滤
+    *     创建：var s = new Set() 或
+    *           var s = new Set([array])
+    *     方法: s.size         //返回集合的元素个数
+                s.add(key)     //添加元素
+    *           s.has(key)     //检测元素
+    *           s.delete(key)  //删除元素,不能直接删除新添加的数组，可以删除变量保存的方法
+    *           s.clear(key)   //清空元素
+    * */
+    var s = new Set([1,2,3,3,"3"]);
+    s.add(4);  //{1,2,3,"3",4}
+    s.add(4);  //{1,2,3,"3",4}
+    s.delete(2);
+    console.log(s);
+
+    var s = new Set([1,2,3]);
+    var arr = [4,5];
+    s.add(arr);
+    s.delete(arr);  //3{1,2,3}
+    //console.log(s);  //4{1,2,3,[4,5]}
+
+    for(var i of s){
+        console.log(i);  //1,2,3
+        i instanceof Array ? s.delete(key): "";
+    }
+    console.log(s);
+
+
+
+    //---------------iterable----------------//
+    /*
+    * iterable数据类型
+    *         遍历：for ... of
+    *               forEach
+    * */
+    var a = ["A","B","C"];
+    var m = new Map([["1","A"],["2","B"],["3","C"]]);
+    var s = new Set(["A","B","C"]);
+    for(var i of a){//遍历Array
+        console.log(i,"11111111"); //A,B,C
+    }
+
+    for(var i of m){//遍历Map
+        console.log(i,"22222222"); //["1","A"] ["2","B"] ["3","C"]
+    }
+
+    for(var i of s){//遍历Set
+        console.log(i,'33333333'); //A,B,C
+    }
+</script>
+</body>
+</html>

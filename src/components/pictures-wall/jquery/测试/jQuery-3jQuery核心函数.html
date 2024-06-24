@@ -1,0 +1,98 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>jQuery核心函数</title>
+    <style>
+        *{margin:0; padding:0;}
+        .sideBox{
+            padding:.25rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sideBox">
+        <button id="btn1">测试</button><br>
+        <input type="text" name="msg1"/><br>
+        <input type="text" name="msg2"/><br>
+    </div>
+
+    <script>
+        //////////////////// jQuery核心函数 //////////////
+        /* 
+            一.jQuery核心函数
+                1.理解
+                   即: $ 或 jQuery
+                   jQuery定义了这个全局的函数供我们调用
+                   它既可作为一般函数调用, 且传递的参数类型不同/格式不同功能就完全不同
+                   也可作为对象调用其定义好的方法, 此时$就是一个工具对象
+                    
+                2.作为函数调用: $(param)
+                    1). 参数为函数 : 当DOM加载完成后，执行此回调函数
+                        $(fun)
+                    2). 参数为选择器(selector)字符串: 查找所有匹配的标签, 并将它们封装成jQuery对象
+                        $("#div1")
+                    3). 参数为DOM对象: 将dom对象封装成jQuery对象
+                        $(this)
+                    4). 参数为html标签字符串 (用得少): 创建标签对象并封装成jQuery对象
+                        $("<div>")
+
+                3.作为对象使用: $.xxx()
+                    1)发送ajax请求的方法
+                        $.ajax()
+                        $.get()
+                        $.post()
+                        ...
+
+                    2)其它工具方法
+                        1). $.each() : 隐式遍历数组
+                        2). $.trim() : 去除两端的空格
+                        3). $.parseJSON()/JSON.parse()：解析一个JSON字符串,返回js对象
+                        ...
+        */
+    </script>
+
+    <script src="./js/jquery-1.11.1.min.js"></script>
+    <script>
+        /*
+            需求1. 点击按钮: 显示按钮的文本, 显示一个新的输入框
+            需求2. 遍历输出数组中所有元素值
+            需求3. 去掉"  my atguigu  "两端的空格
+        */
+        
+        /* 
+            需求1. 点击按钮: 显示按钮的文本, 显示一个新的输入框
+        */
+        //绑定文档加载完成的监听
+        $(function(){ //1.参数为函数，当DDOM加载完成后，执行此回调函数
+            var $btn1 = $('#btn1') //2.参数为选择器字符串，查找所有匹配的标签，并将它们分装成jQuery对象
+            $btn1.click(function(){
+                var txt = $(this).text() //3.参数为发生事件的dom元素，分装成jQuery对象 这里的this为dom元素
+                alert(txt)
+                //4.参数为html标签字符串,创建标签对象并分装成jQuery对象
+                $('<input type="text" name="msg2"/><br>').appendTo('div')
+            })
+        })
+
+        /* 
+            需求2. 遍历输出数组中所有元素值
+        */
+        var arr1 = [2,4,7]
+        //1.隐式$.each()遍历数组
+        $.each(arr1,function(index,item){
+            console.log(index +'----'+ item)
+        })
+
+        /* 
+            需求3. 去掉"  my atguigu  "两端的空格
+        */
+        var str = "  my atguigu  "
+        //原生方法
+        console.log(str.trim())  //输出带空格
+        //jQuery方法
+        console.log($.trim(str))  //输出不带空格
+    </script>
+</body>
+</html> 

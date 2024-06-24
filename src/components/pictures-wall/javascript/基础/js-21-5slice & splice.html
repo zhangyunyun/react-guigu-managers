@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>数组</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    ////////////////////  slice & splice  //////////////
+
+
+    /* 
+        1.slice
+        2.splice
+
+            相同：
+            不同：
+    */
+
+
+
+    /* 
+        1.slice() 
+                定义：可以用来从数组提取指定元素，截取介于两个指定下标之间的元素
+                      不会改变原始数组的值，将截取到的元素封装到一个新的数组中返回
+
+                语法：arr.slice(start,end)
+                
+                参数：第一个参数，截取开始的位置的索引(包括开始索引)
+                      第二个参数，截取结束的位置的索引(不包括结束索引)
+                                  --可以不写
+                                  --索引可以传递一个负值，是从最后一个开始依次往前
+                                        -1倒数第一个
+                                        -2倒数第二个            
+    */
+    console.log('----------------slice()方法--------------')
+    var arr = ["孙悟空","猪八戒","沙和尚","蜘蛛精"]
+
+    var result = arr.slice(0,3)
+    console.log(arr)  //原数组不变: ["孙悟空","猪八戒","沙和尚","蜘蛛精"]
+    console.log(result)  //返回的数组(返回的是截取的元素) ["孙悟空","猪八戒","沙和尚"]
+
+    console.log(arr)  //原数组不变: ["孙悟空","猪八戒","沙和尚","蜘蛛精"]
+    console.log(arr.slice(2,arr.length))  //["沙和尚","蜘蛛精"] 
+    // console.log(arr.slice(2))  //和上面方法相同 ["沙和尚","蜘蛛精"] 
+
+    console.log(arr)  //原数组不变: ["孙悟空","猪八戒","沙和尚","蜘蛛精"] 
+    console.log(arr.slice(-1))  //["蜘蛛精"] 
+
+    console.log(arr)  //原数组不变: ["孙悟空","猪八戒","沙和尚","蜘蛛精"] 
+    console.log(arr.slice(-3))  //["猪八戒","沙和尚","蜘蛛精"]
+    
+    /* 
+        2.splice()
+                定义：用于删除数组中的指定元素
+                      会影响原始数组，会将指定元素从原数组中删除
+                      将被删除的元素作为返回值返回
+
+                参数： 第一个参数，表示开始位置的索引
+                       第二个参数，表示删除的数量
+                       第三个参数及以后...
+                            可以传递一些新的元素，这些元素将会自动插入到开始位置索引(是指第一个参数)前面    
+    */
+    console.log('----------------splice()方法--------------')
+    arr = ["孙悟空","猪八戒","沙和尚","蜘蛛精"]
+    
+    result = arr.splice(0,2)  //从第一个元素开始，删除2个元素
+    console.log(arr)     //原数组变成： ["沙和尚","蜘蛛精"] 
+    console.log(result)  //返回的数组(返回的是删除的元素) ["孙悟空", "猪八戒"]
+    
+    console.log(arr)  //原数组变成：["沙和尚","蜘蛛精"]
+    console.log(arr.splice(1,2))  //["蜘蛛精"]
+
+    console.log(arr)  //原数组变成：["沙和尚"]
+    console.log(arr.splice(0,1,"玉兔精","牛魔王"))  //结果为：["沙和尚"]
+
+    console.log(arr)  //原数组变成：["玉兔精","牛魔王"]
+    console.log(arr.splice(0,1))  //["玉兔精"]
+
+    console.log(arr) //原数组变成：["牛魔王"]
+
+    /* 
+        练习1  创建一个数组
+               去除数组中重复的数字            
+    */
+    arr = [1,2,3,2,1,3,4,2,5]
+    //遍历数组将数组中的所有元素取出来
+    for(var i=0; i<arr.length; i++){
+        console.log(arr[i])
+        for(var j=i+1; j<arr.length; j++){
+            console.log("----"+arr[j])
+            //如果相等了证明出现了重复元素，则删除j对象的元素
+            if(arr[i] == arr[j]){
+                arr.splice(j,1)  
+                //当删除了当前j所在的元素以后，后边的元素会自动补位
+                //此时将不会在比较j所在元素的补位元素(即漏比较了一位)
+                //j自减(-1+1) 当前j所在位置的补位元素就可以比较
+                j--; 
+            }   
+        }
+    }
+
+    console.log("最终结果"+arr)
+
+</script> 
+</body>
+</html>

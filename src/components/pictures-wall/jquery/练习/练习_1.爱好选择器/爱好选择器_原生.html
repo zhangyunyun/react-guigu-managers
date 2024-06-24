@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>爱好选择器</title>
+    <style>
+        *{margin:0; padding:0;}
+        ul,li{
+           list-style:none;
+        }
+        body{
+           padding:10px;
+        }
+        .sideBox{
+           margin-top:20px;
+        }
+    </style>
+</head>
+<body>
+   <h2>你爱好的运动是？</h2>
+   <div class="sideBox">
+      <label><input type="checkbox" id="checkAllBox">全选/全不选</label>
+   </div>
+   <div class="sideBox">
+      <label><input type="checkbox" name="items">足球</label>
+      <label><input type="checkbox" name="items">篮球</label>
+      <label><input type="checkbox" name="items">羽毛球</label>
+      <label><input type="checkbox" name="items">乒乓球</label>
+   </div>
+   <div class="sideBox">
+      <button id="chooseAll">全选</button>
+      <button id="chooseAllNo">全不选</button>
+      <button id="chooseReverse">反选</button>
+      <button id="submit">提交</button>
+   </div>
+
+   <script src="../../js/jquery-1.11.1.min.js"></script>
+   <script>
+      $(function(){
+         var $items = document.getElementsByName('items')
+         var $checkAllBox = document.getElementById('checkAllBox')
+         
+         var len = $items.length  //总共有多少个checkbox
+         //全选
+         var selectAllBtn = document.getElementById('chooseAll')
+         selectAllBtn.onclick = function(){
+            for(var i=0; i<len; i++){
+               $items[i].checked = true
+            }
+            $checkAllBox.checked = true
+         }
+         
+         //全不选
+         var chooseAllNoBtn = document.getElementById('chooseAllNo')
+         chooseAllNoBtn.onclick = function(){
+            for(var i=0; i<len; i++){
+               $items[i].checked = false
+            }
+            $checkAllBox.checked = false
+         }
+
+         //反选
+         var chooseReverseBtn = document.getElementById('chooseReverse')
+         chooseReverseBtn.onclick = function(){
+            var num = 0  //记录选中的个数
+            for(var i=0; i<len; i++){
+               if(!$items[i].checked){
+                  $items[i].checked = true
+                  num++
+               }else{
+                  $items[i].checked = false
+                  $checkAllBox.checked = false
+                  num--
+               }
+            }
+            if(len == num){
+               $checkAllBox.checked = true 
+            }
+         }
+           
+         //点击全选checkbox (全选/全不选)
+         $checkAllBox.onclick = function(){
+            for(var i=0; i<len; i++){
+               if(!$items[i].checked){
+                  $items[i].checked = true
+                  this.checked = true
+               }else{
+                  $items[i].checked = false
+                  this.checked = false
+               }
+            }
+         }
+
+         //点击每一个checkbox选中，如果有1个未选中，就不全选
+         for(var i=0; i<len; i++){
+            var num = 0
+            $items[i].onclick = function(){
+               if(this.checked){ //false
+                  this.checked = true
+                  num++
+               }else{
+                  this.checked = false
+                  num--
+               }
+               if(len == num){
+                  $checkAllBox.checked = true
+               }else{
+                  $checkAllBox.checked = false
+               }
+            }
+         }
+
+         //提交
+         var submitBtn = document.getElementById('submit')
+      })
+   </script>
+</body>
+</html> 

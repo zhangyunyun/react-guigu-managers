@@ -1,0 +1,494 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>面向对象</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  面向对象  //////////////
+
+    //原型对象 
+    /*     
+        -------原型对象
+
+        --------分装
+            a.简单分装
+            b.原始模型分装
+            c.构造函数分装 this 绑定到实例对象上
+                           callee  指向参数集合所属函数
+                           constructor 属性指向构造函数
+                           instanceof 运算符  判断一个变量是否是某个对象的实例
+        
+        -------继承
+            1)构造函数式继承 
+                a.通过：call()方法实现继承
+                        apply()方法实现继承
+                 
+                b.通过原型(prototype)实现继承
+
+                c.直接继承prototype
+
+                d.利用空对象作为中介
+
+                e.拷贝继承
+
+            2)非构造函数的继承
+                a.把子对象的prototype属性指向父对象
+
+                b.浅拷贝继承
+                    只是拷贝基本类型的数据
+                    把父元素的属性，全部拷贝给子对象
+
+            3)组合式继承（也叫组合寄生式继承）   
+               原型继承+call()或者apply()继承
+
+
+        -------多态
+
+
+        -------构造函数分装方法示例       
+    */    
+
+    //--------------------------原型对象 -------------------------//
+    /* 
+       1.原型对象
+            1)prototype
+                a.我们所创建的每一个函数(包括普通函数、构造函数，只要是函数)，解析器都会向函数中添加一个属性prototype
+                  这个属性对应着一个对象，这个对象就是我们所谓的原型对象
+                b.如果函数作为普通函数调用prototype没有任何作用
+                c.如果函数以构造函数调用时，
+                  它所创建的实例对象中都有一个(隐含属性__proto__)
+                  这个隐含属性也指向该构造函数的原型对象，
+                  我们可以通过实例(对象.__proto__)来访问该属性
+                  这个(隐含属性)和(构造函数)同时指向prototype(该构造函数的原型对象) 
+                d.原型对象就是一个公共的区域，
+                  所有同一个类的实例对象都可以访问到该类的原型对象prototype
+                  我们可以将对象中公有的内容，统一设置到原型对象中
+                e.当我们访问对象的一个属性或方法时，会先从对象自身中找
+                  如果有直接使用自身的属性和方法
+                  如果没有就向他指向的构造函数的原型对象中去找
+                
+                注：以后创建构造函数时，
+                    可以将这些对象共有的属性和方法，统一添加到构造函数的原型对象中
+                    就不用分别为每一个对象添加属性和方法
+                    也不会影响到全局作用域
+                    每个实例对象都具有这些属性和方法
+
+
+            2)in  &  hasOwnProperty() 
+              in 
+                用来检查对象中是否含有某个属性
+                如果对象中有，返回true
+                如果对象中没有，但原型中有，也会返回true 
+                语法：
+                    "属性名/方法"  in  实例对象    
+                
+              hasOwnProperty() 
+                用来检查实例对象自身中是否含有某个属性 
+                只有当对象自身含有属性时，才会返回true  
+                语法：
+                   实例对象.hasOwnProperty("属性/方法名")
+
+
+            3)原型对象也是对象，所以他(原型对象)也有原型对象
+              当我们使用一个对象的属性或方法时，会在自身中寻找
+              如果自身中有，直接使用
+              如果没有，就去原型对象中寻找
+
+              如果原型对象中有，直接使用
+              如果原型对象中没有，就去原型的原型中去寻找 
+              对象.__proto__.__proto__最多就这两层(从子级--父级--爷爷级)
+
+              对象.__proto__hasOwnProperty('hasOwnProperty')  //输出false
+              对象.__proto__.__proto__.hasOwnProperty('hasOwnProperty')  //输出true  
+
+              对象.__proto__.__proto__.__proto__  //输出undefined
+              console.log(对象.__proto__.__proto__.__proto__)  //输出值 null
+
+
+            4)toString()  
+
+    */
+    //----------普通函数原型对象
+    function Person(){
+
+    } 
+    console.log("------Person的原型对象如下：------")
+    console.log(Person.prototype)
+    
+    
+    //----------构造函数原型对象
+    /* 
+        MyClass函数对象                         原型对象(地址0x123)
+        prototype    0x123             →→→→→    a        123
+                                                say      func 
+                                                _ptoto_   0x223   原型对象(地址0x223)
+                                                                   _ptoto_
+        通过MyClass创建的实例对象mc1             
+        _ptoto_      0x123             →→→→→     
+        a            "我是mc中的a"
+
+        通过MyClass创建的实例对象mc2
+        _ptoto_      0x123             →→→→→
+
+        通过MyClass创建的实例对象mc3
+        _ptoto_      0x123             →→→→→
+
+    */
+    function MyClass(name,age,gender){
+        this.name = name
+        this.age = age
+        this.gender = gender
+    }
+    
+    //向MyClass原型对象中添加一个属性
+    MyClass.prototype.a = 123;
+
+    //向MyClass原型对象中添加一个方法
+    MyClass.prototype.say = function(){
+        console.log('我是原型对象中的方法')
+    }
+
+    //修改MyClass原型对象的toString
+    MyClass.prototype.toString = function(){
+        return "MyClass[name="+this.name+",age="+this.age+",gender="+this.gender+"]"
+    }
+
+    var mc1 = new MyClass("孙悟空",18,'男');
+    var mc2 = new MyClass("猪八戒",28,'男');
+
+    //构造函数的原型对象
+    console.log("------MyClass的原型对象如下：------")
+    console.log(MyClass.prototype)
+    
+    //实例对象的隐含属性
+    console.log(mc1.__proto__ == MyClass.prototype) //true
+    console.log(mc2.__proto__ == MyClass.prototype) //true
+
+    //向对象自身中添加对象或方法
+    //先从自身中找，如果有直接使用，如果没有就向原型对象中去找
+    mc1.a = "我是mc1中的a";
+    mc1.say();
+    mc2.say();
+    
+    console.log(mc1.a)  //输出 我是mc1中的a
+    console.log(mc2.a)  //输出 123
+
+    //未修改MyClass原型对象的toString后输出
+    //console.log(mc1.toString())   //[Object Object]
+    //console.log(mc2.toString())  //[Object Object]
+    //修改MyClass原型对象的toString后输出
+    /* 
+        MyClass.prototype.toString = function(){
+            return "MyClass[name="+this.name+",age="+this.age+",gender="+this.gender+"]"
+        }
+     */
+    console.log(mc1.toString())   //MyClass[name=孙悟空,age=18,gender=男]
+    console.log(mc2.toString())  //MyClass[name=猪八戒,age=28,gender=男]
+
+    console.log(mc1.hasOwnProperty('a'))  // true
+
+
+
+    //--------------------------分装-------------------------//
+    /*
+        2.分装  
+            就是把属性(property)和方法(method)分装成一个对象，
+            甚至要从原型对象生成一个实例对象
+    */
+
+     //-------------1.简单分装
+     //例1：生成实例对象的原始模式(根据原型对象生成两个实例对象)
+     //    缺点： 生成多个实例，比较麻烦(繁琐)
+     //           实例对象与原型之间没有什么联系
+    //原型对象cat
+    var cat = {   
+        name:"",
+        color:""
+    }
+    //创建一个空实例对象
+    var cat1 = {}  
+    cat1.name = "阿黄";
+    cat1.color = "黄色";
+    console.log(cat1);
+
+
+    var cat2 = {}
+    cat2.name = "阿兰";
+    cat2.color = "蓝色";
+    console.log(cat2);
+
+
+    //-------------2.原始模型分装
+    //   获取原型对象的方法：
+    //       除了可以通过构造函数获取原型对象以外，
+    //       还可以通过具体的对象来获取原型对象   
+    //       --Object.getPrototypeOf(对象)
+    //       --对象.__proto__
+    //       --对象.constructor.prototype
+    
+    //例2：原始模式的改进(调用函数生成实例对象)
+    //        缺点；实例对象之间没有任何联系
+    //        优点：写一个函数，解决了代码重复的问题
+    function catOne(name, color){  //原型对象
+        return {
+            name:name,
+            color:color
+        }
+    }
+    var cat1_1 = catOne("阿毛","黑色");  //实例对象
+    var cat1_2 = catOne("阿Q","白色");  //实例对象
+    console.log(cat1_1);
+    console.log(cat1_2);
+
+    function catTwo(name,color){
+        this.name = name;
+        this.color = color;
+        this.type = "猫科动物";
+        this.eat = function (){
+            console.log("吃老鼠");
+        }
+    }
+
+    var cat2_1 = new catTwo("大毛","黄色");
+    var cat2_2 = new catTwo("二毛","黑色");
+    console.log(cat2_1);
+    console.log(cat2_2);
+    console.log(cat2_1.constructor == catTwo);  //true
+    console.log(cat2_2.constructor == catTwo);  //true
+
+    console.log(cat2_1 instanceof catTwo);  //true
+    console.log(typeof cat2_1);  //对象类型
+
+    console.log(cat2_1.type);   //type属性和eat()方法重复了两次
+    console.log(cat2_1.eat());  //吃老鼠
+
+    console.log(cat2_1.eat);  //输出方法
+    console.log(cat2_2.eat);  //输出方法
+    console.log(cat2_1.eat == cat2_2.eat);  //false
+
+
+    //-------------3.prototype模式
+    /*  
+       例4：prototype模式
+           isPrototypeOf()  判断prototype对象和某个实例对象之间的关系
+           hasOwnProperty() 判断某一个属性到底是本地属性还是继承自prototype对象的属性
+           in运算符  判断某个实例是否含有某个属性(不管是本地属性还是继承属性)
+                     遍历某个对象的所有属性
+           
+           任何一个prototype对象都有一个constructor属性，指向被继承的对象
+           这个对象的所有属性和方法都会被构造函数的实例继承          
+    */
+
+    //例1：
+    function catThree(name, color){
+        this.name = name;
+        this.color = color;
+    }
+    catThree.prototype.type = "猫科动物o";
+    catThree.prototype.eat = function(){
+        console.log("吃老鼠哦！");
+    }
+    var cat3_1 = new catThree("大猫","黑白色");
+    var cat3_2 = new catThree("二猫","灰色");
+    console.log(cat3_1.type);  //猫科动物o
+    console.log(cat3_1.eat());  //吃老鼠哦！
+
+    console.log(cat3_1.eat);  //输出方法
+    console.log(cat3_2.eat);  //输出方法
+    console.log(cat3_1.eat == cat3_2.eat);  //true
+
+    console.log(catThree.prototype.isPrototypeOf(cat3_1));  //true
+    console.log(catThree.hasOwnProperty("name"));  //true
+
+    console.log("type" in cat3_1);  //true
+    console.log("type" in cat3_2);  //true
+
+    for(var prop in cat3_1){
+        console.log("["+prop+"]：" + cat3_1[prop]);   //
+    }
+
+
+    //--------------------------继承-------------------------//
+    /*
+        3.1构造函数继承
+    */
+     //-----------------1、构造函数绑定
+     //  构造函数绑定  将父对象的构造函数绑定在子对象上
+     //                call()，第一个参数也是作用域this,另一个是传递给函数的参数，参数必须列举出来
+     //                apply(this, array),接收两个参数，一个是作用域this，另一个是参数数组
+     //                使用方式：函数对象.call(this对象,参数数组)
+     //                         函数对象.apply(this对象,参数1,参数2,参数N)
+     //                优点：可以在子类构造函数中向超类型构造函数中传递参数，各个实例的值不会互相影响
+     //                bind()永久的改变函数的上下文，返回一个函数引用
+     //例1：
+     function superType(name){
+         this.name = name
+     }
+    function subType(){
+        superType.call(this,"John");  //或者apply(this,arguments)
+        this.age = 29;
+    }
+    var subResult = new subType();
+    console.log(subResult.name);
+    console.log(subResult.age);
+
+    //例2：
+    var arrs = [20, 150, 50, 23, 10, 40];
+    function getMax(){
+        var max = Math.max.apply('',arrs);  //150
+        var min = Math.min.apply('',arrs);  //10
+        console.log(max);
+        console.log(min);
+    }
+    getMax();
+
+
+    //-----------------2、prototype模式
+    function animal(){
+        this.species = "动物";
+    }
+    function Cat(name,color){
+        this.name = name;
+        this.color = color;
+    }
+    Cat.prototype = new animal();  //指向animal
+    Cat.prototype.constructor = Cat;  //没有上一行代码就指向Cat,为解决继承链的紊乱需加这行
+    var catResult = new Cat("阿黄","黄色");
+    console.log(catResult.species);  //动物
+
+    console.log(catResult.constructor == animal);//false
+    console.log(catResult.constructor == Cat);//true
+
+    console.log(animal.prototype.constructor);  //animal
+    console.log(Cat.prototype.constructor);  //Cat
+
+
+    //-----------------3、直接继承prototype
+    function animal1(){}
+    animal1.prototype.species = "动物";
+
+    function Cat1(name, color){
+        this.name = name;
+        this.color = color;
+    }
+    Cat1.prototype = animal1.prototype;  //缺点是将被继承对象的constructor属性也更改了
+    Cat1.prototype.constructor = Cat1;
+    var Cat1Result = new Cat1("阿兰","蓝色");
+    console.log(Cat1Result.species);  //动物
+
+    console.log(Cat1Result.constructor == animal1);  //false
+    console.log(Cat1Result.constructor == Cat1);  //true
+
+    console.log(animal1.prototype.constructor);  //Cat1
+    console.log(Cat1.prototype.constructor);  //Cat1
+
+
+    //-----------------4、利用空对象作为中介
+    function animal2(){}
+    animal2.prototype.species = "大型动物";
+
+    function Cat2(name,color){
+        this.name = name;
+        this.color = color;
+    }
+
+    var F = function(){};   //F是空对象，几乎不占内存
+    F.prototype = animal2.prototype;
+    Cat2.prototype = new F();
+    Cat2.prototype.constructor = Cat2;
+    var Cat2Result = new Cat2("阿Q","红色");
+    console.log(Cat2Result.species);  //动物
+
+    console.log(Cat2Result.constructor == animal2);  //false
+    console.log(Cat2Result.constructor == Cat2)  //true
+
+    console.log(animal2.prototype.constructor);  //animal2
+    console.log(Cat2.prototype.constructor);  //Cat2
+
+
+    //分装上述继承的方法
+    function inherit(children, parent){
+        var F = function(){};   //F是空对象，几乎不占内存
+        F.prototype = parent.prototype;
+        children.prototype = new F();
+        children.prototype.constructor = children;
+        childen.uber = parent.prototype;  //只是为了实现继承的完备性，纯属备用性质
+    }
+    inherit(Cat2, animal2);
+    var result = new Cat2("大大","黑色");
+    console.log(result.species);  //动物
+
+
+    //-----------------5、拷贝继承 (方法利用四中的方法)
+    function inherit1(children, parent){
+        var p = parent.prototype;
+        var c = children.prototype;
+        for(var i in p){
+            c[i] = p[i];   //将父对象(被继承)的对象中的属性全部拷贝给子对象(要继承)的prototype对象
+        }
+        c.uber = p;
+    }
+    inherit1(Cat2, animal2);
+    var result = new Cat2("大大","黑色");
+    console.log(result.species);  //动物
+
+
+    /*
+        3.2非构造函数的继承
+    */
+     //-----------------1、object()方法
+    var person = {
+        nation:"中国"
+    }
+    var doctor = {
+        career:"医生"
+    }
+
+    function object(p){
+        function F(p){}
+        F.prototype = p;  //把子对象的prototype属性指向父对象
+        return new F();
+    }
+
+    /*var doctorResult1 = object(person);
+    doctorResult1.career = "医生";
+    console.log(doctorResult1);*/
+
+
+    //-----------------2、object()浅拷贝  
+    /* 
+        只是拷贝基本类型的数据
+        把父元素的属性，全部拷贝给子对象
+     */
+    function extendCopy(p){
+        var c = {};  //空对象
+        for(var i in p){
+            c[i] = p[i];
+        }
+        c.uber = p;
+        return c;
+    }
+
+    var doctor = extendCopy(person);
+    doctor.career = "医生";
+    console.log(doctor);
+
+    /*person.address = ["北京","上海","香港"];
+    var doctor = extendCopy(person);
+    doctor.address.push("厦门");
+
+    console.log(person);  //address["北京","上海","香港","厦门"]
+    console.log(doctor);  //address["北京","上海","香港","厦门"]*/
+</script>
+</body>
+</html>

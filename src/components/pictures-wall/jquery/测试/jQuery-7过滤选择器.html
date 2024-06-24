@@ -1,0 +1,116 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>jQuery过滤选择器</title>
+    <style>
+        *{margin:0; padding:0;}
+        div{
+            display:inline-block;
+            width:100px;
+            height:100px;
+            margin:10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1" class="box">class为box的div1</div>
+    <div id="div2">class为box的div2</div>
+    <div id="div3">div3</div>
+    <span class="box">class为box的span</span>
+    <br/>
+    <ul>
+        <li>AAAAA</li>
+        <li title="hello">BBBBB</li>
+        <li class="box">CCCCC</li>
+        <li title="hello">DDDDDD</li>
+        <li title="two">EEEEEE</li>
+        <li style="display:none">我本来是隐藏的</li>
+    </ul>
+
+    <script>
+        //////////////////// jQuery过滤选择器 //////////////
+        /* 
+            一.jQuery过滤选择器
+                在原有选择器匹配的元素中进一步进行过滤的选择器   
+                * 基本
+                    :first 
+                    :last 
+                    :not(selector) 
+                    :even 
+                    :odd 
+                    :eq(index) 
+                    :gt(index) 
+                    :lt(index) 
+                    :header 
+                    :animated 
+                    :focus1.6+ 
+                * 内容
+                    :contains(text) 
+                    :empty 
+                    :has(selector) 
+                    :parent 
+                * 可见性
+                    :hidden 
+                    :visible 
+                * 属性  
+                    [attribute] 
+                    [attribute=value] 
+                    [attribute!=value] 
+                    [attribute^=value] 
+                    [attribute$=value] 
+                    [attribute*=value] 
+                    [attrSel1][attrSel2][attrSelN] 
+                * 子元素
+                    :nth-child 
+                    :first-child 
+                    :last-child 
+                    :only-child     
+        */
+    </script>
+
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+        /*
+            需求:
+            1. 选择第一个div
+            2. 选择最后一个class为box的元素
+            3. 选择所有class属性不为box的div
+            4. 选择第二个和第三个li元素
+            5. 选择内容为BBBBB的li
+            6. 选择隐藏的li
+            7. 选择有title属性的li元素
+            8. 选择所有属性title为hello的li元素
+        */
+        $(function(){
+            //1.选择第一个div
+            $("div:first").css("background", "#f00")
+
+            //2.选择最后一个class为box的元素
+            $("div:last").css("background", "#f00")
+
+            //3.选择所有class属性不为box的div
+            $("div:not(.box)").css("background", "#000")
+
+            //4.选择第二个和第三个li元素
+            $("li:gt(0):lt(1)").css("color", "#dd0355")
+            $("li:gt(0):lt(2)").css("color", "#dd0355")
+
+            //5.选择内容为BBBBB的li
+            $("li:contains('BBBBB')").css("color", "#ddd503")
+
+            //6.选择隐藏的li
+            $("li:hidden").show().css("color", "#bc03dd")
+
+            //7.选择有title属性的li元素
+            $("li[title]").css("color", "#0364dd")
+
+            //8.选择所有属性title为hello的li元素
+            $("li[title=hello]").css("color", "#03dd18")
+        })
+        
+    </script>
+    
+</body>
+</html> 

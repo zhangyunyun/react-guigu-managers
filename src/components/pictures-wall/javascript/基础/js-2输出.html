@@ -1,0 +1,57 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>输出</title>
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+    <p id="txt"></p>
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script>
+        ////////////////////  输出  //////////////
+
+        /* 
+          1.window.alert()   弹出警告框
+
+          2.document.write() 将内容写到HTML文档中
+
+          3.innerHTML        将内容写入到HTML元素
+
+          4.console.log()    输出到浏览器的控制台
+
+
+          注意：1.js代码是从上往下的顺序执行的(一行一行执行的)
+        */
+
+        /*
+        * 1.window.alert();
+        * */
+        window.alert(111);
+
+
+        /*
+        * 2.document.write()
+        * */
+        document.write(2222);
+
+
+        /*
+        * 3.document.write()
+        * */
+        document.getElementById("txt").innerHTML = "333";
+
+
+        /*
+        * 4.console.log()
+        * */
+        var a = 1, b = 2, c = a + b;
+        console.log(c);
+    </script>
+
+</body>
+</html>

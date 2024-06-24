@@ -1,0 +1,401 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>Array 数组</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  Array 数组  //////////////
+
+    //数组 是一个有序的值集合，用于在变量中存储多个值
+    //     使用方括号闭合（[]）,值使用逗号(,)分割
+    //     索引以0或1开始
+    //创建数组
+    //访问数组
+    //数组对象属性
+    //数组对象方法
+
+
+    /*
+    * 1.创建数组
+    *     --常规方式：var arr = new Array(数组的长度);
+    *                 arr[0] = "值1"
+    *                 arr[1] = "值2"
+    *     --简洁方式：var arr = new Array
+    *                 var arr = new Array("值1","值2",...);
+    *     --字面量方式：var arr = []
+    *                   var arr = ["值1","值2",...];
+    * */
+    var array = [];
+    var array = new Array();
+    array[0] = "值1"
+    array[1] = "值2"
+    array[2] = "值3"
+	console.log(array)  //["值1","值2","值3"]
+	
+
+
+    /*
+     2.访问数组
+            数组[索引]
+    */
+     console.log(array[0])  //输出值1
+
+
+
+    /*
+     3.数组对象属性
+        --属性：constructor  返回创建数组对象的原型函数
+                length       设置或返回数组元素的个数
+                prototype    允许你向数组对象添加属性或方法
+    */
+    //属性示例1
+    var fruits = ["Banana","Orange","Apple","Mango"];
+    console.log(fruits.constructor);  //function Array() { [native code] }
+
+    //属性示例3 Array.prototype给数组(fruits)中添加新的方法toBig()
+    Array.prototype.toBig = function(){
+        for(var i=0; i<this.length; i++){
+            this[i] = this[i].toUpperCase();
+        }
+    }
+    var fruits = ["Banana","Orange","Apple","Mango"];
+    fruits.toBig();
+    console.log(fruits);  //["BANANA", "ORANGE", "APPLE", "MANGO"]
+
+
+    /*
+      4.数组对象方法
+         --方法：
+               //常用
+                 indexOf(item,start)//返回指定元素的索引值
+                 lastIndexOf()//搜索数组中的元素，返回它最后出现的位置
+                 slice(start,end)  //截取部分元素，返回一个新的Array
+                                   //start包含，end不包含
+                                   //等同于substring()
+                 join(eparator)  //将数组分割成字符串
+                                   eparator指定使用的分隔符(如 ',' '-' 等)
+                 push()    //向数组的末尾添加若干元素
+                 pop()     //删除数组的最后一个元素
+                 unshift() //向数组最开始添加若干元素
+                 shift()   //删除数组的第一个元素
+                 splice(start,length,element)  //从指定元素位置删除若干元素，然后再从该位置添加若干元素
+												//start索引开始包含   
+												//length删除的数量 
+												//element传递一些新的元素
+												
+                 concat(arr1,arr2,arr3,...arrX)  //合并两个或两个以上数组,原始数组不会改变
+                 forEach(item,index) //调用数组的每个元素，并将元素传递给回掉函数
+                           //对空数组是不会执行回掉函数的
+     
+                 reverse() //将数组元素调换位置
+                 valueOf() //是数组对象的默认方法，返回数组对象的原始值
+                           //不会改变原数组
+               //不常用
+                 copyWithin(target,start,end)  //从数组的指定位置拷贝元素到数组的另一个指定位置中
+                            target   //必选，复制到指定目标索引位置
+                            start    //元素复制的起始位置
+                            end      //停止复制的索引位置，默认为array.length
+                                                          如果为负数，表示倒数
+                 entries()  //返回一个数组的迭代对象，该对象包含数组的键值对(key/value)
+                              迭代对象中数组的索引值作为key,数组元素作为value
+                 fill(value,start,end)     //使用一个固定值来填充数组
+                      value   //必选，填充的值
+                      start   //开始填充的位置
+                      end     //停止填充的位置
+                 find()       //返回符合传入测试条件的数组元素
+                 findIndex()  //返回符合传入测试条件的数组元素的索引
+                 includes()   //判断一个数组是否包含一个指定的值，如果是返回true，否则false
+                 keys()   //从数组创建一个包含数组键的可迭代对象
+                          //如果对象是数组返回true，否则返回false
+                 some()   //检测数组中的元素是否满足指定条件
+                          //如果有一个元素满足条件，则表达式返回true,剩余元素不会再执行检测
+                          //不会对空数组进行检测
+                          //不会改变原始数组
+                 Array.from(obj/arr,mapFun,val)//用于通过拥有length属性的对象或可迭代的对象来返回一个数组
+                                               //如果对象是数组返回true,否则返回false
+                             obj/arr //想要转换成数组的伪数组对象或可迭代对象
+                             mapFun  //数组中的每个元素会执行该回调函数
+                             val     // 执行回调函数mapFun时this对象
+                 Array.isArray(obj)//判断一个对象是否为数组
+                                   //如果对象是数组返回true,否则返回false
+               //重要
+                 map(function(currentVal,index,arr),thisVal)//返回一个新的数组，数组中的元素为原始数组元素调用函数处理后的值
+                           //不会对空数组进行检测
+                           //不会改变原始数组
+                 reduce() 
+                 reduceRight()
+                 every()   //检测数值元素的每个元素是否都符合条件
+                 filter()  //
+    */
+    //----------------------------常用----------------------------//
+    //---------indexOf()
+    //---------lastIndexOf()
+    var fruits = ["Apple","Orange","Manggo","Orange"];
+    console.log(fruits.indexOf("Orange"));  //1
+    console.log(fruits.lastIndexOf("Orange")); //3
+
+    var fruits = ["Banana","Orange","Apple","Mango","Banana","Orange","Apple"];
+    console.log(fruits.indexOf("Apple",2));  //2
+    console.log(fruits.indexOf("Apple",6));  //6
+
+    //---------slice()等同于substring()
+    var arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    console.log(arr.slice(1,3)); //['B','C']
+
+
+    //---------join()
+    var arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    console.log(arr.join(",")); //A,B,C,D,E,F,G
+
+
+    //---------push()向数组末尾添加若干元素
+    var fruits = ["apple","orange","manggo"];
+    fruits.push("A","B");
+    console.log(fruits); //["apple","orange","manggo","A","B"];
+
+    //---------pop()删除数组的最后一个元素
+    fruits.pop();
+    console.log(fruits);  //["apple","orange","manggo","A"]
+
+    //---------shift()删除数组的第一个元素
+    fruits.shift();
+    console.log(fruits);  //["orange","manggo","A"]
+
+    //---------unshift()向数组最开始添加若干元素
+    fruits.unshift("banane",{"name":"zhangyy","age":18},["xx","yy","zz"]);
+    console.log(fruits);
+
+
+    //---------splice()修改、添加、删除方法三
+    var arr = ["Microsoft", "Apple", "Yahoo", "AOL", "Excite", "Oracle"];
+    arr.splice(2,3,"Baudu","Xinlang");
+    console.log(arr);  //["Microsoft", "Apple", "Baudu", "Xinlang", "Oracle"]
+
+
+    //---------concat()数组连接,不会改变原始数组
+    var arrCat_1 = [1,2,3];
+    var arrCat_2 = [4,5,6];
+    console.log(arrCat_1.concat(arrCat_2)); //[1, 2, 3, 4, 5, 6]
+    console.log(arrCat_1); //[1,2,3]
+    console.log(arrCat_2); //[4,5,6]
+
+
+    //---------forEach()对数组的每个元素执行回掉函数
+    var number = [4, 9, 16, 25];
+    var sum1 = 0;
+    var sum2 = []
+    var n = 2;
+    number.forEach(function(item,index){
+        console.log("index" +index+ ":" + item);
+        //index0:4
+        //index1:9
+        //index2:16
+        //index3:25
+        sum1 += item;
+        sum2.push(n * item);
+    });
+    console.log(sum1);  //54
+    console.log(sum2);  //[8, 18, 32, 50]
+
+
+    //---------reverse()调换数组元素个数
+    var arr = ["20","1","10","A"];
+    console.log(arr.reverse()); //["A", "10", "1", "20"]
+
+
+    //----------------------------不常用----------------------------//
+    //---------copyWithin()从数组指定位置拷贝元素到数组的另一个指定位置中
+    var arrWithin = ["Banana", "Orange", "Apple", "Mango"];
+    arrWithin.copyWithin(2,0);
+    console.log(arrWithin); //["Banana", "Orange", "Banana", "Orange"]
+
+    //---------entries()返回一个数组的迭代对象，该对象包含数组的键值对(key/value)
+    var arrEntries = ["Banana", "Orange", "Apple", "Mango"];
+    arrEntries.entries();
+    console.log(arrEntries);
+
+
+    //---------fill()使用一个固定值来填充数组
+    var fruirts = ["Banana", "Orange", "Apple", "Mango"];
+    fruirts.fill("Runoob");
+    console.log(fruirts); //["Runoob", "Runoob", "Runoob", "Runoob"]
+
+
+    //---------find()
+    //---------findIndex()
+    var age = [2, 10, 8, 20, 50];
+    function checkAdult(x){
+        return x >= 18
+    }
+    console.log(age.find(checkAdult));  //20
+    console.log(age.findIndex(checkAdult)); //3
+
+    //---------includes()
+    var site = ['runoob', 'google', 'taobao'];
+    console.log(site.includes('runoob')); //true
+    console.log(site.includes('baidu')); //false
+
+    //---------keys()
+    var fruits = ["Banana", "Orange", "Apple", "Mango"];
+    console.log(fruits);
+    fruits.forEach(function(value,index){
+        console.log("index" +index+ ":" + value);
+        //index0:Banana
+        //index1:Orange
+        //index2:Apple
+        //index3:Mango
+    });
+
+    //---------some()
+    var ages = [3, 10, 18, 20];
+    function checkAdult(age) {
+        return age >= 18;
+    }
+    console.log(ages.some(checkAdult));  //true
+
+    //---------from()
+    //数组元素调用回调函数
+    var arr = [1, 2, 3];
+    function checkAdd(x){
+        return x * 10
+    }
+    console.log(Array.from(arr, checkAdd));  //[10,20,30]
+
+    //从string生成数组
+    var str = "foo";
+    console.log(Array.from(str));  //["f","o","o"]
+    //从Set生成数组
+    var set = new Set(['foo', 'bar', 'baz', 'foo']);
+    console.log(set); //对象
+    console.log(Array.from(set)); //转换成数组["foo", "bar", "baz"]
+    //从Map生成数组
+    var map = new Map([[1,2],[2,4],[4,8]]);
+    console.log(map);  //对象
+    console.log(Array.from(map)); //转换成数组 [[1, 2], [2, 4], [4, 8]]
+    var map = new Map([['1', 'a'], ['2', 'b']]);
+    console.log(Array.from(map.keys()));  //["1", "2"]
+    console.log(Array.from(map.values())); //["a", "b"]
+
+    //---------isArray()
+    var arr = [];
+    console.log(Array.isArray(arr)); //true
+    var arr = 123;
+    console.log(Array.isArray(arr)); //false
+
+    //----------------------------重要----------------------------//
+    //---------map() 返回数组中每个元素的平方根
+    var number = [4, 9, 16, 25];
+    console.log(number.map(Math.sqrt));  //[2, 3, 4, 5]
+    //---------every()检测数组元素是否符合条件
+               //只要有一项不满足条件就返回false
+               //不会改变原始数组
+               //不会对空数组进行检测
+    var age = [32,33,16,40];
+    function checkAdult(x){
+        return x >= 18
+    }
+    console.log(age.every(checkAdult));  //false
+    console.log(age);  //[32, 33, 16, 40]
+
+
+    //---------filter()返回所有符合条件的所有元素数组
+                //不会改变原始数组
+                //不会对空数组进行检测
+    var ages = [32, 33, 16, 40];
+    function checkAll(age){
+        return age >= 18
+    }
+    console.log(ages.filter(checkAll)); //[32, 33, 40]
+
+
+    //---------sort()对当前数组进行排序,按默认顺序排序
+    var arr = ["C","B","1","D","20","A"];
+    console.log(arr.sort());  //["1","20","A","B","C","D"]
+
+
+
+    //extend() 用一个或多个其他对象来扩展一个对象，返回被扩展的对象
+        var settings = {validate:false,limit:5,name:"foo"};
+        var options = {validate:true,name:"bar"};
+        $.extend(settings, options);
+        console.log(settings);  //{validate:true, limit:5, name:"bar"};
+        console.log(options);  //{validate:true, name:"bar"}
+
+
+    //grep() 使用过滤函数过滤数组元素
+        var arrs = $.grep([0,1,2],function(n, i){
+            return n > 0;
+        });
+        console.log(arrs);   //[1,2]
+
+
+    //inArray 确定第一个参数在数组中的位置，从0开始计数(如果没有找到则返回-1)
+        var arrs1 = [4, "Pete", 8, "John"];
+        console.log($.inArray("Pete",arrs1));  //1
+        console.log($.inArray("John",arrs1));  //3
+
+
+    //toArray 把集合中所有DOM元素恢复成一个数组
+        $(function(){
+            var arrs2 = $(".arrayList li").toArray();
+            for(var i=0; i<arrs2.length; i++){
+                console.log(arrs2[i].innerHTML);
+            }
+        });
+
+    //合并两个数组
+               //返回结果是修改第一个数组内容，(第一个数组元素后面跟着第二个数组元素)
+               //第二个数组内容不会发生改变
+        var arrM1 = [1,2,3,"哈哈"];
+        var arrM2 = [4,5,6];
+        $.merge(arrM1, arrM2);
+        console.log(arrM1);  //[1,2,3,"哈哈",4,5,6]
+        console.log(arrM2);  //[4,5,6]
+
+
+    //unique 去除重复元素
+        $(function(){
+            var divs = $(".arrayUnique div").get();
+            //alert(divs);
+            /*divs = divs.concat($(".dup").get());
+            $("div:eq(1)").text("重新排序后有" + divs.length + "个div元素");*/
+
+            divs = $.unique($(".dup").get());
+            $("div:eq(2)").text("重新排序后有" + divs.length + "个div元素").css("color","#f00");
+            console.log($(".arrayUnique").html());
+        });
+
+
+
+
+</script>
+<ul class="personList"></ul>
+
+<p></p>
+<span></span>
+
+<ul class="arrayList">
+    <li id="bar">士大夫1</li>
+    <li id="foo">士大夫2</li>
+</ul>
+<button id="clickShow">输出每个li的值</button>
+
+<div class="arrayUnique">
+    <div></div>
+    <div class="dup"></div>
+    <div class="dup"></div>
+    <div class="dup"></div>
+    <div></div>
+</div>
+</body>
+</html>

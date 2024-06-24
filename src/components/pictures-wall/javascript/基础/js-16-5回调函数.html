@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>函数</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  回调函数  //////////////
+
+    //回调函数
+
+    /* 
+        1.回调函数 是指某个方法定义了，没有调用，但是执行了
+    */
+    //----1)callbacks.add()    //回调列表中添加一个回调或回调的集合
+    var foo = function(value){
+        console.log("foo:" + value);  //foo:Hello  //foo:World
+    }
+
+    var bar = function(value){
+        console.log("bar:" + value);  //bar:World
+    }
+
+    var callbacks = $.Callbacks();
+    callbacks.add(foo);
+    callbacks.fire("Hello");   //foo:Hello
+
+    callbacks.disable();   //后面两句不调用
+
+    callbacks.add(bar);
+    callbacks.fire("World");
+
+
+    //----2) callbacks.disable()  //禁用回调列表中的回调
+
+
+    //----3) callbacks.empty()   //从列表中删除所有的回调
+    
+
+    var foo1 = function(value1, value2){
+        console.log("foo:" + value1 + value2);
+    }
+
+    var bar1 = function(value1, value2){
+        console.log("bar:" + value1 + value2);
+    }
+
+    var callbacks1 = $.Callbacks();
+    callbacks1.add(foo1);
+    callbacks1.add(bar1);
+
+    callbacks1.empty();
+
+    callbacks1.fire("John","Han");
+    callbacks1.fire("Tom","cat");
+
+    console.log(callbacks1.has(foo1)); //false 回调列表中没有此函数
+    console.log(callbacks1.has(bar1)); //false 回调列表中没有此函数
+
+
+
+    //----4) callbacks.fire()   //从列表中删除所有的回调
+         callbacks.fired()   //用给定的参数调用所有的回调
+         callbacks.fireWith()  //访问给定的上下文和参数列表中的所有回调
+    
+
+
+    //----5) callbacks.has()   //确定是否有提供的回调列表
+
+
+    //----6) callbacks.lock()   //锁定在其当前状态的回调列表
+         callbacks.locked() //确定是否已被锁定的回调列表
+
+
+    //----7) callbacks.remove() //删除回调或回调回调列表的集合
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>Tab点击切换</title>
+    <style>
+        *{margin:0; padding:0;}
+        ul,li{
+           list-style:none;
+        }
+        body{
+           padding:10px;
+        }
+        #tab {
+           z-index:2;
+           position:relative;
+           margin-top:10px;
+        }
+        #tab li{
+           display:inline-block;
+           margin:0 5px;
+           padding:0 5px;
+           height:30px;
+           line-height:30px;
+           border:1px solid #ddd;
+           background:#fff;
+        }
+        #tab li.current{
+           background:#fff;
+           border-bottom:0;
+           height:31px;
+           line-height:31px;
+        }
+        #tab li:first-child{
+           margin-left:0;
+        }
+        #container{
+            z-index:1;
+            position:relative;
+            margin-top:-2px;
+            border:1px solid #ddd;
+            padding:10px;
+            height:100px;
+            background:#fff;
+        }
+    </style>
+</head>
+<body>
+   <h2>多Tab点击切换</h2>
+   <ul id="tab">
+      <li id="tab1" value="1" class="current">10元套餐</li>
+      <li id="tab2" value="2">30元套餐</li>
+      <li id="tab3" value="3">50元包月</li>
+   </ul>
+   <div id="container">
+      <div id="content1" style="color:#f00;">content1</div>
+      <div id="content2" style="color:rgb(0, 255, 76); display:none">content2</div>
+      <div id="content3" style="color:rgb(0, 110, 255); display:none">content3</div>
+   </div>
+   <script src="../js/jquery-1.11.1.min.js"></script>
+   <script>
+      $(function(){
+         var $contents = $('#container>div')
+         var currentIndex = 0 //设置当前需要隐藏的层的index
+         $('#tab>li').click(function(){
+            var index = $(this).index()
+            $contents[currentIndex].style.display = 'none'
+            //当前层显示
+            $contents[index].style.display = 'block'
+            //改变要隐藏div的index
+            currentIndex = index
+         })
+      })
+   </script>
+</body>
+</html> 

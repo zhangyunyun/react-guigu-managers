@@ -1,0 +1,161 @@
+﻿ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>前沿</title>
+
+    <style>
+       *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    ////////////////////  前沿  //////////////
+    ///////////////////什么是JavaScript
+    /* 
+       1.Java编程语言
+       2.Script脚本语言
+       3.是一门编程语言
+    */
+    
+    ///////////////////起源
+    /* 
+       1.JavaScript诞生于95年，用电话线上网(56K锚)，主要用于前端页面的验证(用户名的长度、密码的长度、邮箱的格式等)
+       2.网景公司开发的liveScript产品(JavaScript的前身)
+       3.sun公司介入了JavaScript开发，Java(Java比较火爆)
+       4.紧接着网景公司乘势修改了liveScript名称为JavaScript
+       5.网景公司浏览器叫Navigator(航海家)
+       6.JScript是微软，95年推出自己的浏览器Explorer(探险家)即IE
+       7.网景公司和微软是竞争关系(微软推出JScript和JavaScript一模一样)
+       8.网景公司将JavaScript捐出，交给了组织(欧洲计算机协会)变成公开的，
+         组织共同定制了JS的标准名命名为ECMAScript，简称(ES)
+       9.ECMAScript是一个标准(不同的浏览器厂商对该标准会有不同的实现)
+             浏览器        JavaScript实现方式
+            FireFox           SpiderMonkey
+            Internet          Explorer JScript/Chakra
+            Safari            JavaScriptCore
+            Chrome            v8引擎(执行最快的引擎)
+            Carakan           Carakan
+       10.ECMAScript是JavaScript标准 
+           ECMAScript和JavaScript说法是等价的
+           ES和JS说法是等价的
+       11.一个完整的JavaScript实现应该由以下3个部分构成
+                          JavaScript 
+            ECMAScript       DOM          BOM               
+    */
+     
+    ///////////////////特点 
+    /* 
+        1.解释型语言(不用编译,直接执行)
+           a.JavaScript是一门解释型语言，所谓解释型语言不需要被编译成机器码在执行，而是直接执行
+           b.少了编译这一步骤，所以解释型语言开发起来尤为轻松
+           c.解释型语言运行较慢也是它的劣势
+           d.解释型语言中使用了JIT技术，使得运行速度得以改善
+        2.类似于 C 和 Java 的语法结构
+           a.JavaScript的语法结构与C 和 Java很像，像for、if、while等语句和Java的基本上是一模一样的
+           b.所以有过C和Java基础的同学学习起来会轻松很多
+           c.不过JavaScript和与Java的关系也仅仅是看起来像而已
+        3.动态语言
+           a.JavaScript是一门动态语言，所谓的动态语言可以暂时理解为
+            在语言中的一切内容都是不确定的。比如一个变量，这一时刻
+            是个整型，下一时刻可能会变成字符串了。当然这个问题我们
+            以后再谈。
+           b.不过在补充一句动态语言相比静态语言性能上要差一些，不过
+            由于JavaScript中应用的JIT技术，所以JS可能是运行速度最快
+            的动态语言了。 
+        4.基于原型的面向对象
+           a.JavaScript是一门面向对象的语言
+           b.ava也是一门面向对象的语言，但是与Java不同JavaScript是
+             基于原型的面向对象
+           c.疑问
+             什么是面向对象？
+             什么是原型？  
+    */
+
+    ///////////////////js库
+    /* 
+      yui.js库  Yahoo的JS框架
+      dojo.js库  重量级
+      jquery.js库 轻量级
+   */
+
+
+   ///////////////////JavaScript----UI的松耦合
+   /* 
+      在Web开发中,UI被定义为以下三个层的组合
+         1.HTML: 结构化需要显示的数据.
+         2.CSS: 视觉上的渲染.
+         3.JavaScript: 增强页面的交互性.
+
+      HTML, CSS, JavaScript之间的关系经常被定义得非常的紧密(紧密耦合)
+      以至于带来的后果是: 改变一个层不得不改变另外的一个或者两个层;
+      (比如: 
+         你想修改一段HTML代码(改一个类名字), 
+         发现不仅需要到CSS里面去修改还需要去JS文件中寻找是否这个元素上绑定有操作事件! 
+         因此在较大规模的web应用中, 或者是团队开发过程中这种布局存在很大的问题.
+      )
+   */
+   /* 
+      松耦合
+         1)将js从css中抽离 (在IE8及早期版本中, 允许在CSS中直接插入JS代码.)
+            去掉css中的js代码
+
+            .box {
+               　width: expression(document.body.offsetWidth + "px");
+            }
+
+         2)将css从js中抽离
+            去掉js中的css代码
+            
+            element.style.color = "red";
+            element.style.left = "10px";
+            element.style.top = "100px";
+            element.style.visibility = "visible";  
+
+      深耦合
+         将js代码从html中抽离 
+            剥离出html中的js代码
+
+         将html代码从js中抽离
+            不要在JS中插入html代码
+
+      紧耦合   
+   */
+
+    ///////////////////
+    //()(param)  //匿名方法，只不过传递了jquery对象
+
+    (function(){})(jQuery)
+    //相当于
+    function aa($){}
+    aa(jQuery)
+
+    //原始: $(document).ready(function(){})
+    //简写：$(function(){})
+
+
+    ///////////////////函数、方法、对象、变量、类
+    //----------1.函数  定义函数后产生以下4个
+    function person(x,y){
+        return x + y
+    }
+
+    //----------2.方法
+    window.person()  //全局调用，返回return后的返回值 输出3
+
+    //----------3.对象  基于对象的语言
+
+    //----------4.变量
+
+    //----------5.类    可以生成实例化的对象
+    var result = person(1,2);      //返回return后的返回值 输出3
+    //var result = new person(1,2);  //返回一个对象person{}
+    console.log(result);
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>箭头函数</title>
+
+    <style>
+        *{margin:0; padding:0;}
+    </style>
+</head>
+<body>
+
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+    'use strict';
+    ////////////////////  箭头函数  //////////////
+
+
+    //箭头函数   es6中新增的一种新函数
+    //定义   定义用的就是一个箭头
+    //格式   1.只包含一个表达式  可省略{...}和return
+    //       2.包含多条语句  不可省略{...}和return
+
+    //generator  es6标准引入的新数据类型，看上去像一个函数，可以返回多次
+
+
+    /*
+     *1.箭头函数
+     *
+     * */
+    //只包含一个表达式
+    x => x * x;
+    //等同于
+    var fn = function(x){
+        return x * x;
+    }
+    console.log('你的浏览器支持ES6的Arrow Function!');
+
+    //包含多条语句
+    /* 
+        x => {
+        if(x > 0){
+            if(x > 0){
+                return x * x;
+            }
+        else{
+            return - x * x;
+        }
+    }
+    */
+    //参数
+        //无参数
+        //() => 3.14;
+
+        //两个参数
+       /* 
+        (x, y) => {
+            x*x + y*y;
+        }
+       */
+
+        //可变参数
+       /*
+        (x, y, ...rest) =>{
+            var i, sum = x + y;
+            for(i=0; i<rest.length; i++){
+                sum += rest[i];
+            }
+            return sum;
+        } 
+       */
+
+    /*
+     *2.this
+     *
+     * */
+    var obj = {
+        birth: 1990,
+        getAge: function () {
+            var b = this.birth;  //1990
+            console.log(b);
+            var fn = function(){
+                var fullYear = new Date().getFullYear();
+                return fullYear - b;
+                //return fullYear - this.birth; // this指向window或undefined
+            }
+            return fn();
+        }
+    }
+    console.log(obj.getAge());  //28
+
+    //箭头函数解决this指向，就不用var that = this的hack写法
+    var obj1 = {
+        birth:1991,
+        getAge:function(){
+            var b = this.birth;  //1991
+            console.log(b);
+            var fullYear = new Date().getFullYear();
+            var fn = () => fullYear - this.birth;  //this指向objs
+            return fn();
+        }
+    }
+    console.log(obj1.getAge());  //27
+
+    //用call或apply调用箭头函数
+    var obj2 = {
+        birth:1991,
+        getAge:function(year){
+            var b = this.birth;
+            var fn = (y) => y - this.birth;
+            return fn();
+        }
+    }
+
+    //箭头函数排序
+    var arr = [1, 10, 20, 2];
+    //arr.sort((x, y) => x -y);
+    //console.log(arr);   //[1, 2, 10, 20]
+
+    arr.sort(function(x, y){
+        if(x < y){
+            return -1
+        }
+        if(x > y){
+            return 1
+        }
+        return 0
+    });
+    console.log(arr);  //[1, 2, 10, 20]
+
+
+    //定义数字0
+    //定义数字1
+    //定义加法
+
+
+    /*
+     *2.generator   由 functon* 定义，除了return语句还可用yield返回
+     *
+     * */
+    function foo1(x){
+        return x * x;
+    }
+    var r1 = foo1(5);
+    console.log(r1);  //25
+
+    //例：generator定义
+    function* foo2(x) {
+        yield x + 1;
+        yield x + 2;
+        return x + 3;
+    }
+    var r2 = foo2(5);
+    console.log(r2.next());
+    console.log(r2.next());
+    console.log(r2.next());
+</script>
+</body>
+</html>

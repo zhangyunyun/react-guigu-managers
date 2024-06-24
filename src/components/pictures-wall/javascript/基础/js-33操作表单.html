@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,shrink-to-fit=no,minimal-ui">
+    <title>操作表单</title>
+
+    <style>
+        *{margin:0; padding:0;}
+        .checkBoxText td{padding:5px;}
+    </style>
+</head>
+<body>
+
+<!----------------------------------取值----------------------------->
+<input type="text" id="email">
+<button id="eValue">取值</button>
+
+
+<!--------------------------------form表单---------------------------->
+<label for="">1.form表单：</label>
+<!--响应button的click事件-->
+<form id="test-form">
+    <input type="text" name="test" value="1">
+    <button type="button" onclick="doSubmitForm()">Submit</button>
+</form>
+
+<!--响应submit的onsubmit事件-->
+<form id="test-form1" onsubmit="return doSubmitForm1()">
+    <input type="text" name="test" value="2">
+    <button type="submit">Submit</button>
+</form>
+
+
+<!--例3-->
+<form id="login-form" method="post" onsubmit="return checkForm()">
+    <input type="text" id="username" name="username">
+    <input type="password" id="password" name="password">
+    <button type="submit">Submit</button>
+</form>
+
+<!--例4-->
+<form id="user-form" method="post" onsubmit="return useForm()">
+    <p><span>用户名：</span><input type="text" id="userNumber" name="text" /></p>
+    <p><span>密码：</span><input type="password" id="psdNumber" name="password" /></p>
+    <p><span>重复密码：</span><input type="password" id="psdNumberDouble" name="password" /></p>
+    <p><button type="submit">提交</button><button type="reset">重置</button></p>
+</form>
+
+
+<!----------------------------select下拉列表元素------------------------------->
+<label for="">2.select下拉列表元素：</label>
+<select id="selectList1">
+    <option value="item1">item1</option>
+    <option value="item2">item2</option>
+    <option value="item3">item3</option>
+    <option value="item4">item4</option>
+    <option value="item5">item5</option>
+</select>
+<select id="selectList2">
+    <option value="item1">item1</option>
+    <option value="item2">item2</option>
+    <option value="item3">item3</option>
+    <option value="item4">item4</option>
+    <option value="item5">item5</option>
+</select>
+<select id="selectList3" multiple>
+    <option value="item1">item1</option>
+    <option value="item2">item2</option>
+    <option value="item3">item3</option>
+    <option value="item4">item4</option>
+    <option value="item5">item5</option>
+</select>
+<br>
+<!----------------------------------checkbox复选框------------------------------>
+<label for="">3.复选框：</label>
+<table class="checkBoxText">
+    <tr>
+        <td>全选 <input type="checkbox" id="selAll"></td>
+        <td>姓名</td>
+        <td>年龄</td>
+        <td>手机号</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="selChild"></td>
+        <td>张三</td>
+        <td>20</td>
+        <td>12365895556</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="selChild"></td>
+        <td>张三</td>
+        <td>20</td>
+        <td>12365895556</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="selChild"></td>
+        <td>张三</td>
+        <td>20</td>
+        <td>12365895556</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="selChild"></td>
+        <td>张三</td>
+        <td>20</td>
+        <td>12365895556</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="selChild"></td>
+        <td>张三</td>
+        <td>20</td>
+        <td>12365895556</td>
+    </tr>
+    <tr>
+        <td colspan="4"><button id="selInvert">反选</button></td>
+    </tr>
+</table>
+
+<!----------------------------------radio单选按钮------------------------------>
+<label for="">4.单选按钮：</label>
+男：<input type="radio" name="gender">
+女：<input type="radio" name="gender">
+
+<br>
+<br>
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script src="../js/加密文件/MD5.js"></script>
+<script>
+    'use strict';
+    ////////////////////  操作表单  //////////////
+
+    //操作表单  表单本身也是DOM树
+
+    //表单的输入控件
+    //获取值
+    //设置值
+    //HTL5控件
+    //提交表单
+
+    //select  下拉列表元素
+    //checkbox 多选框
+    //radio 单选框
+
+
+    /*
+     *1.表单的输入控件
+     *       文本框 <input type="text">,用于输入文本
+     *       口令框 <input type="password">,用于输入口令
+     *       单选框 <input type="radio">,用于选择一项
+     *       复选框 <input type="checkbox">,用于选择多项
+     *       文本域 <textarea></textarea>
+     *       下拉框 <select>,用于选择一项
+     *       隐藏文本 <input type="hidden">,用户不可见，但表单提交时会把隐藏文本发送到服务器
+     * */
+
+
+    /*
+     *2.获取值
+     *      elem.value  应用于input,password,hidden,select,textarea
+     *      elem.checked  应用于radio,checkBox 返回true/false
+     * */
+
+     var input = document.getElementById("email");
+     var eValue = document.getElementById("eValue");
+     eValue.onclick = function(){
+         console.log(input.value);
+     }
+     
+
+    /*
+     *3.设置值  HTL5控件
+     *      日期 <input type="date">
+     *           <input type="datetime">
+     *           <input type="datetime-local">
+     *           <input type="color" value="#ff0000"> //默认是黑色的，颜色值必须写全
+     * */
+
+
+
+
+
+    /*
+     *4.提交表单
+     *      通过<form>元素的submit()方法提交 缺点是扰乱了浏览器对form的正常提交
+     *      响应<form>本身的onsubmit事件
+     *      提交表单不传输明文口令，而是口令的MD5(密码加密)
+     *      加密的方法：base64.js   md5.js   sha1.js
+     * */
+    //例1：响应button的click事件
+    function doSubmitForm(){
+        var form = document.getElementById("test-form");
+        // 可以在此修改form的input...
+        // 提交form:
+        form.submit();
+    }
+
+    //例2：响应submit的onsubmit事件
+    function doSubmitForm1(){
+        var form = document.getElementById("test-form1");
+        // 可以在此修改form的input...
+        // 继续下一步:
+        return true; //return false;  浏览器将不会继续提交form
+    }
+
+    //例3
+    function checkForm(){
+        var pwd = document.getElementById("password");
+        pwd.value = hex_md5(pwd.value);
+        console.log(pwd.value);
+        return true;
+    }
+
+    //例4
+    function useForm(){
+        var userNumber = document.getElementById("userNumber");
+        var psdNumber = document.getElementById("psdNumber");
+        var psdNumberDouble = document.getElementById("psdNumberDouble");
+        var recName = /^[A-Za-z]{1}[A-Za-z0-9]{4,11}$/;
+        var recPsd = /^\w{3,15}$/;
+         if(!recName.test(userNumber.value)){
+             alert("用户名以字母开头，长度为5-16个字符");
+         }else if(!recPsd.test(psdNumber.value)){
+             alert("密码由三到15位数字字母组成!");
+         }else if(recPsd.test(psdNumber.value) !== recPsd.test(psdNumberDouble.value)){
+             alert("两次输入的密码不一致!");
+         }
+    }
+
+
+    //select下拉列表
+        //(1)value
+        var selectText1 = document.getElementById("selectList1");
+        selectText1.addEventListener("change",function(){
+            console.log(this.value);
+        });
+
+        //(2)selectIndex 可以设置选中的项目(从0开始，如果用户没有选中任何一项, selectIndex值为-1)
+        var selectText2 = document.getElementById("selectList2");
+        selectText2.addEventListener("change",function(){
+            console.log(this.selectIndex = 1);
+        });
+
+        //(3)可设置为多选  multiple属性，只返回选中的第一个选项
+        //                              要返回所有值必须遍历select所有选项，检查每一项的selected属性
+        var selElem = document.getElementById("selectList3");
+        var selChildren = selElem.options;
+        var selCount = selChildren.length;
+        var selArr = [];
+        var i;
+        selElem.addEventListener("change",function(){
+            for(i=0; i<selCount; i++){
+                if(selChildren[i].selected){
+                    var ele = selChildren[i].value;
+                    if(selArr.indexOf(ele) == -1){
+                        selArr.push(ele);
+                        console.log(selArr);
+                    }
+                }
+            }
+        });
+
+
+    //checkbox 多选框
+        //(1)选中和未选中两种状态
+        //(2)checked属性
+        //(3)value可以获取值
+        //(4)判断checked的方法
+             //.attr('checked')
+             //.prop('checked')
+             //.is(':checked')
+        //(5)赋值的方法
+             //.attr('checked','checked')
+             //.attr('checked',true/false)
+
+             //.prop('checked','checked')
+             //.prop('checked',true/false);
+             //.prop({checked:true/false});键值对
+             //.prop('checked',function(){
+             //    return true/false
+             // });
+    //例1
+    var selAll = document.getElementById("selAll");
+    var selChild = document.getElementsByName("selChild");
+    var selInvert = document.getElementById("selInvert");
+    //全选
+    selAll.onclick = function(){
+        for(var i=0; i<selChild.length; i++){
+            if(selAll.checked){
+                selChild[i].checked = true
+            }else{
+                selChild[i].checked = false
+            }
+        }
+    }
+
+    //选择复选框  只要有一个未选中就不全选
+    for(var i=0; i<selChild.length; i++){
+        selChild[i].onclick = function(){
+            //假设有一个未选中,就不全选
+            if(!selChild.checked){
+                selAll.checked = false
+            }else{
+                selAll.checked = true
+            }
+        }
+    }
+
+
+    //反选
+    selInvert.onclick =function(){
+        for(var i=0; i<selChild.length; i++){
+            if(selChild[i].checked) {
+                selChild[i].checked = false
+            }else{
+                selChild[i].checked = true
+            }
+        }
+    };
+
+
+    //radio 单选框  同一组单选框只能选中一个
+
+
+</script>
+</body>
+</html>
